@@ -1,63 +1,50 @@
-import axios from 'axios';
-import axiosInstance from '../services/axiosapi';
-import {API_URL} from '../helper'
+import api from './api';
 
-
-// Courses API
 export const coursesAPI = {
-  getAll: () => axiosInstance.get(`${API_URL}/courses`),
-  getById: (id) => axiosInstance.get(`${API_URL}/courses/${id}`),
-  create: (data) => axiosInstance.post(`${API_URL}/courses`, data, {
+  getAll: () => api.get('/api/courses'),
+  getById: (id) => api.get(`/api/courses/${id}`),
+  create: (data) => api.post('/api/courses', data, {
     headers: { 'Content-Type': 'multipart/form-data' }
   }),
-  update: (id, data) => axiosInstance.put(`${API_URL}/courses/${id}`, data, {
+  update: (id, data) => api.put(`/api/courses/${id}`, data, {
     headers: { 'Content-Type': 'multipart/form-data' }
   }),
-  delete: (id) => axiosInstance.delete(`${API_URL}/courses/${id}`)
+  delete: (id) => api.delete(`/api/courses/${id}`)
 };
 
-// Jobs API
 export const jobsAPI = {
-  getAll: () => axios.get(`${API_URL}/jobs`),
-  getById: (id) => axios.get(`${API_URL}/jobs/${id}`),
-  create: (data) => axios.post(`${API_URL}/jobs`, data),
-  update: (id, data) => axios.put(`${API_URL}/jobs/${id}`, data),
-  delete: (id) => axios.delete(`${API_URL}/jobs/${id}`)
+  getAll: () => api.get('/api/jobs'),
+  getById: (id) => api.get(`/api/jobs/${id}`),
+  create: (data) => api.post('/api/jobs', data),
+  update: (id, data) => api.put(`/api/jobs/${id}`, data),
+  delete: (id) => api.delete(`/api/jobs/${id}`)
 };
 
-// Students API
 export const studentsAPI = {
-  getAll: () => axios.get(`${API_URL}/students`),
-  getById: (id) => axios.get(`${API_URL}/students/${id}`),
-  enroll: (id, courseId) => axios.post(`${API_URL}/students/${id}/enroll`, { courseId }),
-  update: (id, data) => axios.put(`${API_URL}/students/${id}`, data),
-  delete: (id) => axios.delete(`${API_URL}/students/${id}`)
+  getAll: () => api.get('/api/students'),
+  getById: (id) => api.get(`/api/students/${id}`),
+  enroll: (id, courseId) => api.post(`/api/students/${id}/enroll`, { courseId }),
+  update: (id, data) => api.put(`/api/students/${id}`, data),
+  delete: (id) => api.delete(`/api/students/${id}`)
 };
 
-// Attendance API
 export const attendanceAPI = {
-  mark: (data) => axios.post(`${API_URL}/attendance`, data),
-  bulkMark: (data) => axios.post(`${API_URL}/attendance/bulk`, data),
-  getStudentAttendance: (studentId, params) => 
-    axios.get(`${API_URL}/attendance/student/${studentId}`, { params }),
-  getCourseAttendance: (courseId, params) => 
-    axios.get(`${API_URL}/attendance/course/${courseId}`, { params })
+  mark: (data) => api.post('/api/attendance', data),
+  bulkMark: (data) => api.post('/api/attendance/bulk', data),
+  getStudentAttendance: (studentId, params) => api.get(`/api/attendance/student/${studentId}`, { params }),
+  getCourseAttendance: (courseId, params) => api.get(`/api/attendance/course/${courseId}`, { params })
 };
 
-// Fees API
 export const feesAPI = {
-  getAll: () => axios.get(`${API_URL}/fees`),
-  getStudentFees: (studentId) => axios.get(`${API_URL}/fees/student/${studentId}`),
-  getById: (id) => axios.get(`${API_URL}/fees/${id}`),
-  addPayment: (id, data) => axios.post(`${API_URL}/fees/${id}/payment`, data),
-  getPending: () => axios.get(`${API_URL}/fees/pending`),
-  getStatistics: () => axios.get(`${API_URL}/fees/statistics`)
+  getAll: () => api.get('/api/fees'),
+  getStudentFees: (studentId) => api.get(`/api/fees/student/${studentId}`),
+  getById: (id) => api.get(`/api/fees/${id}`),
+  addPayment: (id, data) => api.post(`/api/fees/${id}/payment`, data),
+  getPending: () => api.get('/api/fees/pending'),
+  getStatistics: () => api.get('/api/fees/statistics')
 };
 
-// Dashboard API
 export const dashboardAPI = {
-  getAdminDashboard: () => axios.get(`${API_URL}/dashboard/admin`),
-  getStudentDashboard: () => axios.get(`${API_URL}/dashboard/student`)
+  getAdminDashboard: () => api.get('/api/dashboard/admin'),
+  getStudentDashboard: () => api.get('/api/dashboard/student')
 };
-
-
