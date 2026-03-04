@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { VITE_API_URL } from '../helper';
+// import { VITE_API_URL } from '../helper';
 
 // Axios instance create karein
 const axiosInstance = axios.create({
-  baseURL: VITE_API_URL || 'http://localhost:5000', // Base URL yahan set karein
+  baseURL: import.meta.env.VITE_API_URL,
   timeout: 10000, // 10 seconds timeout
   headers: {
     'Content-Type': 'application/json',
