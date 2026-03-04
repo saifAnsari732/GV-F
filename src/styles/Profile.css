@@ -1,0 +1,530 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* { box-sizing: border-box; }
+
+.profile-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  padding: 32px 48px;
+  font-family: 'Inter', sans-serif;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .profile-container { padding: 16px; }
+}
+
+/* ─── Header ─────────────────────────────────────────── */
+.profile-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.profile-header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #a78bfa, #60a5fa, #34d399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 8px;
+}
+
+.profile-header p {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.4);
+  margin: 0;
+}
+
+/* ─── Messages ───────────────────────────────────────── */
+.success-message {
+  background: rgba(52,211,153,0.1);
+  border: 1px solid rgba(52,211,153,0.3);
+  border-left: 4px solid #34d399;
+  color: #34d399;
+  padding: 13px 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: .92rem;
+  font-weight: 500;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.error-banner {
+  background: rgba(248,113,113,0.1);
+  border: 1px solid rgba(248,113,113,0.3);
+  border-left: 4px solid #f87171;
+  color: #f87171;
+  padding: 13px 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: .92rem;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ─── Layout ─────────────────────────────────────────── */
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ─── Cards ──────────────────────────────────────────── */
+.profile-card,
+.enrolled-courses-card {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 36px;
+}
+
+/* ─── Avatar Section ─────────────────────────────────── */
+.profile-avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 28px;
+}
+
+/* Avatar wrapper — relative for camera button */
+.avatar-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.profile-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(167,139,250,0.5);
+  box-shadow: 0 0 30px rgba(167,139,250,0.25);
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-initials {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+/* Camera / edit button */
+.avatar-edit-btn {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+  border: 2px solid #1a1535;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  transition: all .25s;
+  box-shadow: 0 4px 12px rgba(124,58,237,0.5);
+}
+
+.avatar-edit-btn:hover {
+  transform: scale(1.15);
+  box-shadow: 0 6px 18px rgba(124,58,237,0.65);
+}
+
+/* Image upload confirm bar */
+.image-upload-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(167,139,250,0.12);
+  border: 1px solid rgba(167,139,250,0.3);
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: .82rem;
+  color: rgba(255,255,255,0.7);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.upload-bar-actions { display: flex; gap: 8px; }
+
+.upload-confirm-btn {
+  padding: 6px 16px;
+  background: linear-gradient(135deg, #34d399, #059669);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 700;
+  font-size: .8rem;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .2s;
+}
+
+.upload-confirm-btn:hover:not(:disabled) { transform: translateY(-1px); }
+.upload-confirm-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.upload-cancel-btn {
+  padding: 6px 12px;
+  background: rgba(248,113,113,0.15);
+  border: 1px solid rgba(248,113,113,0.3);
+  border-radius: 8px;
+  color: #f87171;
+  font-weight: 700;
+  font-size: .82rem;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .2s;
+}
+
+.upload-cancel-btn:hover { background: rgba(248,113,113,0.28); }
+
+/* Basic info below avatar */
+.profile-basic-info {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-basic-info h2 {
+  font-size: 1.5rem;
+  color: #fff;
+  font-weight: 800;
+  margin: 0;
+}
+
+.profile-email {
+  color: rgba(255,255,255,0.45);
+  font-size: .9rem;
+  margin: 0;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 5px 16px;
+  border-radius: 20px;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: .5px;
+}
+
+.role-badge.student {
+  background: rgba(96,165,250,0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(96,165,250,0.3);
+}
+
+.role-badge.admin {
+  background: rgba(251,191,36,0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(251,191,36,0.3);
+}
+
+/* ─── Detail Rows ────────────────────────────────────── */
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  transition: background .2s;
+}
+
+.detail-row:hover { background: rgba(255,255,255,0.07); }
+
+.detail-label {
+  font-weight: 600;
+  color: rgba(255,255,255,0.45);
+  font-size: .88rem;
+}
+
+.detail-value {
+  color: rgba(255,255,255,0.85);
+  font-size: .9rem;
+  font-weight: 500;
+  text-align: right;
+}
+
+.status-badge {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.status-badge.active {
+  background: rgba(52,211,153,0.15);
+  color: #34d399;
+  border: 1px solid rgba(52,211,153,0.3);
+}
+
+.status-badge.inactive {
+  background: rgba(248,113,113,0.15);
+  color: #f87171;
+  border: 1px solid rgba(248,113,113,0.3);
+}
+
+.edit-profile-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px;
+  margin-top: 8px;
+  background: rgba(167,139,250,0.15);
+  border: 1px solid rgba(167,139,250,0.35);
+  border-radius: 12px;
+  color: #a78bfa;
+  font-size: .92rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .25s;
+}
+
+.edit-profile-btn:hover {
+  background: rgba(167,139,250,0.28);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(124,58,237,0.2);
+}
+
+/* ─── Edit Form ──────────────────────────────────────── */
+.profile-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group { display: flex; flex-direction: column; gap: 7px; }
+
+.form-group label {
+  font-size: .78rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: .7px;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  font-size: .95rem;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  transition: all .25s;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: rgba(167,139,250,0.6);
+  background: rgba(255,255,255,0.1);
+  box-shadow: 0 0 0 3px rgba(167,139,250,0.15);
+}
+
+.form-group textarea { resize: vertical; min-height: 90px; }
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.save-btn {
+  flex: 2;
+  padding: 12px;
+  background: linear-gradient(135deg, #34d399, #059669);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: .92rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .25s;
+  box-shadow: 0 6px 16px rgba(52,211,153,0.25);
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(52,211,153,0.4);
+}
+
+.cancel-btn {
+  flex: 1;
+  padding: 12px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  color: rgba(255,255,255,0.6);
+  font-size: .92rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .2s;
+}
+
+.cancel-btn:hover { background: rgba(255,255,255,0.11); color: #fff; }
+
+/* ─── Enrolled Courses ───────────────────────────────── */
+.enrolled-courses-card h3 {
+  font-size: 1.1rem;
+  color: #fff;
+  font-weight: 700;
+  margin: 0 0 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.courses-list { display: flex; flex-direction: column; gap: 10px; }
+
+.course-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  transition: all .25s;
+}
+
+.course-item:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateX(4px);
+}
+
+.course-info h4 {
+  font-size: .95rem;
+  color: #fff;
+  margin: 0 0 4px;
+  font-weight: 600;
+}
+
+.course-code {
+  color: rgba(255,255,255,0.38);
+  font-size: .78rem;
+  margin: 0;
+}
+
+.enrollment-status {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.enrollment-status.active {
+  background: rgba(52,211,153,0.15);
+  color: #34d399;
+  border: 1px solid rgba(52,211,153,0.3);
+}
+
+.enrollment-status.completed {
+  background: rgba(96,165,250,0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(96,165,250,0.3);
+}
+
+/* ─── Loading / Error ────────────────────────────────── */
+.profile-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#24243e 100%);
+  gap: 14px;
+}
+
+.profile-spinner {
+  width: 44px; height: 44px;
+  border: 3px solid rgba(167,139,250,0.2);
+  border-top-color: #a78bfa;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.profile-loading p { color: rgba(255,255,255,0.45); font-family: 'Inter', sans-serif; }
+
+.profile-error {
+  text-align: center;
+  padding: 80px 20px;
+  font-size: 1.1rem;
+  color: #f87171;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#24243e 100%);
+}
+
+/* ─── Responsive ─────────────────────────────────────── */
+@media (max-width: 600px) {
+  .profile-card, .enrolled-courses-card { padding: 22px 18px; }
+  .detail-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .detail-value { text-align: left; }
+  .course-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .form-actions { flex-direction: column; }
+}
+/* Fix: initials fallback inside avatar */
+.avatar-initials-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+}
+
+/* Remove old .avatar-initials if present */
+.avatar-initials { display: none; }
