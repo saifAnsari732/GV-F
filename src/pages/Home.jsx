@@ -6,7 +6,7 @@ import {
   FaChalkboardTeacher, FaLaptopCode, FaChevronLeft, FaChevronRight,
   FaAward, FaTrophy, FaRocket, FaStar
 } from 'react-icons/fa';
-import axios from 'axios';
+import api from '../services/api';
 const Home = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -47,18 +47,19 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
   
-  const fetchCourses = async () => {
-    try {
-      // const response = await axios.get(`/api/courses`);
-      const response = await axios.get('/api/courses');
-      console.log("jhfjs",response);
-      setCourses(response.data.data);
-    } catch (error) {
-      console.error('Error fetching courses:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+const fetchCourses = async () => {
+  try {
+    const response = await api.get('/api/courses');
+    console.log("URL hit:", response.config.url);
+    console.log("BaseURL:", response.config.baseURL);
+    setCourses(response.data.data);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    console.error('Failed URL:', error.config?.baseURL + error.config?.url);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);

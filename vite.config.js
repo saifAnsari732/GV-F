@@ -8,7 +8,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:5000', // Sirf dev ke liye, production mein proxy kaam nahi karta
+        target: 'http://localhost:5000', 
         changeOrigin: true
       }
     }
