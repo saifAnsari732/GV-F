@@ -50,8 +50,6 @@ const Home = () => {
 const fetchCourses = async () => {
   try {
     const response = await api.get('/api/courses');
-    console.log("URL hit:", response.config.url);
-    console.log("BaseURL:", response.config.baseURL);
     setCourses(response.data.data);
   } catch (error) {
     console.error('Error fetching courses:', error);
@@ -101,8 +99,8 @@ const fetchCourses = async () => {
 
   const stats = [
     { icon: <FaUsers />, number: '10,000+', label: 'Students Trained', gradient: 'from-blue-500 to-indigo-600' },
-    { icon: <FaAward />, number: '500+', label: 'Courses Completed', gradient: 'from-purple-500 to-pink-600' },
-    { icon: <FaTrophy />, number: '95%', label: 'Success Rate', gradient: 'from-amber-500 to-orange-600' },
+    { icon: <FaAward />, number: '50+', label: 'Courses Completed', gradient: 'from-purple-500 to-pink-600' },
+    { icon: <FaTrophy />, number: '90%', label: 'Success Rate', gradient: 'from-amber-500 to-orange-600' },
     { icon: <FaStar />, number: '4.8/5', label: 'Student Rating', gradient: 'from-emerald-500 to-teal-600' }
   ];
 
@@ -238,12 +236,12 @@ const fetchCourses = async () => {
       </section>
 
       {/* ─── COURSES SECTION ─── */}
-      <section className="py-20 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
+      <section className="py-2 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
             <span className="inline-block text-cyan-400 font-semibold text-sm uppercase tracking-widest mb-3">Our Programs</span>
             <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4">Popular Courses</h2>
-            <p className="text-slate-400 text-lg max-w-xl mx-auto">Industry-aligned programs designed to get you hired faster</p>
+            {/* <p className="text-slate-400 text-lg max-w-xl mx-auto">Industry-aligned programs designed to get you hired faster</p> */}
           </div>
 
           {loading ? (
@@ -279,7 +277,7 @@ const fetchCourses = async () => {
                       <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors mb-1">
                         {course.courseName}
                       </h3>
-                      <p className="text-slate-400 text-xs mb-5 flex-1">Master this in-demand course</p>
+                      <p className="text-slate-400 text-xs mb-5">Master this in-demand course</p>
 
                       {/* CTA button */}
                       <div className={`flex items-center justify-between w-full px-4 py-2.5 bg-gradient-to-r ${colors.gradient} text-white text-sm font-semibold rounded-xl group-hover:shadow-lg transition-all duration-300`}>
@@ -367,7 +365,25 @@ const fetchCourses = async () => {
           </div>
         </div>
       </section>
-
+         
+          {/* ─── FLOATING RATING BUTTON ─── */}
+      
+      <Link  to="https://tinyurl.com/55bwj4bh"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed right-0 top-1/2 -translate-y-1/2 z-50 group"
+      >
+        <div className="bg-gradient-to-b from-yellow-600 to-orange-600 text-white px-1 py-1 rounded-l-2xl shadow-xl hover:px-4 transition-all duration-300 flex flex-col items-center gap-2 hover:shadow-orange-500/40 hover:shadow-2xl lg:px-3 lg:py-3">
+          {/* <span className="text-xl">⭐</span> */}
+          <span
+            className="text-md font-bold tracking-widest"
+            style={{ writingMode: 'vertical-rl', textOrientation: 'mixed', transform: 'rotate(180deg)' }}
+          >
+            Rate Us
+          </span>
+          <span className="text-xl">⭐</span>
+        </div>
+      </Link>
     </div>
   );
 };

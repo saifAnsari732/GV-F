@@ -2,11 +2,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FaUser, FaBars, FaTimes, FaGraduationCap, FaBriefcase, FaChartBar, FaSignOutAlt, FaHome, FaBook } from 'react-icons/fa';
+import { FaUser, FaBars, FaTimes, FaGraduationCap, FaBriefcase, FaChartBar, FaSignOutAlt, FaHome, FaBook, FaCertificate } from 'react-icons/fa';
 import '../styles/Navbar.css';
 
 const Navbar = () => {
-  const {isAuthenticated, isAdmin, logout } = useAuth();
+  const { isAuthenticated, isAdmin, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -92,9 +92,9 @@ const Navbar = () => {
           <span>GV Computer Center</span>
         </Link>
 
-        <button 
+        <button
           ref={toggleRef}
-          className="menu-toggle" 
+          className="menu-toggle"
           onClick={toggleMenu}
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
@@ -102,43 +102,63 @@ const Navbar = () => {
           {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        <div 
+        <div
           ref={menuRef}
           className={`navbar-menu ${menuOpen ? 'active' : ''}`}
         >
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className={`nav-link ${isActive('/') ? 'active' : ''}`}
             onClick={closeMenu}
           >
             <FaHome /> <span>Home</span>
           </Link>
-          <Link 
-            to="/courses" 
+          <Link
+            to="/courses"
             className={`nav-link ${isActive('/courses') ? 'active' : ''}`}
             onClick={closeMenu}
           >
             <FaBook /> <span>Courses</span>
           </Link>
-          <Link 
-            to="/jobs" 
+          <Link
+            to="/jobs"
             className={`nav-link ${isActive('/jobs') ? 'active' : ''}`}
             onClick={closeMenu}
           >
             <FaBriefcase /> <span>Jobs</span>
           </Link>
-
+          {/* varified  */}
+          {
+          isAdmin ? "":
+          
+          <Link
+            to="/verify-certificate"
+            className={`nav-link ${isActive('/verify-certificate') ? 'active' : ''}`}
+            onClick={closeMenu}
+          >
+            <FaCertificate /> <span>Verify</span>
+          </Link>
+}
           {isAuthenticated ? (
             <>
-              <Link 
-                to={isAdmin ? "/admin/dashboard" : "/student/dashboard"} 
+              <Link
+                to={isAdmin ? "/admin/dashboard" : "/student/dashboard"}
                 className={`nav-link ${isActive('/admin/dashboard') || isActive('/student/dashboard') ? 'active' : ''}`}
                 onClick={closeMenu}
               >
                 <FaChartBar /> <span>Dashboard</span>
               </Link>
-              <Link 
-                to="/profile" 
+              {isAdmin && (
+                <Link
+                  to="/admin/certificates"
+                  className={`nav-link ${isActive('/admin/certificates') ? 'active' : ''}`}
+                  onClick={closeMenu}
+                >
+                  <FaCertificate /> <span>Certificates</span>
+                </Link>
+              )}
+              <Link
+                to="/profile"
                 className={`nav-link ${isActive('/profile') ? 'active' : ''}`}
                 onClick={closeMenu}
               >
@@ -150,16 +170,16 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link 
-                to="/login" 
+              <Link
+                to="/login"
                 className={`nav-link ${isActive('/login') ? 'active' : ''}`}
                 onClick={closeMenu}
               >
                 <span>Login</span>
               </Link>
-              <Link 
-                to="/register" 
-                className="btn btn-primary nav-btn" 
+              <Link
+                to="/register"
+                className="btn btn-primary nav-btn"
                 onClick={closeMenu}
               >
                 <span>Register</span>
