@@ -1,9 +1,8 @@
 import axios from 'axios';
-import {VITE_API_URL} from '../helper';
+import {API_URL} from '../helper';
 
-console.log(VITE_API_URL,"jh");
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -37,4 +36,4 @@ api.interceptors.response.use(
 );
 
 export default api;
-export { VITE_API_URL };
+export { API_URL };

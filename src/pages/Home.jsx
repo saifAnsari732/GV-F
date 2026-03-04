@@ -7,7 +7,7 @@ import {
   FaAward, FaTrophy, FaRocket, FaStar
 } from 'react-icons/fa';
 import axios from 'axios';
-
+import {API_URL} from '../helper'
 const Home = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -47,12 +47,11 @@ const Home = () => {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
-
+  
   const fetchCourses = async () => {
     try {
-      // const response = await coursesAPI.getAll();
-      const response = await axios.get('/api/courses');
-      console.log("jhfjs",response.data);
+      const response = await axios.get(`/api/courses`);
+      console.log("jhfjs",response);
       setCourses(response.data.data);
     } catch (error) {
       console.error('Error fetching courses:', error);
