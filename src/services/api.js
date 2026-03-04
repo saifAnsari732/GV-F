@@ -1,50 +1,36 @@
-import api from './api';
+import axios from 'axios';
+import { API_URL } from '../helper';
 
-export const coursesAPI = {
-  getAll: () => api.get('/api/courses'),
-  getById: (id) => api.get(`/api/courses/${id}`),
-  create: (data) => api.post('/api/courses', data, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }),
-  update: (id, data) => api.put(`/api/courses/${id}`, data, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }),
-  delete: (id) => api.delete(`/api/courses/${id}`)
-};
+const api = axios.create({
+  baseURL: API_URL,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-export const jobsAPI = {
-  getAll: () => api.get('/api/jobs'),
-  getById: (id) => api.get(`/api/jobs/${id}`),
-  create: (data) => api.post('/api/jobs', data),
-  update: (id, data) => api.put(`/api/jobs/${id}`, data),
-  delete: (id) => api.delete(`/api/jobs/${id}`)
-};
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-export const studentsAPI = {
-  getAll: () => api.get('/api/students'),
-  getById: (id) => api.get(`/api/students/${id}`),
-  enroll: (id, courseId) => api.post(`/api/students/${id}/enroll`, { courseId }),
-  update: (id, data) => api.put(`/api/students/${id}`, data),
-  delete: (id) => api.delete(`/api/students/${id}`)
-};
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
 
-export const attendanceAPI = {
-  mark: (data) => api.post('/api/attendance', data),
-  bulkMark: (data) => api.post('/api/attendance/bulk', data),
-  getStudentAttendance: (studentId, params) => api.get(`/api/attendance/student/${studentId}`, { params }),
-  getCourseAttendance: (courseId, params) => api.get(`/api/attendance/course/${courseId}`, { params })
-};
-
-export const feesAPI = {
-  getAll: () => api.get('/api/fees'),
-  getStudentFees: (studentId) => api.get(`/api/fees/student/${studentId}`),
-  getById: (id) => api.get(`/api/fees/${id}`),
-  addPayment: (id, data) => api.post(`/api/fees/${id}/payment`, data),
-  getPending: () => api.get('/api/fees/pending'),
-  getStatistics: () => api.get('/api/fees/statistics')
-};
-
-export const dashboardAPI = {
-  getAdminDashboard: () => api.get('/api/dashboard/admin'),
-  getStudentDashboard: () => api.get('/api/dashboard/student')
-};
+export default api;
+export { API_URL };
