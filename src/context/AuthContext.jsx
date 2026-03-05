@@ -1,6 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useState, useEffect, useContext} from 'react';
-import axios from 'axios';
 import api from '../services/api';
 const AuthContext = createContext();
 export const useAuth= () => {
@@ -27,8 +26,8 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get('/api/auth/me');
-      // console.log("fetchuser",response.data);
+      const response = await api.get('/api/auth/me');
+
       setUser(response.data.data);
     } catch (error) {
       console.error('Error fetching user:', error);
@@ -48,7 +47,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('token', token);
       setToken(token);
       setUser(user);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
        console.log("user",user);
       return { success: true, user };
     } catch (error) {
@@ -71,7 +70,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('token', token);
       setToken(token);
       setUser(user);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       
       return { success: true, user };
     } catch (error) {
