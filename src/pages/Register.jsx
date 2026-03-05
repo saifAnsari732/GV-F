@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import { FaUser, FaEnvelope, FaLock, FaPhone, FaHome, FaCalendar, FaCamera, FaUserPlus, FaUserTag, FaBook } from 'react-icons/fa';
 import api from '../services/api';
-
+import img from '../components/image.png'
 const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -106,38 +106,17 @@ const Register = () => {
   return (
     <div className="min-h-[calc(100vh-70px)] flex items-center justify-center px-5 py-10 bg-gradient-to-br from-indigo-500/10 to-purple-700/10">
       <div className="w-full max-w-2xl animate-fadeIn">
-        <div className="bg-white rounded-2xl shadow-lg p-10">
-
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-800 mb-2">Create Account</h2>
-            <p className="text-sm text-gray-500">Join GV Computer Center today</p>
-          </div>
+        <div className="bg-white rounded-2xl shadow-lg p-4">
 
           <form onSubmit={handleSubmit}>
 
             {/* Profile Upload */}
-            <div className="flex flex-col items-center mb-8">
+            <div className="flex flex-col items-center ">
               <div className="w-28 h-28 rounded-full border-4 border-indigo-500 flex items-center justify-center overflow-hidden bg-gray-100 mb-4">
-                {preview ? (
-                  <img src={preview} alt="Profile" className="w-full h-full object-cover" />
-                ) : (
-                  <FaUser className="text-5xl text-gray-400" />
-                )}
+                  <img src={img} alt="Profile" className="w-full h-full object-cover" />
+               
               </div>
-              <label
-                htmlFor="profileImage"
-                className="inline-flex items-center gap-2 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg cursor-pointer transition duration-200 hover:-translate-y-0.5 hover:shadow-lg"
-              >
-                <FaCamera /> Upload Photo
-              </label>
-              <input
-                type="file"
-                id="profileImage"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-              />
+             
             </div>
 
             {/* Row 1: Name & Email */}

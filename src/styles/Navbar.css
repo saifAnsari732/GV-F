@@ -44,7 +44,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 5px 10px;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -237,7 +237,7 @@
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
   .navbar-container {
-    padding: 12px 16px;
+    padding: 4px 16px;
   }
 
   .menu-toggle {

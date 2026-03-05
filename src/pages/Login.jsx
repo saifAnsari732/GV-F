@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import { FaEnvelope, FaLock, FaSignInAlt } from 'react-icons/fa';
-
+import img from '../components/image.png'
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -43,12 +43,17 @@ const Login = () => {
   return (
     <div className="min-h-[calc(100vh-70px)] flex items-center justify-center px-5 py-10 bg-gradient-to-br from-indigo-500/10 to-purple-700/10">
       <div className="w-full max-w-md animate-fadeIn">
+        <div className="flex flex-col items-center ">
+          <div className="w-28 h-28 rounded-full border-4 border-indigo-500 flex items-center justify-center overflow-hidden bg-gray-100 ">
+            <img src={img} alt="Profile" className="w-full h-full object-cover" />
+          </div>
+
+        </div>
         <div className="bg-white rounded-2xl shadow-lg p-10">
 
           {/* Header */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-4">
             <h2 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h2>
-            <p className="text-sm text-gray-500">Login to access your account</p>
           </div>
 
           {/* Form */}
