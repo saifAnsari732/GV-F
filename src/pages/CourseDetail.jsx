@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -11,11 +12,12 @@ const CourseDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => { fetchCourseDetail(); }, [id]);
 
+  
   const fetchCourseDetail = async () => {
     try {
       const response = await axios.get(`/api/courses/${id}`);
+      console.log("cors detl",response.data);
       if (response.data.success) setCourse(response.data.data);
       setLoading(false);
     } catch (err) {
@@ -23,6 +25,7 @@ const CourseDetail = () => {
       setLoading(false);
     }
   };
+  useEffect(() => { fetchCourseDetail() }, [id]);
 
   if (loading) return (
     <div className="cd-page">
