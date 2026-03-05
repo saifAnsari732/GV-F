@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import api from '../../services/api';
 
 const FeeInformation = () => {
   const [fees, setFees] = useState([]);
@@ -23,7 +23,7 @@ const FeeInformation = () => {
   const fetchFeeData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const studentResponse = await axios.get('/api/auth/me', {
+      const studentResponse = await api.get('/api/auth/me', {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -31,7 +31,7 @@ const FeeInformation = () => {
         const student = studentResponse.data.data;
         setStudentInfo(student);
         const studentId = student._id;
-        const feeResponse = await axios.get(`/api/fees/student/${studentId}`, {
+        const feeResponse = await api.get(`/api/fees/student/${studentId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 

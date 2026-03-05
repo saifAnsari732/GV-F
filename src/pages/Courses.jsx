@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { FaClock, FaUsers, FaArrowRight, FaBookOpen, FaSearch } from 'react-icons/fa';
 import '../styles/Courses.css';
+import api from '../services/api';
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -15,7 +15,7 @@ const Courses = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get('/api/courses');
+      const response = await api.get('/api/courses');
       console.log("object",response.data.data);
       if (response.data.success) setCourses(response.data.data);
       setLoading(false);

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/CourseManagement.css';
+import api from '../../services/api';
 
 const AdminCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -32,7 +32,7 @@ const AdminCourses = () => {
   const fetchCourses = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/courses', {
+      const response = await api.get('/api/courses', {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data.success) {
@@ -173,7 +173,7 @@ const AdminCourses = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.delete(`/api/courses/${courseId}`, {
+      const response = await api.delete(`/api/courses/${courseId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -223,14 +223,14 @@ const AdminCourses = () => {
 
       let response;
       if (modalMode === 'edit' && selectedCourse) {
-        response = await axios.put(`/api/courses/${selectedCourse._id}`, formDataToSend, {
+        response = await api.put(`/api/courses/${selectedCourse._id}`, formDataToSend, {
           headers: { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
           }
         });
       } else {
-        response = await axios.post('/api/courses', formDataToSend, {
+        response = await api.post('/api/courses', formDataToSend, {
           headers: { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'

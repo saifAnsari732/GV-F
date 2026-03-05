@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import toast from 'react-hot-toast';
+import api from '../../services/api';
 
 const AdminJobs = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const AdminJobs = () => {
 
   const fetchJobs = async () => {
     try {
-      const response = await axios.get('/api/jobs');
+      const response = await api.get('/api/jobs');
       setJobs(response.data.data);
     } catch (error) {
       toast.error('Failed to fetch jobs');
@@ -60,10 +60,10 @@ const AdminJobs = () => {
 
     try {
       if (editingJob) {
-        await axios.put(`/api/jobs/${editingJob._id}`, jobData);
+        await api.put(`/api/jobs/${editingJob._id}`, jobData);
         toast.success('Job updated successfully');
       } else {
-        await axios.post('/api/jobs', jobData);
+        await api.post('/api/jobs', jobData);
         toast.success('Job created successfully');
       }
 
@@ -77,7 +77,7 @@ const AdminJobs = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this job?')) {
       try {
-        await axios.delete(`/api/jobs/${id}`);
+        await api.delete(`/api/jobs/${id}`);
         toast.success('Job deleted successfully');
         fetchJobs();
       } catch (error) {

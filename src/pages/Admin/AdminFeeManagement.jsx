@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import '../../styles/AdminFeeManagement.css';
+import api from '../../services/api';
 const AdminFeeManagement = () => {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
@@ -50,7 +50,7 @@ const AdminFeeManagement = () => {
       const token = localStorage.getItem('token');
       
       // Fetch all students
-      const studentsResponse = await axios.get('/api/students', {
+      const studentsResponse = await api.get('/api/students', {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -59,7 +59,7 @@ const AdminFeeManagement = () => {
         setStudents(studentsData);
         
         // Fetch all fee records
-        const feesResponse = await axios.get('/api/fees', {
+        const feesResponse = await api.get('/api/fees', {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log("fee response:", feesResponse.data);
@@ -82,7 +82,7 @@ const AdminFeeManagement = () => {
   const fetchCourses = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/courses', {
+      const response = await api.get('/api/courses', {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data.success) {
@@ -141,7 +141,7 @@ const AdminFeeManagement = () => {
 
       const token = localStorage.getItem('token');
       
-      const response = await axios.post(`/api/fees/${feeId}/payment`, {
+      const response = await api.post(`/api/fees/${feeId}/payment`, {
         amount: parseFloat(paymentData.amount),
         paymentMode: paymentData.paymentMode,
         transactionId: paymentData.transactionId || undefined,
@@ -210,7 +210,7 @@ const AdminFeeManagement = () => {
 
       console.log('Creating fee record with data:', feeData);
 
-      const response = await axios.post('/api/fees', feeData, {
+      const response = await api.post('/api/fees', feeData, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

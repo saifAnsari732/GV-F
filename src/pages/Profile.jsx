@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import '../styles/Profile.css';
+import api from '../services/api';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -19,7 +19,7 @@ const Profile = () => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/auth/me', {
+      const response = await api.get('/api/auth/me', {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data.success) {
@@ -62,7 +62,7 @@ const Profile = () => {
       const token = localStorage.getItem('token');
       const fd = new FormData();
       fd.append('profileImage', imageFile);
-      const response = await axios.put('/api/auth/profile/image', fd, {
+      const response = await api.put('/api/auth/profile/image', fd, {
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
       });
       if (response.data.success) {
@@ -83,7 +83,7 @@ const Profile = () => {
     setMessage('');
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.put('/api/auth/profile', formData, {
+      const response = await api.put('/api/auth/profile', formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data.success) {

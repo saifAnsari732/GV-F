@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import ApplyModal from '../components/ApplyModal';
@@ -11,6 +10,7 @@ import {
   FaClock, FaRocket, FaExclamationTriangle
 } from 'react-icons/fa';
 import '../styles/JobDetail.css';
+import api from '../services/api';
 
 const JobDetail = () => {
   const { id } = useParams();
@@ -30,7 +30,7 @@ const JobDetail = () => {
 
   const fetchJobDetail = async () => {
     try {
-      const response = await axios.get(`/api/jobs/${id}`);
+      const response = await api.get(`/api/jobs/${id}`);
       if (response.data.success) setJob(response.data.data);
       setLoading(false);
     } catch (err) {
@@ -41,9 +41,11 @@ const JobDetail = () => {
 
   const checkApplicationStatus = async () => {
     try {
-      const response = await axios.get('/api/applications/my-applications');
+      const response = await api.get('/api/applications/my-applications');
       setHasApplied(response.data.data.some(app => app.jobId._id === id));
-    } catch {}
+    } catch {
+      console.log("object");
+    }
   };
 
   const handleApplyClick = () => {

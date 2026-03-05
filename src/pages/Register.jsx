@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import { FaUser, FaEnvelope, FaLock, FaPhone, FaHome, FaCalendar, FaCamera, FaUserPlus, FaUserTag, FaBook } from 'react-icons/fa';
-import axios from 'axios';
+import api from '../services/api';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -32,7 +32,7 @@ const Register = () => {
     setLoadingCourses(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/courses', {
+      const response = await api.get('/api/courses', {
         headers: token ? { Authorization: `Bearer ${token}` } : {}
       });
       console.log("object", response.courseName);

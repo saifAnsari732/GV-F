@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import {
   FaBookOpen, FaChartBar, FaCheckCircle, FaClock,
   FaUser, FaBriefcase, FaRupeeSign, FaArrowRight,
   FaGraduationCap, FaExclamationTriangle
 } from 'react-icons/fa';
 import '../../styles/StudentDashboard.css';
+import api from '../../services/api';
 
 const StudentDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
@@ -18,7 +18,7 @@ const StudentDashboard = () => {
   const fetchDashboardData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/dashboard/student', {
+      const response = await api.get('/api/dashboard/student', {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data.success) setDashboardData(response.data.data);

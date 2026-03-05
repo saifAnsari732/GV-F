@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import api from '../services/api';
 
 const ApplyModal = ({ job, user, onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
@@ -48,7 +48,7 @@ const ApplyModal = ({ job, user, onClose, onSuccess }) => {
     }
     setLoading(true);
     try {
-      const response = await axios.post('/api/applications/apply', {
+      const response = await api.post('/api/applications/apply', {
         jobId: job._id,
         ...formData
       });

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import '../../styles/AttendanceManagement.css';
+import api from '../../services/api';
 
 const SimpleAttendance = () => {
   const [courses, setCourses] = useState([]);
@@ -27,7 +27,7 @@ const SimpleAttendance = () => {
   const fetchCourses = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/courses', {
+      const response = await api.get('/api/courses', {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log("courses", response.data);
@@ -51,7 +51,7 @@ const SimpleAttendance = () => {
       console.log("Fetching students for course:", selectedCourse);
       
       // Fetch all students (since API might not be filtering properly)
-      const response = await axios.get('/api/students', {
+      const response = await api.get('/api/students', {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -85,7 +85,7 @@ const SimpleAttendance = () => {
         
         // Fetch existing attendance for selected date
         try {
-          const attendanceResponse = await axios.get(
+          const attendanceResponse = await api.get(
             `/api/attendance/course/${selectedCourse}?date=${selectedDate}`,
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -227,7 +227,7 @@ const SimpleAttendance = () => {
           remarks: ''
         }));
 
-      const response = await axios.post(
+      const response = await api.post(
         '/api/attendance/bulk',
         {
           courseId: selectedCourse,

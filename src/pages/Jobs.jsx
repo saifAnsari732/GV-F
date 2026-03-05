@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { FaMapMarkerAlt, FaBriefcase, FaRupeeSign, FaClock, FaCalendarAlt, FaArrowRight, FaSearch, FaExclamationTriangle } from 'react-icons/fa';
 import '../styles/Jobs.css';
+import api from '../services/api';
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -15,7 +15,7 @@ const Jobs = () => {
 
   const fetchJobs = async () => {
     try {
-      const response = await axios.get('/api/jobs');
+      const response = await api.get('/api/jobs');
       if (response.data.success) setJobs(response.data.data);
       setLoading(false);
     } catch (err) {

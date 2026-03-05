@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import api from '../../services/api';
 
 const AdminApplications = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const AdminApplications = () => {
     const token=localStorage.getItem('token')
     console.log("ssss",token);
     try {
-      const response = await axios.get('/api/applications/admin/all',{
+      const response = await api.get('/api/applications/admin/all',{
         headers: { Authorization: `Bearer ${token}` }
       
       });
@@ -58,7 +58,7 @@ const AdminApplications = () => {
 
   const handleStatusUpdate = async (applicationId, newStatus) => {
     try {
-      const response = await axios.put(`/api/applications/admin/${applicationId}/status`, {
+      const response = await api.put(`/api/applications/admin/${applicationId}/status`, {
         status: newStatus
       });
       
