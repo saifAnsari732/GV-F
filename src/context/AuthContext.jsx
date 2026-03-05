@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useState, useEffect, useContext} from 'react';
 import axios from 'axios';
+import api from '../services/api';
 const AuthContext = createContext();
 export const useAuth= () => {
   const context = useContext(AuthContext);
@@ -39,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('/api/auth/login', { email, password });
+      const response = await api.post('/api/auth/login', { email, password });
       console.log("logn",response.data);
      
       const { token, user } = response.data.data;
@@ -61,7 +62,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (formData) => {
     try {
-      const response = await axios.post('/api/auth/register', formData, {
+      const response = await api.post('/api/auth/register', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -85,7 +86,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
     setToken(null);
     setUser(null);
-    delete axios.defaults.headers.common['Authorization'];
+    delete api.defaults.headers.common['Authorization'];
   };
 
   const updateUser = (updatedUser) => {
