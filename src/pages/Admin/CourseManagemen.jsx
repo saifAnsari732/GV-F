@@ -98,7 +98,9 @@ const AdminCourses = () => {
         : await api.post('/api/courses', fd, { headers:{ Authorization:`Bearer ${token}`,'Content-Type':'multipart/form-data' } });
       if (res.data.success) {
         toast.update(t,{render:modalMode==='edit'?'Course updated successfully!':'Course created successfully!',type:'success',isLoading:false,autoClose:3000});
-        setShowModal(false); resetForm(); fetchCourses();
+        setShowModal(false); 
+        resetForm();
+         fetchCourses();
       }
     } catch (err) {
       toast.update(t,{render:err.response?.data?.message||'Failed to save course',type:'error',isLoading:false,autoClose:3000});
