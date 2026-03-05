@@ -2,8 +2,28 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import '../../styles/AdminFeeManagement.css';
 import api from '../../services/api';
+
+const BG = 'linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#24243e 100%)';
+const inputCls = "w-full px-3.5 py-2.5 bg-white/[0.06] border border-white/[0.12] rounded-lg text-sm text-white font-['Inter',sans-serif] placeholder-white/30 transition-all duration-200 focus:outline-none focus:border-[rgba(167,139,250,0.5)] focus:shadow-[0_0_0_3px_rgba(167,139,250,0.1)]";
+const selectCls = inputCls + " cursor-pointer";
+
+const statusConfig = {
+  paid:    { bg: 'bg-[rgba(52,211,153,0.15)]',  text: 'text-[#34d399]',  border: 'border-[rgba(52,211,153,0.3)]',  label: '✓ Fully Paid' },
+  partial: { bg: 'bg-[rgba(251,191,36,0.15)]',  text: 'text-[#fbbf24]',  border: 'border-[rgba(251,191,36,0.3)]',  label: '◑ Partial'    },
+  pending: { bg: 'bg-[rgba(248,113,113,0.15)]', text: 'text-[#f87171]',  border: 'border-[rgba(248,113,113,0.3)]', label: '○ Pending'    },
+  'no-fees':{ bg: 'bg-white/[0.06]',            text: 'text-white/45',   border: 'border-white/10',                label: '— No Fees'    },
+};
+
+const StatusBadge = ({ status }) => {
+  const c = statusConfig[status] || statusConfig['no-fees'];
+  return (
+    <span className={`inline-block px-3 py-0.5 rounded-full text-[.75rem] font-bold whitespace-nowrap border ${c.bg} ${c.text} ${c.border}`}>
+      {c.label}
+    </span>
+  );
+};
+
 const AdminFeeManagement = () => {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
@@ -15,460 +35,234 @@ const AdminFeeManagement = () => {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [paymentData, setPaymentData] = useState({
-    amount: '',
-    paymentMode: 'Cash',
-    transactionId: '',
-    remarks: ''
-  });
-  const [createFeeData, setCreateFeeData] = useState({
-    studentId: '',
-    courseId: '',
-    totalFees: '',
-    paidAmount: '',
-    paymentMode: 'Cash',
-    transactionId: '',
-    remarks: ''
-  });
-  const [statistics, setStatistics] = useState({
-    totalFees: 0,
-    totalPaid: 0, 
-    totalPending: 0,
-    totalStudents: 0,
-    fullyPaid: 0,
-    partiallyPaid: 0,
-    pending: 0
-  });
+  const [paymentData, setPaymentData] = useState({ amount: '', paymentMode: 'Cash', transactionId: '', remarks: '' });
+  const [createFeeData, setCreateFeeData] = useState({ studentId: '', courseId: '', totalFees: '', paidAmount: '', paymentMode: 'Cash', transactionId: '', remarks: '' });
+  const [statistics, setStatistics] = useState({ totalFees: 0, totalPaid: 0, totalPending: 0, totalStudents: 0, fullyPaid: 0, partiallyPaid: 0, pending: 0 });
 
-  useEffect(() => {
-    fetchData();
-    fetchCourses();
-  }, []);
+  useEffect(() => { fetchData(); fetchCourses(); }, []);
 
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('token');
-      
-      // Fetch all students
-      const studentsResponse = await api.get('/api/students', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
-      if (studentsResponse.data.success) {
-        const studentsData = studentsResponse.data.data;
-        setStudents(studentsData);
-        
-        // Fetch all fee records
-        const feesResponse = await api.get('/api/fees', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        console.log("fee response:", feesResponse.data);
-        
-        if (feesResponse.data.success) {
-          const feesData = feesResponse.data.data;
-          console.log("fees data:", feesData);
-          setFees(feesData);
-          calculateStatistics(feesData, studentsData);
-        }
+      const studentsRes = await api.get('/api/students', { headers: { Authorization: `Bearer ${token}` } });
+      if (studentsRes.data.success) {
+        const sd = studentsRes.data.data;
+        setStudents(sd);
+        const feesRes = await api.get('/api/fees', { headers: { Authorization: `Bearer ${token}` } });
+        if (feesRes.data.success) { setFees(feesRes.data.data); calculateStatistics(feesRes.data.data, sd); }
       }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      toast.error('Failed to fetch data');
-    } finally {
-      setLoading(false);
-    }
+    } catch (e) { toast.error('Failed to fetch data'); }
+    finally { setLoading(false); }
   };
 
   const fetchCourses = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await api.get('/api/courses', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (response.data.success) {
-        setCourses(response.data.data);
-      }
-    } catch (error) {
-      console.error('Error fetching courses:', error);
-    }
+      const res = await api.get('/api/courses', { headers: { Authorization: `Bearer ${token}` } });
+      if (res.data.success) setCourses(res.data.data);
+    } catch (e) { console.error(e); }
   };
 
   const calculateStatistics = (feesData, studentsData) => {
-    // Calculate totals from fee records
-    let totalFees = 0;
-    let totalPaid = 0;
-    let totalPending = 0;
-    
-    feesData.forEach(fee => {
-      // Safely add amounts, ensuring they're numbers
-      totalFees += Number(fee.totalFees) || 0;
-      totalPaid += Number(fee.paidAmount) || 0;
-      totalPending += Number(fee.pendingAmount) || 0;
-    });
-
-    // Count statuses
-    const fullyPaid = feesData.filter(fee => fee.status === 'paid').length;
-    const partiallyPaid = feesData.filter(fee => fee.status === 'partial').length;
-    const pending = feesData.filter(fee => fee.status === 'pending').length;
-
-    console.log('Calculated statistics:', {
-      totalFees,
-      totalPaid,
-      totalPending,
-      fullyPaid,
-      partiallyPaid,
-      pending
-    });
-
-    setStatistics({
-      totalFees,
-      totalPaid,
-      totalPending,
-      totalStudents: studentsData.length,
-      fullyPaid,
-      partiallyPaid,
-      pending
-    });
+    let totalFees = 0, totalPaid = 0, totalPending = 0;
+    feesData.forEach(f => { totalFees += Number(f.totalFees)||0; totalPaid += Number(f.paidAmount)||0; totalPending += Number(f.pendingAmount)||0; });
+    setStatistics({ totalFees, totalPaid, totalPending, totalStudents: studentsData.length,
+      fullyPaid: feesData.filter(f=>f.status==='paid').length,
+      partiallyPaid: feesData.filter(f=>f.status==='partial').length,
+      pending: feesData.filter(f=>f.status==='pending').length });
   };
 
   const handleAddPayment = async (feeId) => {
+    if (!paymentData.amount || paymentData.amount <= 0) { toast.error('Please enter a valid amount'); return; }
     try {
-      // Validate amount
-      if (!paymentData.amount || paymentData.amount <= 0) {
-        toast.error('Please enter a valid amount');
-        return;
-      }
-
       const token = localStorage.getItem('token');
-      
-      const response = await api.post(`/api/fees/${feeId}/payment`, {
-        amount: parseFloat(paymentData.amount),
-        paymentMode: paymentData.paymentMode,
-        transactionId: paymentData.transactionId || undefined,
-        remarks: paymentData.remarks || undefined
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      if (response.data.success) {
-        toast.success('Payment added successfully');
-        setShowPaymentModal(false);
-        setPaymentData({
-          amount: '',
-          paymentMode: 'Cash',
-          transactionId: '',
-          remarks: ''
-        });
-        fetchData(); // Refresh data
-      }
-    } catch (error) {
-      console.error('Error adding payment:', error);
-      toast.error(error.response?.data?.message || 'Failed to add payment');
-    }
+      const res = await api.post(`/api/fees/${feeId}/payment`,
+        { amount: parseFloat(paymentData.amount), paymentMode: paymentData.paymentMode, transactionId: paymentData.transactionId||undefined, remarks: paymentData.remarks||undefined },
+        { headers: { Authorization: `Bearer ${token}` } });
+      if (res.data.success) { toast.success('Payment added successfully'); setShowPaymentModal(false); setPaymentData({ amount:'', paymentMode:'Cash', transactionId:'', remarks:'' }); fetchData(); }
+    } catch (e) { toast.error(e.response?.data?.message||'Failed to add payment'); }
   };
 
   const handleCreateFee = async () => {
-    try {
-      // Validate form
-      if (!createFeeData.studentId || !createFeeData.courseId || !createFeeData.totalFees) {
-        toast.error('Please fill all required fields');
-        return;
-      }
-
-      // Validate total fees
-      const totalFees = parseFloat(createFeeData.totalFees);
-      if (isNaN(totalFees) || totalFees <= 0) {
-        toast.error('Please enter a valid total fees amount');
-        return;
-      }
-
-      // Validate paid amount if provided
-      let paidAmount = 0;
-      if (createFeeData.paidAmount) {
-        paidAmount = parseFloat(createFeeData.paidAmount);
-        if (isNaN(paidAmount) || paidAmount < 0) {
-          toast.error('Please enter a valid paid amount');
-          return;
-        }
-        if (paidAmount > totalFees) {
-          toast.error('Paid amount cannot be greater than total fees');
-          return;
-        }
-      }
-
-      const token = localStorage.getItem('token');
-      
-      const feeData = {
-        studentId: createFeeData.studentId,
-        courseId: createFeeData.courseId,
-        totalFees: totalFees,
-        paidAmount: paidAmount,
-        paymentMode: paidAmount > 0 ? createFeeData.paymentMode : undefined,
-        transactionId: paidAmount > 0 ? createFeeData.transactionId : undefined,
-        remarks: createFeeData.remarks || undefined
-      };
-
-      console.log('Creating fee record with data:', feeData);
-
-      const response = await api.post('/api/fees', feeData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      if (response.data.success) {
-        toast.success('Fee record created successfully');
-        setShowCreateModal(false);
-        setCreateFeeData({
-          studentId: '',
-          courseId: '',
-          totalFees: '',
-          paidAmount: '',
-          paymentMode: 'Cash',
-          transactionId: '',
-          remarks: ''
-        });
-        fetchData(); // Refresh data
-      }
-    } catch (error) {
-      console.error('Error creating fee record:', error);
-      toast.error(error.response?.data?.message || 'Failed to create fee record');
+    if (!createFeeData.studentId||!createFeeData.courseId||!createFeeData.totalFees) { toast.error('Please fill all required fields'); return; }
+    const totalFees = parseFloat(createFeeData.totalFees);
+    if (isNaN(totalFees)||totalFees<=0) { toast.error('Please enter a valid total fees amount'); return; }
+    let paidAmount = 0;
+    if (createFeeData.paidAmount) {
+      paidAmount = parseFloat(createFeeData.paidAmount);
+      if (isNaN(paidAmount)||paidAmount<0) { toast.error('Please enter a valid paid amount'); return; }
+      if (paidAmount>totalFees) { toast.error('Paid amount cannot be greater than total fees'); return; }
     }
+    try {
+      const token = localStorage.getItem('token');
+      const res = await api.post('/api/fees', { studentId: createFeeData.studentId, courseId: createFeeData.courseId, totalFees, paidAmount, paymentMode: paidAmount>0?createFeeData.paymentMode:undefined, transactionId: paidAmount>0?createFeeData.transactionId:undefined, remarks: createFeeData.remarks||undefined }, { headers: { Authorization: `Bearer ${token}` } });
+      if (res.data.success) { toast.success('Fee record created successfully'); setShowCreateModal(false); setCreateFeeData({ studentId:'', courseId:'', totalFees:'', paidAmount:'', paymentMode:'Cash', transactionId:'', remarks:'' }); fetchData(); }
+    } catch (e) { toast.error(e.response?.data?.message||'Failed to create fee record'); }
   };
 
-  const getStudentFees = (studentId) => {
-    return fees.filter(fee => {
-      // Handle both populated and unpopulated student fields
-      const feeStudentId = fee.student?._id || fee.student;
-      return feeStudentId === studentId;
-    });
-  };
-
-  const getStudentTotalFees = (studentId) => {
-    const studentFees = getStudentFees(studentId);
-    return studentFees.reduce((sum, fee) => sum + (Number(fee.totalFees) || 0), 0);
-  };
-
-  const getStudentPaidFees = (studentId) => {
-    const studentFees = getStudentFees(studentId);
-    return studentFees.reduce((sum, fee) => sum + (Number(fee.paidAmount) || 0), 0);
-  };
-
-  const getStudentPendingFees = (studentId) => {
-    const studentFees = getStudentFees(studentId);
-    return studentFees.reduce((sum, fee) => sum + (Number(fee.pendingAmount) || 0), 0);
-  };
-
-  const getStudentFeeStatus = (studentId) => {
-    const studentFees = getStudentFees(studentId);
-    if (studentFees.length === 0) return 'no-fees';
-    
-    const allPaid = studentFees.every(fee => fee.status === 'paid');
-    const anyPending = studentFees.some(fee => fee.status === 'pending');
-    
-    if (allPaid) return 'paid';
-    if (anyPending) return 'pending';
+  const getStudentFees = (id) => fees.filter(f => (f.student?._id||f.student)===id);
+  const getStudentTotalFees = (id) => getStudentFees(id).reduce((s,f)=>s+(Number(f.totalFees)||0),0);
+  const getStudentPaidFees  = (id) => getStudentFees(id).reduce((s,f)=>s+(Number(f.paidAmount)||0),0);
+  const getStudentPendingFees=(id) => getStudentFees(id).reduce((s,f)=>s+(Number(f.pendingAmount)||0),0);
+  const getStudentFeeStatus = (id) => {
+    const sf = getStudentFees(id);
+    if (!sf.length) return 'no-fees';
+    if (sf.every(f=>f.status==='paid')) return 'paid';
+    if (sf.some(f=>f.status==='pending')) return 'pending';
     return 'partial';
   };
 
-  const getStatusBadge = (status) => {
-  const config = {
-    'paid':    { bg: 'bg-green-100',  text: 'text-green-800',  label: '✓ Fully Paid' },
-    'partial': { bg: 'bg-yellow-100', text: 'text-yellow-800', label: '◑ Partial'    },
-    'pending': { bg: 'bg-red-100',    text: 'text-red-800',    label: '○ Pending'    },
-    'no-fees': { bg: 'bg-gray-100',   text: 'text-gray-800',   label: '— No Fees'    }
-  };
-  const { bg, text, label } = config[status] || config['no-fees'];
-  return <span className={`status-badge ${bg} ${text}`}>{label}</span>;
-};
-
-  const formatCurrency = (amount) => {
-    if (amount === undefined || amount === null || isNaN(amount)) return '₹0';
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      minimumFractionDigits: 0
-    }).format(amount);
+  const formatCurrency = (v) => {
+    if (v===undefined||v===null||isNaN(v)) return '₹0';
+    return new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',minimumFractionDigits:0}).format(v);
   };
 
-  const filteredStudents = students.filter(student => {
-    const matchesSearch = student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         student.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         student.phone?.includes(searchTerm);
-    
-    if (statusFilter === 'all') return matchesSearch;
-    
-    const studentStatus = getStudentFeeStatus(student._id);
-    return matchesSearch && studentStatus === statusFilter;
+  const filteredStudents = students.filter(s => {
+    const match = s.name?.toLowerCase().includes(searchTerm.toLowerCase()) || s.email?.toLowerCase().includes(searchTerm.toLowerCase()) || s.phone?.includes(searchTerm);
+    return statusFilter==='all' ? match : match && getStudentFeeStatus(s._id)===statusFilter;
   });
 
-  if (loading) {
-    return (
-      <div className="fee-loading-container">
-        <div className="fee-loading-spinner"></div>
-        <p>Loading fee management data...</p>
-      </div>
-    );
-  }
+  const statCards = [
+    { label:'Total Fees',     value: formatCurrency(statistics.totalFees),    icon:'💰', bar:'linear-gradient(180deg,#a78bfa,#7c3aed)' },
+    { label:'Total Paid',     value: formatCurrency(statistics.totalPaid),     icon:'✅', bar:'linear-gradient(180deg,#34d399,#059669)' },
+    { label:'Total Pending',  value: formatCurrency(statistics.totalPending),  icon:'⏳', bar:'linear-gradient(180deg,#f87171,#dc2626)' },
+    { label:'Total Students', value: statistics.totalStudents,                 icon:'👥', bar:'linear-gradient(180deg,#60a5fa,#2563eb)' },
+  ];
+
+  if (loading) return (
+    <div className="min-h-screen flex flex-col items-center justify-center font-['Inter',sans-serif]" style={{ background: BG }}>
+      <div className="w-12 h-12 rounded-full border-[3px] border-[rgba(167,139,250,0.2)] border-t-[#a78bfa] animate-spin mb-4" />
+      <p className="text-white/50 text-base">Loading fee management data...</p>
+    </div>
+  );
+
+  const paymentModes = ['Cash','Online','Card','UPI','Cheque'];
 
   return (
-    <div className="admin-fee-container">
-      {/* Header */}
-      <div className="admin-fee-header">
-        <div className="header-content">
-          <h1>Fee Management</h1>
-          <p>Manage student fees and payments</p>
+    <div className="min-h-screen px-12 py-8 max-md:px-4 font-['Inter',sans-serif]" style={{ background: BG }}>
+
+      {/* ── Header ── */}
+      <div className="flex flex-wrap justify-between items-center gap-4 mb-8">
+        <div>
+          <h1 className="text-[2.4rem] font-extrabold m-0 mb-1.5"
+            style={{ background:'linear-gradient(90deg,#a78bfa,#60a5fa,#34d399)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
+            Fee Management
+          </h1>
+          <p className="text-base text-white/45 m-0">Manage student fees and payments</p>
         </div>
-        <div className="header-buttons">
-          <button 
-            onClick={() => setShowCreateModal(true)}
-            className="create-btn"
-          >
+        <div className="flex gap-3 flex-wrap max-md:w-full max-md:flex-col">
+          <button onClick={() => setShowCreateModal(true)}
+            className="px-6 py-3 rounded-xl text-white font-bold text-[.9rem] border-none cursor-pointer transition-all duration-250 hover:-translate-y-[3px] hover:shadow-[0_12px_30px_rgba(52,211,153,0.45)] max-md:w-full max-md:text-center"
+            style={{ background:'linear-gradient(135deg,#34d399,#059669)', boxShadow:'0 8px 20px rgba(52,211,153,0.3)' }}>
             + Create Fee Record
           </button>
-          <button 
-            onClick={() => navigate('/admin/dashboard')}
-            className="back-btn"
-          >
+          <button onClick={() => navigate('/admin/dashboard')}
+            className="px-6 py-3 rounded-xl text-white/80 font-semibold text-[.9rem] cursor-pointer backdrop-blur-[10px] border border-white/15 transition-all duration-250 hover:bg-white/[0.12] hover:text-white hover:-translate-y-0.5 max-md:w-full max-md:text-center"
+            style={{ background:'rgba(255,255,255,0.06)' }}>
             ← Back to Dashboard
           </button>
         </div>
       </div>
 
-      {/* Statistics Cards */}
-      <div className="stats-grid">
-        <div className="stat-card total">
-          <div className="stat-icon">💰</div>
-          <div className="stat-details">
-            <h3>Total Fees</h3>
-            <p className="stat-value">{formatCurrency(statistics.totalFees)}</p>
+      {/* ── Stats ── */}
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-5 mb-6">
+        {statCards.map((s, i) => (
+          <div key={i} className="flex items-center gap-4 px-6 py-[22px] rounded-[20px] border border-white/10 backdrop-blur-xl relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] hover:border-white/[0.18]"
+            style={{ background:'rgba(255,255,255,0.06)' }}>
+            <div className="absolute top-0 left-0 w-1 h-full rounded-l-[20px]" style={{ background: s.bar }} />
+            <div className="text-[2rem] shrink-0">{s.icon}</div>
+            <div>
+              <h3 className="text-[.72rem] text-white/45 m-0 mb-1.5 font-semibold uppercase tracking-[1px]">{s.label}</h3>
+              <p className="text-[1.7rem] text-white font-extrabold m-0 leading-none">{s.value}</p>
+            </div>
           </div>
-        </div>
-        
-        <div className="stat-card paid">
-          <div className="stat-icon">✅</div>
-          <div className="stat-details">
-            <h3>Total Paid</h3>
-            <p className="stat-value">{formatCurrency(statistics.totalPaid)}</p>
-          </div>
-        </div>
-        
-        <div className="stat-card pending">
-          <div className="stat-icon">⏳</div>
-          <div className="stat-details">
-            <h3>Total Pending</h3>
-            <p className="stat-value">{formatCurrency(statistics.totalPending)}</p>
-          </div>
-        </div>
-        
-        <div className="stat-card students">
-          <div className="stat-icon">👥</div>
-          <div className="stat-details">
-            <h3>Total Students</h3>
-            <p className="stat-value">{statistics.totalStudents}</p>
-          </div>
-        </div>
+        ))}
       </div>
 
-      {/* Status Summary */}
-      <div className="status-summary">
-        <div className="summary-item">
-          <span className="dot green"></span>
-          <span>Fully Paid: {statistics.fullyPaid}</span>
-        </div>
-        <div className="summary-item">
-          <span className="dot yellow"></span>
-          <span>Partial: {statistics.partiallyPaid}</span>
-        </div>
-        <div className="summary-item">
-          <span className="dot red"></span>
-          <span>Pending: {statistics.pending}</span>
-        </div>
+      {/* ── Status Summary ── */}
+      <div className="flex flex-wrap gap-6 max-sm:gap-3.5 bg-white/[0.05] border border-white/[0.08] px-6 py-3.5 rounded-2xl mb-6 backdrop-blur-[10px]">
+        {[
+          { dot:'bg-[#34d399] shadow-[0_0_6px_rgba(52,211,153,0.6)]',   label:`Fully Paid: ${statistics.fullyPaid}` },
+          { dot:'bg-[#fbbf24] shadow-[0_0_6px_rgba(251,191,36,0.6)]',   label:`Partial: ${statistics.partiallyPaid}` },
+          { dot:'bg-[#f87171] shadow-[0_0_6px_rgba(248,113,113,0.6)]',  label:`Pending: ${statistics.pending}` },
+        ].map((s,i) => (
+          <div key={i} className="flex items-center gap-2 text-white/65 text-[.88rem] font-medium">
+            <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${s.dot}`} />
+            {s.label}
+          </div>
+        ))}
       </div>
 
-      {/* Search and Filter */}
-      <div className="search-filter-section">
-        <div className="search-box">
-          <input
-            type="text"
-            placeholder="Search by student name, email or phone..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-input"
+      {/* ── Search & Filter ── */}
+      <div className="flex flex-wrap gap-3.5 mb-6 max-sm:flex-col">
+        <div className="flex-1 relative min-w-[260px] max-sm:min-w-0">
+          <input type="text" placeholder="Search by student name, email or phone..."
+            value={searchTerm} onChange={e => setSearchTerm(e.target.value)}
+            className={inputCls + " pl-11"}
           />
-          <span className="search-icon">🔍</span>
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-base pointer-events-none">🔍</span>
         </div>
-        
-        <select 
-          className="filter-select"
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-        >
-          <option value="all">All Status</option>
-          <option value="paid">Fully Paid</option>
-          <option value="partial">Partial</option>
-          <option value="pending">Pending</option>
-          <option value="no-fees">No Fees</option>
+        <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
+          className={selectCls + " min-w-[180px] max-sm:w-full"}
+          style={{ background:'rgba(255,255,255,0.07)' }}>
+          <option value="all" style={{ background:'#302b63' }}>All Status</option>
+          <option value="paid" style={{ background:'#302b63' }}>Fully Paid</option>
+          <option value="partial" style={{ background:'#302b63' }}>Partial</option>
+          <option value="pending" style={{ background:'#302b63' }}>Pending</option>
+          <option value="no-fees" style={{ background:'#302b63' }}>No Fees</option>
         </select>
       </div>
 
-      {/* Students Fee Table */}
-      <div className="students-table-container">
+      {/* ── Table ── */}
+      <div className="bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-[20px] overflow-hidden overflow-x-auto mb-8">
         {filteredStudents.length === 0 ? (
-          <div className="empty-state">
-            <div className="empty-icon">📋</div>
-            <h3>No students found</h3>
-            <p>Try adjusting your search or filter</p>
+          <div className="text-center py-16 px-5">
+            <div className="text-[4rem] mb-3 opacity-50">📋</div>
+            <h3 className="text-[1.3rem] text-white/70 m-0 mb-2">No students found</h3>
+            <p className="text-white/35 text-[.95rem] m-0">Try adjusting your search or filter</p>
           </div>
         ) : (
-          <table className="students-table">
+          <table className="w-full border-collapse">
             <thead>
               <tr>
-                <th>Student</th>
-                <th>Contact</th>
-                <th>Total Fee</th>
-                <th>Paid</th>
-                <th>Pending</th>
-                <th>Status</th>
-                <th>Actions</th>
+                {['Student','Contact','Total Fee','Paid','Pending','Status','Actions'].map(h => (
+                  <th key={h} className="text-left px-[18px] py-3.5 bg-white/[0.05] text-white/45 font-semibold text-[.72rem] uppercase tracking-[1px] border-b border-white/[0.08] whitespace-nowrap">
+                    {h}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
               {filteredStudents.map(student => {
-                const totalFee = getStudentTotalFees(student._id);
-                const paidFee = getStudentPaidFees(student._id);
+                const totalFee   = getStudentTotalFees(student._id);
+                const paidFee    = getStudentPaidFees(student._id);
                 const pendingFee = getStudentPendingFees(student._id);
-                const status = getStudentFeeStatus(student._id);
-                
+                const status     = getStudentFeeStatus(student._id);
                 return (
-                  <tr key={student._id}>
-                    <td>
-                      <div className="student-info">
-                        <div className="student-avatar">
+                  <tr key={student._id} className="border-b border-white/[0.05] transition-colors duration-200 hover:bg-white/[0.04] last:border-b-0">
+                    <td className="px-[18px] py-3.5 text-white/85 text-[.9rem]">
+                      <div className="flex items-center gap-3">
+                        <div className="w-[38px] h-[38px] rounded-full flex items-center justify-center text-white font-bold text-base shrink-0"
+                          style={{ background:'linear-gradient(135deg,#667eea,#764ba2)' }}>
                           {student.name?.charAt(0).toUpperCase()}
                         </div>
                         <div>
-                          <div className="student-name">{student.name}</div>
-                          <div className="student-id">ID: {student._id.slice(-6)}</div>
+                          <div className="font-semibold text-white">{student.name}</div>
+                          <div className="text-[.75rem] text-white/35">ID: {student._id.slice(-6)}</div>
                         </div>
                       </div>
                     </td>
-                    <td>
-                      <div className="contact-info">
-                        <div>{student.email}</div>
-                        <div className="phone">{student.phone}</div>
-                      </div>
+                    <td className="px-[18px] py-3.5 text-white/85 text-[.88rem]">
+                      <div>{student.email}</div>
+                      <div className="text-[.78rem] text-white/40 mt-0.5">{student.phone}</div>
                     </td>
-                    <td className="amount">{formatCurrency(totalFee)}</td>
-                    <td className="amount paid">{formatCurrency(paidFee)}</td>
-                    <td className="amount pending">{formatCurrency(pendingFee)}</td>
-                    <td>{getStatusBadge(status)}</td>
-                    <td>
-                      <button 
-                        className="view-btn"
-                        onClick={() => {
-                          setSelectedStudent(student);
-                          setShowPaymentModal(true);
-                        }}
-                      >
+                    <td className="px-[18px] py-3.5 font-bold text-white/85">{formatCurrency(totalFee)}</td>
+                    <td className="px-[18px] py-3.5 font-bold text-[#34d399]">{formatCurrency(paidFee)}</td>
+                    <td className="px-[18px] py-3.5 font-bold text-[#f87171]">{formatCurrency(pendingFee)}</td>
+                    <td className="px-[18px] py-3.5"><StatusBadge status={status} /></td>
+                    <td className="px-[18px] py-3.5">
+                      <button onClick={() => { setSelectedStudent(student); setShowPaymentModal(true); }}
+                        className="px-4 py-[7px] bg-[rgba(167,139,250,0.18)] border border-[rgba(167,139,250,0.3)] rounded-lg text-[#a78bfa] text-[.82rem] font-semibold cursor-pointer whitespace-nowrap transition-all duration-250 hover:bg-[rgba(167,139,250,0.35)] hover:-translate-y-0.5 hover:shadow-[0_6px_16px_rgba(167,139,250,0.25)]">
                         View Details
                       </button>
                     </td>
@@ -480,155 +274,74 @@ const AdminFeeManagement = () => {
         )}
       </div>
 
-      {/* Debug Info - Remove in production */}
-      <div className="mt-4 p-4 bg-gray-100 rounded-lg text-xs">
-        <h4 className="font-bold mb-2">Debug Info:</h4>
-        <p>Total Students: {students.length}</p>
-        <p>Total Fee Records: {fees.length}</p>
-        <p>Total Fees Amount: {formatCurrency(statistics.totalFees)}</p>
-        <p>Total Paid Amount: {formatCurrency(statistics.totalPaid)}</p>
-        <p>Total Pending Amount: {formatCurrency(statistics.totalPending)}</p>
-      </div>
-
-      {/* Create Fee Record Modal */}
+      {/* ── Create Fee Modal ── */}
       {showCreateModal && (
-        <div className="modal-overlay" onClick={() => setShowCreateModal(false)}>
-          <div className="modal-content create-modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-header">
-              <h2>Create New Fee Record</h2>
-              <button className="close-btn" onClick={() => setShowCreateModal(false)}>×</button>
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[1000] backdrop-blur-[6px] p-4"
+          onClick={() => setShowCreateModal(false)}>
+          <div className="bg-[#1a1535] border border-white/[0.12] rounded-3xl w-full max-w-[580px] max-h-[90vh] overflow-y-auto shadow-[0_30px_80px_rgba(0,0,0,0.6)] scrollbar-thin"
+            onClick={e => e.stopPropagation()}>
+            {/* Modal Header */}
+            <div className="flex justify-between items-center px-7 py-[22px] border-b border-white/[0.08] sticky top-0 bg-[#1a1535] z-10 rounded-t-3xl">
+              <h2 className="text-[1.2rem] text-white font-bold m-0">Create New Fee Record</h2>
+              <button onClick={() => setShowCreateModal(false)}
+                className="w-8 h-8 flex items-center justify-center bg-white/[0.08] border border-white/[0.12] rounded-lg text-[1.3rem] cursor-pointer text-white/60 transition-all duration-200 hover:bg-[rgba(248,113,113,0.2)] hover:border-[rgba(248,113,113,0.4)] hover:text-[#f87171]">
+                ×
+              </button>
             </div>
-            
-            <div className="modal-body">
-              <form onSubmit={(e) => { e.preventDefault(); handleCreateFee(); }}>
-                {/* Student Selection */}
-                <div className="form-group">
-                  <label>Select Student *</label>
-                  <select
-                    value={createFeeData.studentId}
-                    onChange={(e) => setCreateFeeData({...createFeeData, studentId: e.target.value})}
-                    required
-                    className="form-select"
-                  >
-                    <option value="">Choose a student</option>
-                    {students.map(student => (
-                      <option key={student._id} value={student._id}>
-                        {student.name} - {student.email}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+            <div className="px-7 py-6">
+              <form onSubmit={e => { e.preventDefault(); handleCreateFee(); }}>
+                {[
+                  { label:'Select Student *', required: true, el:
+                    <select value={createFeeData.studentId} onChange={e=>setCreateFeeData({...createFeeData,studentId:e.target.value})} required className={selectCls} style={{background:'rgba(255,255,255,0.07)'}}>
+                      <option value="" style={{background:'#1a1535'}}>Choose a student</option>
+                      {students.map(s=><option key={s._id} value={s._id} style={{background:'#1a1535'}}>{s.name} - {s.email}</option>)}
+                    </select> },
+                  { label:'Select Course *', required: true, el:
+                    <select value={createFeeData.courseId} onChange={e=>{const c=courses.find(x=>x._id===e.target.value);setCreateFeeData({...createFeeData,courseId:e.target.value,totalFees:c?.fees||''})}} required className={selectCls} style={{background:'rgba(255,255,255,0.07)'}}>
+                      <option value="" style={{background:'#1a1535'}}>Choose a course</option>
+                      {courses.map(c=><option key={c._id} value={c._id} style={{background:'#1a1535'}}>{c.courseName} - {c.courseCode} (₹{c.fees})</option>)}
+                    </select> },
+                  { label:'Total Fees (₹) *', el:
+                    <input type="number" value={createFeeData.totalFees} onChange={e=>setCreateFeeData({...createFeeData,totalFees:e.target.value})} required min="1" step="1" placeholder="Enter total fees" className={inputCls} /> },
+                  { label:'Initial Payment Amount (₹) (Optional)', el:
+                    <><input type="number" value={createFeeData.paidAmount} onChange={e=>setCreateFeeData({...createFeeData,paidAmount:e.target.value})} min="0" step="1" placeholder="Enter initial payment" className={inputCls} />
+                    {createFeeData.paidAmount&&parseFloat(createFeeData.paidAmount)>parseFloat(createFeeData.totalFees)&&<p className="text-[#f87171] text-xs mt-1">Paid amount cannot exceed total fees</p>}</> },
+                ].map((f,i) => (
+                  <div key={i} className="mb-[18px]">
+                    <label className="block mb-[7px] font-semibold text-white/75 text-[.85rem] uppercase tracking-[.6px]">{f.label}</label>
+                    {f.el}
+                  </div>
+                ))}
 
-                {/* Course Selection */}
-                <div className="form-group">
-                  <label>Select Course *</label>
-                  <select
-                    value={createFeeData.courseId}
-                    onChange={(e) => {
-                      const selectedCourse = courses.find(c => c._id === e.target.value);
-                      setCreateFeeData({
-                        ...createFeeData,
-                        courseId: e.target.value,
-                        totalFees: selectedCourse?.fees || ''
-                      });
-                    }}
-                    required
-                    className="form-select"
-                  >
-                    <option value="">Choose a course</option>
-                    {courses.map(course => (
-                      <option key={course._id} value={course._id}>
-                        {course.courseName} - {course.courseCode} (₹{course.fees})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Total Fees */}
-                <div className="form-group">
-                  <label>Total Fees (₹) *</label>
-                  <input
-                    type="number"
-                    value={createFeeData.totalFees}
-                    onChange={(e) => setCreateFeeData({...createFeeData, totalFees: e.target.value})}
-                    required
-                    min="1"
-                    step="1"
-                    className="form-input"
-                    placeholder="Enter total fees"
-                  />
-                </div>
-
-                {/* Initial Payment */}
-                <div className="form-group">
-                  <label>Initial Payment Amount (₹) (Optional)</label>
-                  <input
-                    type="number"
-                    value={createFeeData.paidAmount}
-                    onChange={(e) => setCreateFeeData({...createFeeData, paidAmount: e.target.value})}
-                    min="0"
-                    step="1"
-                    className="form-input"
-                    placeholder="Enter initial payment"
-                  />
-                  {createFeeData.paidAmount && parseFloat(createFeeData.paidAmount) > parseFloat(createFeeData.totalFees) && (
-                    <p className="text-red-500 text-sm mt-1">Paid amount cannot exceed total fees</p>
-                  )}
-                </div>
-
-                {/* Payment Mode (if initial payment) */}
                 {createFeeData.paidAmount && parseFloat(createFeeData.paidAmount) > 0 && (
                   <>
-                    <div className="form-group">
-                      <label>Payment Mode</label>
-                      <select
-                        value={createFeeData.paymentMode}
-                        onChange={(e) => setCreateFeeData({...createFeeData, paymentMode: e.target.value})}
-                        className="form-select"
-                      >
-                        <option value="Cash">Cash</option>
-                        <option value="Online">Online</option>
-                        <option value="Card">Card</option>
-                        <option value="UPI">UPI</option>
-                        <option value="Cheque">Cheque</option>
+                    <div className="mb-[18px]">
+                      <label className="block mb-[7px] font-semibold text-white/75 text-[.85rem] uppercase tracking-[.6px]">Payment Mode</label>
+                      <select value={createFeeData.paymentMode} onChange={e=>setCreateFeeData({...createFeeData,paymentMode:e.target.value})} className={selectCls} style={{background:'rgba(255,255,255,0.07)'}}>
+                        {paymentModes.map(m=><option key={m} value={m} style={{background:'#1a1535'}}>{m}</option>)}
                       </select>
                     </div>
-
-                    <div className="form-group">
-                      <label>Transaction ID (Optional)</label>
-                      <input
-                        type="text"
-                        value={createFeeData.transactionId}
-                        onChange={(e) => setCreateFeeData({...createFeeData, transactionId: e.target.value})}
-                        className="form-input"
-                        placeholder="Enter transaction ID"
-                      />
+                    <div className="mb-[18px]">
+                      <label className="block mb-[7px] font-semibold text-white/75 text-[.85rem] uppercase tracking-[.6px]">Transaction ID (Optional)</label>
+                      <input type="text" value={createFeeData.transactionId} onChange={e=>setCreateFeeData({...createFeeData,transactionId:e.target.value})} placeholder="Enter transaction ID" className={inputCls} />
                     </div>
                   </>
                 )}
 
-                {/* Remarks */}
-                <div className="form-group">
-                  <label>Remarks (Optional)</label>
-                  <textarea
-                    value={createFeeData.remarks}
-                    onChange={(e) => setCreateFeeData({...createFeeData, remarks: e.target.value})}
-                    className="form-textarea"
-                    placeholder="Enter any remarks"
-                    rows="3"
-                  />
+                <div className="mb-[18px]">
+                  <label className="block mb-[7px] font-semibold text-white/75 text-[.85rem] uppercase tracking-[.6px]">Remarks (Optional)</label>
+                  <textarea value={createFeeData.remarks} onChange={e=>setCreateFeeData({...createFeeData,remarks:e.target.value})} rows="3" placeholder="Enter any remarks"
+                    className={inputCls + " resize-y min-h-[90px]"} />
                 </div>
 
-                {/* Form Actions */}
-                <div className="form-actions">
-                  <button type="button" className="cancel-btn" onClick={() => setShowCreateModal(false)}>
+                <div className="flex justify-end gap-3 mt-6 pt-5 border-t border-white/[0.08]">
+                  <button type="button" onClick={() => setShowCreateModal(false)}
+                    className="px-6 py-3 rounded-[10px] bg-white/[0.07] border border-white/[0.12] text-white/70 font-semibold text-[.9rem] cursor-pointer transition-all duration-200 hover:bg-white/[0.12] hover:text-white">
                     Cancel
                   </button>
-                  <button 
-                    type="submit" 
-                    className="submit-btn"
-                    disabled={createFeeData.paidAmount && parseFloat(createFeeData.paidAmount) > parseFloat(createFeeData.totalFees)}
-                  >
+                  <button type="submit" disabled={!!(createFeeData.paidAmount&&parseFloat(createFeeData.paidAmount)>parseFloat(createFeeData.totalFees))}
+                    className="px-6 py-3 rounded-[10px] text-white font-bold text-[.9rem] border-none cursor-pointer transition-all duration-250 disabled:opacity-45 disabled:cursor-not-allowed hover:not-disabled:-translate-y-0.5 hover:not-disabled:shadow-[0_10px_24px_rgba(124,58,237,0.5)]"
+                    style={{ background:'linear-gradient(135deg,#a78bfa,#7c3aed)', boxShadow:'0 6px 16px rgba(124,58,237,0.35)' }}>
                     Create Fee Record
                   </button>
                 </div>
@@ -638,111 +351,84 @@ const AdminFeeManagement = () => {
         </div>
       )}
 
-      {/* Student Details Modal */}
+      {/* ── Student Details Modal ── */}
       {showPaymentModal && selectedStudent && (
-        <div className="modal-overlay" onClick={() => setShowPaymentModal(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <div className="modal-header">
-              <h2>Fee Details - {selectedStudent.name}</h2>
-              <button className="close-btn" onClick={() => setShowPaymentModal(false)}>×</button>
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[1000] backdrop-blur-[6px] p-4"
+          onClick={() => setShowPaymentModal(false)}>
+          <div className="bg-[#1a1535] border border-white/[0.12] rounded-3xl w-full max-w-[800px] max-h-[90vh] overflow-y-auto shadow-[0_30px_80px_rgba(0,0,0,0.6)]"
+            onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center px-7 py-[22px] border-b border-white/[0.08] sticky top-0 bg-[#1a1535] z-10 rounded-t-3xl">
+              <h2 className="text-[1.2rem] text-white font-bold m-0">Fee Details — {selectedStudent.name}</h2>
+              <button onClick={() => setShowPaymentModal(false)}
+                className="w-8 h-8 flex items-center justify-center bg-white/[0.08] border border-white/[0.12] rounded-lg text-[1.3rem] cursor-pointer text-white/60 transition-all duration-200 hover:bg-[rgba(248,113,113,0.2)] hover:border-[rgba(248,113,113,0.4)] hover:text-[#f87171]">
+                ×
+              </button>
             </div>
-            
-            <div className="modal-body">
-              {/* Student Info */}
-              <div className="student-detail-info">
-                <p><strong>Email:</strong> {selectedStudent.email}</p>
-                <p><strong>Phone:</strong> {selectedStudent.phone}</p>
+
+            <div className="px-7 py-6">
+              {/* Student info */}
+              <div className="bg-white/[0.05] border border-white/[0.08] rounded-xl p-4 mb-5">
+                <p className="my-1.5 text-white/65 text-[.9rem]"><strong className="text-white/90">Email:</strong> {selectedStudent.email}</p>
+                <p className="my-1.5 text-white/65 text-[.9rem]"><strong className="text-white/90">Phone:</strong> {selectedStudent.phone}</p>
               </div>
 
-              {/* Course-wise Fee Breakdown */}
-              <h3 className="section-title">Course-wise Fee Breakdown</h3>
-              <div className="course-fee-list">
+              <h3 className="text-base text-white/80 font-bold mb-4">Course-wise Fee Breakdown</h3>
+
+              <div className="flex flex-col gap-4">
                 {getStudentFees(selectedStudent._id).map(fee => (
-                  <div key={fee._id} className="course-fee-item">
-                    <div className="course-header">
-                      <h4>{fee.course?.courseName || 'Course'}</h4>
-                      {getStatusBadge(fee.status)}
-                    </div>
-                    
-                    <div className="fee-details">
-                      <div className="fee-row">
-                        <span>Total Fee:</span>
-                        <strong>{formatCurrency(fee.totalFees)}</strong>
-                      </div>
-                      <div className="fee-row">
-                        <span>Paid Amount:</span>
-                        <strong className="paid">{formatCurrency(fee.paidAmount)}</strong>
-                      </div>
-                      <div className="fee-row">
-                        <span>Pending Amount:</span>
-                        <strong className="pending">{formatCurrency(fee.pendingAmount)}</strong>
-                      </div>
+                  <div key={fee._id} className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-4">
+                    <div className="flex justify-between items-center mb-3">
+                      <h4 className="text-base text-white font-semibold m-0">{fee.course?.courseName||'Course'}</h4>
+                      <StatusBadge status={fee.status} />
                     </div>
 
-                    {/* Payment History */}
-                    {fee.payments && fee.payments.length > 0 && (
-                      <div className="payment-history">
-                        <h5>Payment History</h5>
-                        {fee.payments.map((payment, index) => (
-                          <div key={index} className="payment-item">
-                            <div className="payment-date">
-                              {new Date(payment.paymentDate).toLocaleDateString()}
-                            </div>
-                            <div className="payment-amount">{formatCurrency(payment.amount)}</div>
-                            <div className="payment-mode">{payment.paymentMode}</div>
-                            {payment.transactionId && (
-                              <div className="payment-txn">ID: {payment.transactionId}</div>
-                            )}
+                    {/* Fee rows */}
+                    <div className="bg-white/[0.03] rounded-[10px] p-3.5 mb-3">
+                      {[
+                        { label:'Total Fee:',    val: formatCurrency(fee.totalFees),    cls:'text-white/90' },
+                        { label:'Paid Amount:',  val: formatCurrency(fee.paidAmount),   cls:'text-[#34d399]' },
+                        { label:'Pending Amount:',val:formatCurrency(fee.pendingAmount),cls:'text-[#f87171]' },
+                      ].map((r,i)=>(
+                        <div key={i} className="flex justify-between py-[7px] border-b border-white/[0.06] last:border-b-0 text-[.88rem] text-white/55">
+                          <span>{r.label}</span>
+                          <strong className={r.cls}>{r.val}</strong>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Payment history */}
+                    {fee.payments?.length > 0 && (
+                      <div className="mb-3">
+                        <h5 className="text-[.82rem] text-white/45 font-semibold uppercase tracking-[.8px] m-0 mb-2">Payment History</h5>
+                        {fee.payments.map((p,i) => (
+                          <div key={i} className="flex flex-wrap items-center gap-3 px-3 py-2 bg-white/[0.04] rounded-lg mb-1.5 text-[.83rem]">
+                            <span className="text-white/45 min-w-[90px]">{new Date(p.paymentDate).toLocaleDateString()}</span>
+                            <span className="text-[#34d399] font-bold min-w-[90px]">{formatCurrency(p.amount)}</span>
+                            <span className="text-white/60">{p.paymentMode}</span>
+                            {p.transactionId && <span className="text-white/35 text-[.78rem]">ID: {p.transactionId}</span>}
                           </div>
                         ))}
                       </div>
                     )}
 
-                    {/* Add Payment Form */}
-                    <div className="add-payment-form">
-                      <h5>Add Payment</h5>
-                      <div className="form-row">
-                        <input
-                          type="number"
-                          placeholder="Amount"
-                          value={paymentData.amount}
-                          onChange={(e) => setPaymentData({...paymentData, amount: e.target.value})}
-                          className="payment-input"
-                        />
-                        <select
-                          value={paymentData.paymentMode}
-                          onChange={(e) => setPaymentData({...paymentData, paymentMode: e.target.value})}
-                          className="payment-select"
-                        >
-                          <option value="Cash">Cash</option>
-                          <option value="Online">Online</option>
-                          <option value="Card">Card</option>
-                          <option value="UPI">UPI</option>
-                          <option value="Cheque">Cheque</option>
+                    {/* Add payment */}
+                    <div className="bg-white/[0.04] border border-[rgba(167,139,250,0.2)] rounded-xl p-4">
+                      <h5 className="text-[.82rem] text-white/45 font-semibold uppercase tracking-[.8px] m-0 mb-3">Add Payment</h5>
+                      <div className="flex gap-2.5 mb-2.5 max-sm:flex-col">
+                        <input type="number" placeholder="Amount" value={paymentData.amount}
+                          onChange={e=>setPaymentData({...paymentData,amount:e.target.value})} className={inputCls} />
+                        <select value={paymentData.paymentMode} onChange={e=>setPaymentData({...paymentData,paymentMode:e.target.value})}
+                          className={selectCls} style={{background:'rgba(255,255,255,0.06)'}}>
+                          {paymentModes.map(m=><option key={m} value={m} style={{background:'#1a1535'}}>{m}</option>)}
                         </select>
                       </div>
-                      <div className="form-row">
-                        <input
-                          type="text"
-                          placeholder="Transaction ID (optional)"
-                          value={paymentData.transactionId}
-                          onChange={(e) => setPaymentData({...paymentData, transactionId: e.target.value})}
-                          className="payment-input"
-                        />
-                      </div>
-                      <div className="form-row">
-                        <input
-                          type="text"
-                          placeholder="Remarks (optional)"
-                          value={paymentData.remarks}
-                          onChange={(e) => setPaymentData({...paymentData, remarks: e.target.value})}
-                          className="payment-input"
-                        />
-                      </div>
-                      <button 
-                        className="add-payment-btn"
-                        onClick={() => handleAddPayment(fee._id)}
-                      >
+                      <input type="text" placeholder="Transaction ID (optional)" value={paymentData.transactionId}
+                        onChange={e=>setPaymentData({...paymentData,transactionId:e.target.value})} className={inputCls + " mb-2.5"} />
+                      <input type="text" placeholder="Remarks (optional)" value={paymentData.remarks}
+                        onChange={e=>setPaymentData({...paymentData,remarks:e.target.value})} className={inputCls + " mb-3"} />
+                      <button onClick={() => handleAddPayment(fee._id)}
+                        className="w-full py-3 rounded-[10px] text-white font-bold text-[.9rem] border-none cursor-pointer mt-1 transition-all duration-250 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(124,58,237,0.5)]"
+                        style={{ background:'linear-gradient(135deg,#a78bfa,#7c3aed)', boxShadow:'0 6px 16px rgba(124,58,237,0.35)' }}>
                         Add Payment
                       </button>
                     </div>
