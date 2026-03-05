@@ -4,7 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import Home from './pages/Home'
 import Navbar from './components/Navbar';
-import { CreateCertificate, CertificateList, VerifyCertificate, CertificateDetail } from './pages/Admin/Certificate';
+import { CreateCertificate, CertificateList, VerifyCertificate,CertificateDetail } from './pages/Admin/Certificate';
 
 // Lazy load pages
 const Login = lazy(() => import('./pages/Login'));
@@ -22,7 +22,6 @@ const AdminJobs = lazy(() => import('./pages/Admin/Jobcreate'))
 const JobApplication = lazy(() => import('./pages/Admin/Applications'))
 const FeeInformation = lazy(() => import('./pages/Student/FeeInformation'));
 const AdminFeeManagement = lazy(() => import('./pages/Admin/AdminFeeManagement'));
-
 // Loading component
 const LoadingSpinner = () => (
   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -69,7 +68,7 @@ function AppRoutes() {
           <Route path="/admin/certificates/create" element={<CreateCertificate />} />
           <Route path="/admin/certificates" element={<CertificateList />} />
           <Route path="/verify-certificate" element={<VerifyCertificate />} />
-          <Route path="/certificates/:id" element={<CertificateDetail />} />
+          <Route path="/certificates/:id" element={<CertificateDetail/>} />
 
 
 

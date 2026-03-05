@@ -604,6 +604,7 @@ export const CertificateDetail = () => {
     const fetch = async () => {
       try {
         const res = await api.get(`/api/certificates/${id}`);
+        console.log("cirtificate data");
         setCert(res.data.data);
       } catch (e) { console.error(e); }
       finally { setLoading(false); }
