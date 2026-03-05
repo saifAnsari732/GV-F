@@ -168,7 +168,7 @@ const Register = () => {
                   required
                 />
               </div>
-              <div>
+              {/* <div>
                 <label className={labelClass}>
                   <FaUserTag className="text-indigo-500" /> Role
                 </label>
@@ -182,7 +182,7 @@ const Register = () => {
                   <option value="student">Student</option>
                   <option value="admin">Admin</option>
                 </select>
-              </div>
+              </div> */}
             </div>
 
             {/* Course Selection */}
