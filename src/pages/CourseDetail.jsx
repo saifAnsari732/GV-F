@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { FaArrowLeft, FaClock, FaUsers, FaRupeeSign, FaRocket, FaEnvelope, FaCheckCircle, FaChalkboardTeacher, FaListUl } from 'react-icons/fa';
-
+import api from '../services/api';
 const CourseDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -13,7 +12,7 @@ const CourseDetail = () => {
 
   const fetchCourseDetail = async () => {
     try {
-      const response = await axios.get(`/api/courses/${id}`);
+      const response = await api.get(`/api/courses/${id}`);
       console.log("cors detl", response.data);
       if (response.data.success) setCourse(response.data.data);
       setLoading(false);
