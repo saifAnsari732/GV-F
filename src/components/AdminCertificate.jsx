@@ -968,14 +968,12 @@ export const CertificateDetail = () => {
             min-height: auto !important;
             display: block !important;
             overflow: visible !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
           }
           .cert-card {
             box-shadow: none !important;
             page-break-inside: avoid !important;
-          }
-          * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
           }
         }
       `}</style>
