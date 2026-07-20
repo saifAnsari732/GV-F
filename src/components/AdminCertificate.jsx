@@ -684,13 +684,17 @@ export const CertificateDetail = () => {
           }
           .print-m-0 {
             margin: 0 !important;
-            padding: 24px 28px !important;
+            padding: 32px 36px !important;
             box-shadow: none !important;
-            border: 12px double #d4af37 !important;
+            border: 14px double #d4af37 !important;
             border-radius: 0 !important;
             background: #fdfbf7 !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
+            min-height: 262mm !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
           }
           .cert-card {
             box-shadow: none !important;
