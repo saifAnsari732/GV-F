@@ -78,7 +78,7 @@ export default async function Home() {
             </span>
           </h1>
           <p className="text-gray-600 text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mb-10 px-4">
-            Basic computer knowledge se lekar advanced coding tak sab kuch sikhein. 10,000+ students ke bharosemand institute se judiye, best certificate paayein aur aaj hi apne naye career ki shuruwat karein!
+            Basic se lekar advanced computer courses (DCA, ADCA, Tally, CCC, O-Level) sab kuch sikhein. 10,000+ students ke bharosemand institute se judiye, best certificate paayein aur apne career ki shuruwat karein!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4">
             <Link href="/register"
