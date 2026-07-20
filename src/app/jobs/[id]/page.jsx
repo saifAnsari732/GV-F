@@ -161,7 +161,7 @@ const JobDetail = () => {
               <div className="flex flex-wrap gap-2.5 max-sm:gap-2">
                 {job.experience && <div className={pill}><FaBriefcase style={{color:'#00D4FF'}}/><span>{job.experience}</span></div>}
                 {job.salary    && <div className={pill}><FaRupeeSign  style={{color:'#10B981'}}/><span>{job.salary}</span></div>}
-                {job.deadline  && <div className={pill}><FaCalendarAlt style={{color:'#F59E0B'}}/><span>Apply by {new Date(job.deadline).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</span></div>}
+                {job.lastDate  && <div className={pill}><FaCalendarAlt style={{color:'#F59E0B'}}/><span>Apply by {new Date(job.lastDate).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</span></div>}
               </div>
             </div>
             {/* Posted */}
@@ -304,7 +304,7 @@ const JobDetail = () => {
                 { icon:<FaBriefcase/>,   label:'Job Type',   value:job.jobType,    color:tp.color },
                 job.experience && { icon:<FaBriefcase/>,   label:'Experience', value:job.experience, color:'#00D4FF' },
                 job.salary     && { icon:<FaRupeeSign/>,   label:'Salary',     value:job.salary,     color:'#10B981' },
-                job.deadline   && { icon:<FaCalendarAlt/>, label:'Deadline',   value:new Date(job.deadline).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}), color:'#F59E0B' },
+                job.lastDate   && { icon:<FaCalendarAlt/>, label:'Deadline',   value:new Date(job.lastDate).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}), color:'#F59E0B' },
                 { icon:<FaMapMarkerAlt/>, label:'Location',  value:job.location,   color:'#A78BFA' },
               ].filter(Boolean).map((item,i) => (
                 <div key={i} className="flex items-center gap-3.5 py-2.5 border-b border-white/[0.07] last:border-b-0 last:pb-0">
