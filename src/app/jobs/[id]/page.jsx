@@ -9,7 +9,7 @@ import ApplyModal from '../../../components/ApplyModal';
 import {
   FaArrowLeft, FaMapMarkerAlt, FaBriefcase, FaRupeeSign,
   FaCalendarAlt, FaCheckCircle, FaEnvelope, FaLink,
-  FaClock, FaRocket, FaExclamationTriangle
+  FaClock, FaRocket, FaExclamationTriangle, FaPhoneAlt
 } from 'react-icons/fa';
 import api from '../../../services/api';
 
@@ -264,16 +264,28 @@ const JobDetail = () => {
               </div>
 
               {hasApplied ? (
-                <button disabled
-                  className="flex items-center justify-content-center gap-2.5 w-[calc(100%-52px)] max-sm:w-[calc(100%-36px)] mx-[26px] max-sm:mx-[18px] mb-[22px] py-3.5 rounded-2xl bg-[rgba(16,185,129,0.1)] text-[#10B981] border border-[rgba(16,185,129,0.25)] font-['Space_Grotesk',sans-serif] text-[15px] font-bold cursor-not-allowed justify-center">
-                  <FaCheckCircle/> Already Applied
-                </button>
+                <div className="flex flex-col gap-3 w-[calc(100%-52px)] max-sm:w-[calc(100%-36px)] mx-[26px] max-sm:mx-[18px] mb-[22px]">
+                  <button disabled
+                    className="flex items-center justify-center gap-2.5 py-3.5 rounded-2xl bg-[rgba(16,185,129,0.1)] text-[#10B981] border border-[rgba(16,185,129,0.25)] font-['Space_Grotesk',sans-serif] text-[15px] font-bold cursor-not-allowed">
+                    <FaCheckCircle/> Already Applied
+                  </button>
+                  <a href="tel:+919876543210"
+                    className="flex items-center justify-center gap-2.5 py-3.5 rounded-2xl bg-white border border-gray-200 text-gray-700 font-['Space_Grotesk',sans-serif] text-[15px] font-bold cursor-pointer transition-all duration-300 shadow-sm hover:border-cyan-400 hover:text-cyan-600 hover:-translate-y-0.5 hover:scale-[1.02] no-underline">
+                    <FaPhoneAlt/> Call HR
+                  </a>
+                </div>
               ) : (
-                <button onClick={handleApplyClick}
-                  className="flex items-center justify-center gap-2.5 w-[calc(100%-52px)] max-sm:w-[calc(100%-36px)] mx-[26px] max-sm:mx-[18px] mb-[22px] py-3.5 rounded-2xl text-gray-900 border-none font-['Space_Grotesk',sans-serif] text-[15px] font-bold cursor-pointer transition-all duration-300 shadow-[0_4px_20px_rgba(0,212,255,0.2)] hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-[0_8px_28px_rgba(0,212,255,0.35)]"
-                  style={{background:'linear-gradient(135deg,#00D4FF,#7C3AED)'}}>
-                  <FaRocket/> Apply Now
-                </button>
+                <div className="flex flex-col gap-3 w-[calc(100%-52px)] max-sm:w-[calc(100%-36px)] mx-[26px] max-sm:mx-[18px] mb-[22px]">
+                  <button onClick={handleApplyClick}
+                    className="flex items-center justify-center gap-2.5 py-3.5 rounded-2xl text-gray-900 border-none font-['Space_Grotesk',sans-serif] text-[15px] font-bold cursor-pointer transition-all duration-300 shadow-[0_4px_20px_rgba(0,212,255,0.2)] hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-[0_8px_28px_rgba(0,212,255,0.35)]"
+                    style={{background:'linear-gradient(135deg,#00D4FF,#7C3AED)'}}>
+                    <FaRocket/> Apply Now
+                  </button>
+                  <a href="tel:+919876543210"
+                    className="flex items-center justify-center gap-2.5 py-3.5 rounded-2xl bg-white border border-gray-200 text-gray-700 font-['Space_Grotesk',sans-serif] text-[15px] font-bold cursor-pointer transition-all duration-300 shadow-sm hover:border-cyan-400 hover:text-cyan-600 hover:-translate-y-0.5 hover:scale-[1.02] no-underline">
+                    <FaPhoneAlt/> Call HR
+                  </a>
+                </div>
               )}
 
               <div className="h-px bg-white/[0.07] mb-[18px]"/>
