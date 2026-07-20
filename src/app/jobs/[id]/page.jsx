@@ -20,8 +20,8 @@ const BG_MESH = (
   </>
 );
 
-const pill = "flex items-center gap-[7px] bg-white/[0.04] border border-white/[0.07] px-4 py-[7px] rounded-full text-[13px] font-medium text-gray-600";
-const sectionCls = "bg-white border border-white/[0.07] rounded-[20px] p-7 max-sm:p-[18px] animate-[fadeInUp_0.5s_ease-out_backwards]";
+const pill = "flex items-center gap-[7px] bg-gray-50 border border-gray-200 px-4 py-[7px] rounded-full text-[13px] font-medium text-gray-700";
+const sectionCls = "bg-white border border-gray-200 shadow-sm rounded-[20px] p-7 max-sm:p-[18px] animate-[fadeInUp_0.5s_ease-out_backwards]";
 
 const typePalette = {
   'Full-time':  { bg:'rgba(16,185,129,0.1)',  color:'#10B981', border:'rgba(16,185,129,0.25)' },
@@ -73,7 +73,7 @@ const JobDetail = () => {
 
   const handleCopyLink = () => { navigator.clipboard.writeText(window.location.href); setCopied(true); setTimeout(()=>setCopied(false),2000); };
 
-  const pageCls = "min-h-screen bg-[#080C14] font-['Space_Grotesk',sans-serif] text-gray-900 relative overflow-x-hidden";
+  const pageCls = "min-h-screen bg-gray-50 font-['Space_Grotesk',sans-serif] text-gray-900 relative overflow-x-hidden pt-12";
 
   /* ── Loading ── */
   if (loading) return (
@@ -131,12 +131,12 @@ const JobDetail = () => {
 
         {/* ── Back ── */}
         <button onClick={()=>navigate('/jobs')}
-          className="inline-flex items-center gap-2.5 bg-white border border-white/[0.07] text-gray-600 px-5 py-2.5 rounded-xl font-['Space_Grotesk',sans-serif] text-sm font-medium cursor-pointer mb-7 transition-all duration-300 hover:border-[rgba(0,212,255,0.3)] hover:text-[#00D4FF] hover:-translate-x-[3px]">
+          className="inline-flex items-center gap-2.5 bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl font-['Space_Grotesk',sans-serif] text-sm font-medium cursor-pointer mb-7 transition-all duration-300 hover:border-cyan-300 hover:text-cyan-500 hover:-translate-x-[3px] shadow-sm">
           <FaArrowLeft/> Back to Jobs
         </button>
 
         {/* ── Hero ── */}
-        <div className="bg-white border border-white/[0.07] rounded-3xl overflow-hidden mb-6">
+        <div className="bg-white border border-gray-200 shadow-sm rounded-3xl overflow-hidden mb-6">
           <div className="h-[3px]" style={{background:'linear-gradient(135deg,#00D4FF,#7C3AED)'}}/>
           <div className="flex flex-wrap justify-between items-start gap-6 px-10 py-9 max-[900px]:px-6 max-[900px]:py-7">
             {/* Left */}
@@ -166,7 +166,7 @@ const JobDetail = () => {
             </div>
             {/* Posted */}
             <div className="shrink-0 pt-1">
-              <div className="flex items-center gap-3.5 bg-white/[0.03] border border-white/[0.07] rounded-2xl px-5 py-4">
+              <div className="flex items-center gap-3.5 bg-gray-50 border border-gray-200 rounded-2xl px-5 py-4">
                 <FaClock className="text-[20px] opacity-70" style={{color:'#00D4FF'}}/>
                 <div>
                   <div className="text-[11px] font-semibold tracking-[1px] uppercase text-[#4B5563] mb-1">Posted on</div>
@@ -198,7 +198,7 @@ const JobDetail = () => {
                 <ul className="list-none p-0 m-0 flex flex-col gap-2.5">
                   {job.requirements.map((req,i) => (
                     <li key={i}
-                      className="flex items-start gap-3 bg-white/[0.02] border border-white/[0.07] rounded-[10px] px-4 py-3 transition-all duration-300 hover:border-[rgba(16,185,129,0.25)]">
+                      className="flex items-start gap-3 bg-gray-50 border border-gray-200 rounded-[10px] px-4 py-3 transition-all duration-300 hover:border-[rgba(16,185,129,0.3)]">
                       <FaCheckCircle className="text-[#10B981] text-sm mt-0.5 shrink-0"/>
                       <span className="text-[0.92rem] text-gray-600 leading-[1.6]">{req}</span>
                     </li>
@@ -234,7 +234,7 @@ const JobDetail = () => {
             {job.contactEmail && (
               <div className={sectionCls}>
                 <SectionHead color="#06B6D4" title="Contact Information"/>
-                <div className="flex items-center gap-4 bg-white/[0.02] border border-white/[0.07] rounded-2xl px-5 py-4 text-[20px]">
+                <div className="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-2xl px-5 py-4 text-[20px]">
                   <FaEnvelope style={{color:'#00D4FF'}}/>
                   <div>
                     <div className="text-[11px] font-semibold tracking-[1px] uppercase text-[#4B5563] mb-1">Email Address</div>
@@ -252,7 +252,7 @@ const JobDetail = () => {
           <div className="flex flex-col gap-[18px] sticky top-6 max-[900px]:static max-[900px]:order-first">
 
             {/* Apply Card */}
-            <div className="bg-white border border-white/[0.07] rounded-[20px] overflow-hidden">
+            <div className="bg-white border border-gray-200 shadow-sm rounded-[20px] overflow-hidden">
               <div className="h-[3px]" style={{background:'linear-gradient(135deg,#00D4FF,#7C3AED)'}}/>
               <div className="px-[26px] max-sm:px-[18px]">
                 <h3 className="font-['Syne',sans-serif] text-[1.15rem] font-extrabold text-gray-900 mt-[26px] mb-2.5">
@@ -286,7 +286,7 @@ const JobDetail = () => {
                     { href:`mailto:?subject=Job: ${job.title}&body=${window.location.href}`, label:<><FaEnvelope/> Email</> },
                     { onClick:handleCopyLink, label:<><FaLink/> {copied?'Copied!':'Copy Link'}</> },
                   ].map((s,i) => {
-                    const cls = "flex-1 inline-flex items-center justify-center gap-2 px-3.5 py-[9px] rounded-[10px] bg-white/[0.04] border border-white/[0.07] text-gray-600 font-['Space_Grotesk',sans-serif] text-[13px] font-semibold cursor-pointer no-underline transition-all duration-300 hover:border-[rgba(0,212,255,0.3)] hover:text-[#00D4FF]";
+                    const cls = "flex-1 inline-flex items-center justify-center gap-2 px-3.5 py-[9px] rounded-[10px] bg-gray-50 border border-gray-200 text-gray-700 font-['Space_Grotesk',sans-serif] text-[13px] font-semibold cursor-pointer no-underline transition-all duration-300 hover:border-cyan-300 hover:text-cyan-500 shadow-sm";
                     return s.href
                       ? <Link key={i} href={s.href} className={cls}>{s.label}</Link>
                       : <button key={i} onClick={s.onClick} className={cls}>{s.label}</button>;
@@ -296,8 +296,8 @@ const JobDetail = () => {
             </div>
 
             {/* Quick Info */}
-            <div className="bg-white border border-white/[0.07] rounded-[20px] p-6">
-              <div className="font-['Syne',sans-serif] text-base font-extrabold text-gray-900 mb-[18px] pb-3.5 border-b border-white/[0.07]">
+            <div className="bg-white border border-gray-200 shadow-sm rounded-[20px] p-6">
+              <div className="font-['Syne',sans-serif] text-base font-extrabold text-gray-900 mb-[18px] pb-3.5 border-b border-gray-200">
                 Job Overview
               </div>
               {[
@@ -307,7 +307,7 @@ const JobDetail = () => {
                 job.lastDate   && { icon:<FaCalendarAlt/>, label:'Deadline',   value:new Date(job.lastDate).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}), color:'#F59E0B' },
                 { icon:<FaMapMarkerAlt/>, label:'Location',  value:job.location,   color:'#A78BFA' },
               ].filter(Boolean).map((item,i) => (
-                <div key={i} className="flex items-center gap-3.5 py-2.5 border-b border-white/[0.07] last:border-b-0 last:pb-0">
+                <div key={i} className="flex items-center gap-3.5 py-2.5 border-b border-gray-100 last:border-b-0 last:pb-0">
                   <div className="w-9 h-9 rounded-[10px] flex items-center justify-center text-sm shrink-0"
                     style={{color:item.color, background:`${item.color}15`}}>
                     {item.icon}
