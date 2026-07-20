@@ -6,6 +6,7 @@ import {
   FaQuoteLeft, FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope
 } from 'react-icons/fa';
 import ReviewHelper from '../components/ReviewHelper';
+import TestimonialSlider from '../components/TestimonialSlider';
 import { API_URL } from '../helper';
 
 export const dynamic = 'force-dynamic';
@@ -200,59 +201,8 @@ export default async function Home() {
             <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">What Our Students Say</h2>
             <p className="text-gray-600 text-lg max-w-xl mx-auto">Don't just take our word for it. Hear from the students who built their careers with us.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Testimonial 1 */}
-            <div className="bg-gray-50 border border-gray-200 rounded-3xl p-8 relative hover:shadow-lg transition-shadow">
-              <FaQuoteLeft className="text-4xl text-gray-200 absolute top-6 right-6" />
-              <div className="flex text-amber-400 mb-4">
-                {[...Array(5)].map((_, i) => <FaStar key={i} />)}
-              </div>
-              <p className="text-gray-600 italic mb-6 leading-relaxed">
-                "The DCA course at GV Computer Center completely changed my career path. The instructors were incredibly supportive, and the hands-on projects gave me the confidence to apply for jobs."
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl">R</div>
-                <div>
-                  <h4 className="font-bold text-gray-900">Rahul Sharma</h4>
-                  <p className="text-sm text-gray-500">Placed at TechCorp</p>
-                </div>
-              </div>
-            </div>
-            {/* Testimonial 2 */}
-            <div className="bg-gray-50 border border-gray-200 rounded-3xl p-8 relative hover:shadow-lg transition-shadow mt-0 md:mt-8">
-              <FaQuoteLeft className="text-4xl text-gray-200 absolute top-6 right-6" />
-              <div className="flex text-amber-400 mb-4">
-                {[...Array(5)].map((_, i) => <FaStar key={i} />)}
-              </div>
-              <p className="text-gray-600 italic mb-6 leading-relaxed">
-                "I enrolled in the ADCA program. The curriculum is perfectly aligned with industry standards. Within two months of graduating, I secured a great IT position!"
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center text-white font-bold text-xl">S</div>
-                <div>
-                  <h4 className="font-bold text-gray-900">Sneha Patel</h4>
-                  <p className="text-sm text-gray-500">Placed at InfoSys</p>
-                </div>
-              </div>
-            </div>
-            {/* Testimonial 3 */}
-            <div className="bg-gray-50 border border-gray-200 rounded-3xl p-8 relative hover:shadow-lg transition-shadow mt-0 md:mt-16">
-              <FaQuoteLeft className="text-4xl text-gray-200 absolute top-6 right-6" />
-              <div className="flex text-amber-400 mb-4">
-                {[...Array(5)].map((_, i) => <FaStar key={i} />)}
-              </div>
-              <p className="text-gray-600 italic mb-6 leading-relaxed">
-                "Best institute in Fazilnagar! The practical training approach and 100% job support promise are real. I highly recommend GV to anyone looking to start a tech career."
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-xl">A</div>
-                <div>
-                  <h4 className="font-bold text-gray-900">Amit Verma</h4>
-                  <p className="text-sm text-gray-500">Freelance Developer</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          
+          <TestimonialSlider />
         </div>
       </section>
 
