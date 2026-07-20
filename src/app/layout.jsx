@@ -9,8 +9,30 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'GV Computer Center',
-  description: 'GV Computer Center Portal',
+  title: 'GV Computer Center | Best Computer Institute in Fazilnagar, Tamkuhi, Kasaya',
+  description: 'GV Computer Center is the top-rated computer training institute near Fazilnagar, Tamkuhi, Kasaya, and Kushinagar. We offer advanced DCA, ADCA, Tally, and coding courses. Enroll now!',
+  keywords: 'GV Computer Center, Computer Institute in Fazilnagar, Computer classes Tamkuhi, Computer coaching Kasaya, Best computer center near me, DCA ADCA course in Kushinagar, Coding classes in Fazilnagar, Web Development Course UP',
+  openGraph: {
+    title: 'GV Computer Center | Best Computer Institute in Fazilnagar, Tamkuhi, Kasaya',
+    description: 'GV Computer Center is the top-rated computer training institute near Fazilnagar, Tamkuhi, Kasaya, and Kushinagar.',
+    url: 'https://gv-frontend-six.vercel.app',
+    siteName: 'GV Computer Center',
+    images: [
+      {
+        url: '/gv-logo.jpg',
+        width: 800,
+        height: 600,
+        alt: 'GV Computer Center Logo',
+      },
+    ],
+    locale: 'en_IN',
+    type: 'website',
+  },
+  icons: {
+    icon: '/gv-logo.jpg',
+    shortcut: '/gv-logo.jpg',
+    apple: '/gv-logo.jpg',
+  },
 };
 
 export default function RootLayout({ children }) {
