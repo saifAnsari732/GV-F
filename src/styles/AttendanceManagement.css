@@ -4,13 +4,13 @@
 
 .simple-attendance {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-  padding: 32px 48px;
+  background: #f9fafb; /* Light Gray Background */
+  padding: 100px 48px 48px; /* Extra padding top for navbar offset */
   font-family: 'Inter', sans-serif;
 }
 
 @media (max-width: 768px) {
-  .simple-attendance { padding: 16px; }
+  .simple-attendance { padding: 88px 16px 32px; }
 }
 
 /* ─── Header ─────────────────────────────────────────── */
@@ -19,7 +19,7 @@
 .attendance-header h1 {
   font-size: 2.4rem;
   font-weight: 800;
-  background: linear-gradient(90deg, #a78bfa, #60a5fa, #34d399);
+  background: linear-gradient(90deg, #06b6d4, #3b82f6, #6366f1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -28,31 +28,34 @@
 
 .attendance-header p {
   font-size: 1rem;
-  color: rgba(255,255,255,0.45);
+  color: #4b5563;
   margin: 0;
+  font-weight: 500;
 }
 
 /* ─── Messages ───────────────────────────────────────── */
 .error-message {
-  background: rgba(248,113,113,0.1);
-  border: 1px solid rgba(248,113,113,0.3);
-  border-left: 4px solid #f87171;
-  color: #f87171;
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-left: 4px solid #ef4444;
+  color: #991b1b;
   padding: 13px 18px;
   border-radius: 12px;
   margin-bottom: 20px;
   font-size: .9rem;
+  font-weight: 600;
 }
 
 .success-message {
-  background: rgba(52,211,153,0.1);
-  border: 1px solid rgba(52,211,153,0.3);
-  border-left: 4px solid #34d399;
-  color: #34d399;
+  background: rgba(16,185,129,0.08);
+  border: 1px solid rgba(16,185,129,0.2);
+  border-left: 4px solid #10b981;
+  color: #065f46;
   padding: 13px 18px;
   border-radius: 12px;
   margin-bottom: 20px;
   font-size: .9rem;
+  font-weight: 600;
 }
 
 /* ─── Course Tabs ────────────────────────────────────── */
@@ -61,16 +64,16 @@
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 24px;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   padding: 16px;
   border-radius: 18px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .course-tab {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
   padding: 11px 18px;
   border-radius: 12px;
   cursor: pointer;
@@ -84,32 +87,32 @@
 }
 
 .course-tab:hover {
-  background: rgba(255,255,255,0.1);
+  background: #e5e7eb;
   transform: translateY(-2px);
-  border-color: rgba(255,255,255,0.2);
+  border-color: #d1d5db;
 }
 
 .course-tab.active {
-  background: linear-gradient(135deg, rgba(167,139,250,0.35), rgba(124,58,237,0.35));
-  border-color: rgba(167,139,250,0.6);
-  box-shadow: 0 6px 20px rgba(124,58,237,0.3);
+  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  border-color: #0891b2;
+  box-shadow: 0 6px 18px rgba(6,182,212,0.25);
 }
 
 .course-tab-name {
   font-weight: 700;
   font-size: .88rem;
-  color: rgba(255,255,255,0.85);
+  color: #4b5563;
 }
 
 .course-tab.active .course-tab-name { color: #fff; }
 
 .course-tab-code {
   font-size: .7rem;
-  color: rgba(255,255,255,0.38);
+  color: #9ca3af;
   font-weight: 500;
 }
 
-.course-tab.active .course-tab-code { color: rgba(167,139,250,0.8); }
+.course-tab.active .course-tab-code { color: rgba(255,255,255,0.85); }
 
 /* ─── Date Section ───────────────────────────────────── */
 .date-section {
@@ -117,17 +120,17 @@
   gap: 14px;
   align-items: center;
   flex-wrap: wrap;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   padding: 16px 20px;
   border-radius: 16px;
   margin-bottom: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .date-section label {
   font-weight: 700;
-  color: rgba(255,255,255,0.6);
+  color: #4b5563;
   font-size: .82rem;
   text-transform: uppercase;
   letter-spacing: .8px;
@@ -136,28 +139,27 @@
 
 .date-input {
   padding: 10px 14px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: #ffffff;
+  border: 1px solid #d1d5db;
   border-radius: 10px;
   font-size: .92rem;
-  color: #fff;
+  color: #111827;
   font-family: 'Inter', sans-serif;
   transition: all .25s;
-  colorscheme: dark;
 }
 
 .date-input:focus {
   outline: none;
-  border-color: rgba(167,139,250,0.6);
-  box-shadow: 0 0 0 3px rgba(167,139,250,0.15);
+  border-color: #06b6d4;
+  box-shadow: 0 0 0 3px rgba(6,182,212,0.15);
 }
 
 .btn-refresh {
   padding: 10px 20px;
-  background: rgba(96,165,250,0.15);
-  border: 1px solid rgba(96,165,250,0.3);
+  background: rgba(6,182,212,0.08);
+  border: 1px solid rgba(6,182,212,0.25);
   border-radius: 10px;
-  color: #60a5fa;
+  color: #0891b2;
   font-weight: 700;
   font-size: .85rem;
   cursor: pointer;
@@ -166,36 +168,37 @@
 }
 
 .btn-refresh:hover {
-  background: rgba(96,165,250,0.28);
+  background: rgba(6,182,212,0.15);
   transform: translateY(-2px);
 }
 
 .btn-refresh:disabled {
-  opacity: .35;
+  opacity: .45;
   cursor: not-allowed;
   transform: none;
 }
 
 /* ─── Course Info ────────────────────────────────────── */
 .course-info {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-left: 4px solid #a78bfa;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-left: 4px solid #06b6d4;
   padding: 16px 20px;
   border-radius: 14px;
   margin-bottom: 22px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
 }
 
 .course-info h2 {
   font-size: 1.15rem;
-  color: #fff;
+  color: #111827;
   font-weight: 800;
   margin: 0 0 4px;
 }
 
 .course-info p {
   font-size: .82rem;
-  color: rgba(255,255,255,0.4);
+  color: #6b7280;
   margin: 0;
   font-weight: 500;
 }
@@ -209,35 +212,35 @@
 }
 
 .summary-card {
-  background: rgba(255,255,255,0.06);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   padding: 20px;
   border-radius: 18px;
   text-align: center;
   transition: transform .3s, box-shadow .3s;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .summary-card::after {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 3px;
+  height: 3.5px;
 }
 
-.summary-card.total::after   { background: linear-gradient(90deg,#a78bfa,#7c3aed); }
-.summary-card.present::after { background: linear-gradient(90deg,#34d399,#059669); }
-.summary-card.absent::after  { background: linear-gradient(90deg,#f87171,#dc2626); }
-.summary-card.late::after    { background: linear-gradient(90deg,#fbbf24,#d97706); }
+.summary-card.total::after   { background: linear-gradient(90deg,#06b6d4,#3b82f6); }
+.summary-card.present::after { background: linear-gradient(90deg,#10b981,#059669); }
+.summary-card.absent::after  { background: linear-gradient(90deg,#ef4444,#dc2626); }
+.summary-card.late::after    { background: linear-gradient(90deg,#f59e0b,#d97706); }
 
-.summary-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,0.35); }
+.summary-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.06); }
 
 .summary-label {
   display: block;
   font-size: .72rem;
-  color: rgba(255,255,255,0.4);
+  color: #6b7280;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .8px;
@@ -248,7 +251,7 @@
   display: block;
   font-size: 2.2rem;
   font-weight: 800;
-  color: #fff;
+  color: #111827;
   line-height: 1;
 }
 
@@ -273,50 +276,50 @@
 }
 
 .btn-quick.present {
-  background: rgba(52,211,153,0.14);
-  border-color: rgba(52,211,153,0.35);
-  color: #34d399;
+  background: rgba(16,185,129,0.08);
+  border-color: rgba(16,185,129,0.25);
+  color: #10b981;
 }
 
 .btn-quick.present:hover {
-  background: rgba(52,211,153,0.28);
+  background: rgba(16,185,129,0.18);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(52,211,153,0.2);
+  box-shadow: 0 4px 12px rgba(16,185,129,0.15);
 }
 
 .btn-quick.absent {
-  background: rgba(248,113,113,0.14);
-  border-color: rgba(248,113,113,0.35);
-  color: #f87171;
+  background: rgba(239,68,68,0.08);
+  border-color: rgba(239,68,68,0.25);
+  color: #ef4444;
 }
 
 .btn-quick.absent:hover {
-  background: rgba(248,113,113,0.28);
+  background: rgba(239,68,68,0.18);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(248,113,113,0.2);
+  box-shadow: 0 4px 12px rgba(239,68,68,0.15);
 }
 
 .btn-quick.clear {
-  background: rgba(251,191,36,0.14);
-  border-color: rgba(251,191,36,0.35);
-  color: #fbbf24;
+  background: rgba(245,158,11,0.08);
+  border-color: rgba(245,158,11,0.25);
+  color: #d97706;
 }
 
 .btn-quick.clear:hover {
-  background: rgba(251,191,36,0.28);
+  background: rgba(245,158,11,0.18);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(251,191,36,0.2);
+  box-shadow: 0 4px 12px rgba(245,158,11,0.15);
 }
 
 /* ─── Table ──────────────────────────────────────────── */
 .students-table-container {
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 20px;
   overflow: hidden;
   overflow-x: auto;
   margin-bottom: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .students-table {
@@ -327,37 +330,37 @@
 .students-table th {
   text-align: left;
   padding: 14px 18px;
-  background: rgba(255,255,255,0.05);
-  color: rgba(255,255,255,0.4);
+  background: #f9fafb;
+  color: #6b7280;
   font-weight: 700;
   font-size: .7rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid #e5e7eb;
   white-space: nowrap;
 }
 
 .students-table td {
   padding: 13px 18px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  color: rgba(255,255,255,0.8);
+  border-bottom: 1px solid #f3f4f6;
+  color: #374151;
   font-size: .9rem;
 }
 
 .students-table tbody tr:last-child td { border-bottom: none; }
 .students-table tbody tr { transition: background .2s; }
-.students-table tbody tr:hover { background: rgba(255,255,255,0.04); }
+.students-table tbody tr:hover { background: #f9fafb; }
 
 /* Row status highlights */
-.students-table tbody tr.row-present { background: rgba(52,211,153,0.05); }
-.students-table tbody tr.row-absent  { background: rgba(248,113,113,0.05); }
-.students-table tbody tr.row-late    { background: rgba(251,191,36,0.05); }
+.students-table tbody tr.row-present { background: rgba(16,185,129,0.03); }
+.students-table tbody tr.row-absent  { background: rgba(239,68,68,0.03); }
+.students-table tbody tr.row-late    { background: rgba(245,158,11,0.03); }
 
 /* Sr number */
-.sr-no { color: rgba(255,255,255,0.35); font-weight: 600; }
+.sr-no { color: #9ca3af; font-weight: 600; }
 
 /* Student name */
-.student-name-cell .student-name { font-weight: 600; color: #fff; }
+.student-name-cell .student-name { font-weight: 600; color: #111827; }
 
 /* ─── Custom Checkboxes ──────────────────────────────── */
 .checkbox-cell { text-align: center; width: 64px; }
@@ -382,41 +385,41 @@
 .checkbox-custom {
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,0.06);
-  border: 2px solid rgba(255,255,255,0.15);
+  background: #f3f4f6;
+  border: 2px solid #d1d5db;
   border-radius: 7px;
   transition: all .2s;
 }
 
 /* Hover states */
 .checkbox-label.present:hover .checkbox-custom {
-  border-color: #34d399;
-  background: rgba(52,211,153,0.1);
+  border-color: #10b981;
+  background: rgba(16,185,129,0.1);
 }
 .checkbox-label.absent:hover .checkbox-custom {
-  border-color: #f87171;
-  background: rgba(248,113,113,0.1);
+  border-color: #ef4444;
+  background: rgba(239,68,68,0.1);
 }
 .checkbox-label.late:hover .checkbox-custom {
-  border-color: #fbbf24;
-  background: rgba(251,191,36,0.1);
+  border-color: #f59e0b;
+  background: rgba(245,158,11,0.1);
 }
 
 /* Checked states */
 .checkbox-label.present .checkbox-input:checked + .checkbox-custom {
-  background: #34d399;
-  border-color: #34d399;
-  box-shadow: 0 0 10px rgba(52,211,153,0.5);
+  background: #10b981;
+  border-color: #10b981;
+  box-shadow: 0 0 8px rgba(16,185,129,0.3);
 }
 .checkbox-label.absent .checkbox-input:checked + .checkbox-custom {
-  background: #f87171;
-  border-color: #f87171;
-  box-shadow: 0 0 10px rgba(248,113,113,0.5);
+  background: #ef4444;
+  border-color: #ef4444;
+  box-shadow: 0 0 8px rgba(239,68,68,0.3);
 }
 .checkbox-label.late .checkbox-input:checked + .checkbox-custom {
-  background: #fbbf24;
-  border-color: #fbbf24;
-  box-shadow: 0 0 10px rgba(251,191,36,0.5);
+  background: #f59e0b;
+  border-color: #f59e0b;
+  box-shadow: 0 0 8px rgba(245,158,11,0.3);
 }
 
 /* Checkmark */
@@ -444,8 +447,8 @@
 
 .spinner {
   width: 44px; height: 44px;
-  border: 3px solid rgba(167,139,250,0.2);
-  border-top-color: #a78bfa;
+  border: 3px solid rgba(6,182,212,0.2);
+  border-top-color: #0891b2;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 14px;
@@ -453,7 +456,7 @@
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.loading-container p { color: rgba(255,255,255,0.45); font-size: .95rem; }
+.loading-container p { color: #6b7280; font-size: .95rem; }
 
 /* ─── Submit Section ─────────────────────────────────── */
 .submit-section {
@@ -464,7 +467,7 @@
 
 .btn-submit {
   padding: 13px 36px;
-  background: linear-gradient(135deg, #34d399, #059669);
+  background: linear-gradient(135deg, #10b981, #059669);
   border: none;
   border-radius: 12px;
   color: #fff;
@@ -473,12 +476,12 @@
   cursor: pointer;
   transition: all .25s;
   font-family: 'Inter', sans-serif;
-  box-shadow: 0 8px 20px rgba(52,211,153,0.3);
+  box-shadow: 0 8px 20px rgba(16,185,129,0.25);
 }
 
 .btn-submit:hover:not(:disabled) {
   transform: translateY(-3px);
-  box-shadow: 0 14px 28px rgba(52,211,153,0.45);
+  box-shadow: 0 12px 24px rgba(16,185,129,0.35);
 }
 
 .btn-submit:disabled { opacity: .4; cursor: not-allowed; }
@@ -488,12 +491,13 @@
 .no-students {
   text-align: center;
   padding: 60px 20px;
-  background: rgba(255,255,255,0.03);
-  border: 1px dashed rgba(255,255,255,0.1);
+  background: #ffffff;
+  border: 1px dashed #d1d5db;
   border-radius: 18px;
-  color: rgba(255,255,255,0.3);
+  color: #9ca3af;
   font-size: 1rem;
   margin: 10px 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
 }
 
 /* ─── Responsive ─────────────────────────────────────── */

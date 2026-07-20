@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import api from '../services/api';
@@ -78,7 +79,7 @@ const ApplyModal = ({ job, user, onClose, onSuccess }) => {
         <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex justify-between items-center rounded-t-2xl z-10">
           <div>
             <h2 className="text-lg font-bold text-gray-800">Apply for <span className="text-indigo-600">{job.title}</span></h2>
-            <p className="text-xs text-gray-400 mt-0.5">{job.company} · {job.location}</p>
+            <p className="text-xs text-gray-600 mt-0.5">{job.company} · {job.location}</p>
           </div>
           <button
             onClick={onClose}
@@ -145,7 +146,7 @@ const ApplyModal = ({ job, user, onClose, onSuccess }) => {
                 {errors.applicantPhone && <p className="text-red-500 text-xs mt-1">{errors.applicantPhone}</p>}
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1.5">Expected Salary <span className="text-gray-400 font-normal">(Optional)</span></label>
+                <label className="block text-xs font-semibold text-gray-600 mb-1.5">Expected Salary <span className="text-gray-600 font-normal">(Optional)</span></label>
                 <input
                   type="text"
                   name="expectedSalary"
@@ -173,7 +174,7 @@ const ApplyModal = ({ job, user, onClose, onSuccess }) => {
 
             {/* Cover Letter */}
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1.5">Cover Letter <span className="text-gray-400 font-normal">(Optional)</span></label>
+              <label className="block text-xs font-semibold text-gray-600 mb-1.5">Cover Letter <span className="text-gray-600 font-normal">(Optional)</span></label>
               <textarea
                 name="coverLetter"
                 value={formData.coverLetter}
@@ -224,7 +225,7 @@ const ApplyModal = ({ job, user, onClose, onSuccess }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+                className="flex-1 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 disabled:opacity-60 disabled:cursor-not-allowed text-gray-900 font-semibold rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">

@@ -1,4 +1,4 @@
-import api from './coursesAPI';
+import api from './api';
 
 export const coursesAPI = {
   getAll: () => api.get('/api/courses'),
