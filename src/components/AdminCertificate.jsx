@@ -923,7 +923,7 @@ export const CertificateDetail = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100/60 py-12 px-4 pt-24 relative overflow-hidden print:p-0 print:bg-white print:pt-0">
+    <div className="min-h-screen bg-gray-100/60 py-12 px-4 pt-24 relative overflow-hidden print:overflow-visible print:p-0 print:bg-white print:pt-0">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,500&family=Great+Vibes&display=swap');
         
@@ -950,35 +950,39 @@ export const CertificateDetail = () => {
             margin: 10mm !important;
           }
           body {
-            background-color: white !important;
+            background: white !important;
             margin: 0 !important;
             padding: 0 !important;
+            overflow: visible !important;
           }
           nav, header, footer, .no-print {
             display: none !important;
           }
           .print-m-0 {
-            margin: 0 !important;
+            margin: 0 auto !important;
             padding: 40px !important;
             box-shadow: none !important;
             border: 4px solid #d4af37 !important;
             border-radius: 0 !important;
-            background-color: white !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
+            background: white !important;
             min-height: auto !important;
             display: block !important;
+            overflow: visible !important;
           }
           .cert-card {
             box-shadow: none !important;
             page-break-inside: avoid !important;
           }
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
         }
       `}</style>
 
-      <div className="max-w-4xl mx-auto relative z-10">
+      <div className="max-w-4xl mx-auto relative z-10 print:overflow-visible">
 
-        <div className="cert-card bg-white rounded-3xl p-8 sm:p-12 relative overflow-hidden print-m-0">
+        <div className="cert-card bg-white rounded-3xl p-8 sm:p-12 relative overflow-hidden print:overflow-visible print-m-0">
           
           <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-[#d4af37] print:hidden" />
           <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-[#d4af37] print:hidden" />
