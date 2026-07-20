@@ -12,8 +12,9 @@ import { API_URL } from '../helper';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Home | GV Computer Center',
-  description: 'Master computer skills from basics to advanced. Join 10,000+ students with industry-recognized certifications.',
+  title: 'GV Computer Center | Best Computer Institute in Fazilnagar, Tamkuhi, Kasaya',
+  description: 'No.1 computer training institute in Fazilnagar — DCA, ADCA, Tally, CCC, O Level courses + Job Placement assistance. Serving Tamkuhi Raj, Kasaya, Kushinagar, Padrauna & nearby areas.',
+  keywords: 'GV Computer Center, Best Computer Institute Fazilnagar, Computer classes Tamkuhi, Top institute Kasaya, DCA ADCA near me, Jobs in Fazilnagar, Computer course Kushinagar, Job placement Fazilnagar, Tally CCC O Level institute, IT course Padrauna, Government job help Fazilnagar',
 };
 
 async function getCourses() {

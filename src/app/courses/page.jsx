@@ -5,8 +5,9 @@ import { API_URL } from '../../helper';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Courses | GV Computer Center',
-  description: 'Explore our comprehensive computer training programs designed to launch your tech career. From basics to advanced programming with industry-recognized certifications.',
+  title: 'Computer Courses in Fazilnagar, Tamkuhi, Kasaya | GV Computer Center',
+  description: 'Join DCA, ADCA, Tally Prime, CCC, O Level, Web Development & more courses at GV Computer Center — top-rated institute in Fazilnagar, Tamkuhi Raj, Kasaya & Kushinagar.',
+  keywords: 'DCA course in Fazilnagar, ADCA classes near me, Tally Prime with GST in Tamkuhi, CCC certification Kasaya, O Level course Kushinagar, Diploma in Computer Application UP, ADCA computer center Padrauna, Web Development class in Fazilnagar, Best computer course near me, IT training institute Kushinagar district',
 };
 
 async function getCourses() {

@@ -5,8 +5,9 @@ import { API_URL } from '../../helper';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Job Board | GV Computer Center',
-  description: 'Find your next dream job. Placement-assisted opportunities curated exclusively for GV Computer Center graduates.',
+  title: 'Job Vacancies in Fazilnagar & Tamkuhi | GV Computer Center',
+  description: 'Find the latest private jobs, computer operator jobs, and IT vacancies in Fazilnagar, Tamkuhi Raj, Kasaya, and Kushinagar.',
+  keywords: 'Jobs in Fazilnagar, Latest jobs in Tamkuhi Raj, Computer operator jobs Kasaya, Private jobs in Kushinagar, Vacancies in Padrauna, Data entry jobs near me, IT jobs Gorakhpur, GV Computer Center jobs, employment in Dhanauji Kalon',
 };
 
 async function getJobs() {
