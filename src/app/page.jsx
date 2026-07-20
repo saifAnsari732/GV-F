@@ -126,13 +126,13 @@ export default async function Home() {
           </div>
 
           {!courses.length ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className="bg-white rounded-3xl h-64 animate-pulse border border-gray-200" />
+                <div key={i} className="bg-white rounded-2xl sm:rounded-3xl h-64 animate-pulse border border-gray-200" />
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
               {courses.slice(0, 4).map((course) => {
                 const CourseIcon = getCourseIcon(course.courseName);
                 const colors = getCourseColor(course.courseName);
@@ -140,19 +140,20 @@ export default async function Home() {
                   <Link
                     key={course._id}
                     href={`/courses/${course._id}`}
-                    className={`group relative bg-white border border-gray-200 rounded-3xl overflow-hidden ${colors.border} transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${colors.glow} flex flex-col`}
+                    className={`group relative bg-white border border-gray-200 rounded-2xl sm:rounded-3xl overflow-hidden ${colors.border} transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${colors.glow} flex flex-col`}
                   >
                     <div className={`h-1.5 w-full bg-gradient-to-r ${colors.gradient}`} />
                     <div className="absolute inset-0 bg-gradient-to-br from-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                    <div className="relative p-6 flex flex-col flex-1">
-                      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${colors.gradient} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                        <CourseIcon className="text-2xl text-white" />
+                    <div className="relative p-4 sm:p-6 flex flex-col flex-1">
+                      <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br ${colors.gradient} flex items-center justify-center mb-3 sm:mb-5 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                        <CourseIcon className="text-xl sm:text-2xl text-white" />
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-cyan-400 transition-colors mb-2">{course.courseName}</h3>
-                      <p className="text-gray-600 text-sm mb-6 flex-1">Master this in-demand course and elevate your career.</p>
-                      <div className={`flex items-center justify-between w-full px-4 py-3 bg-gray-50/50 group-hover:bg-gradient-to-r ${colors.gradient} text-gray-700 group-hover:text-gray-900 text-sm font-semibold rounded-xl border border-gray-200 group-hover:border-transparent transition-all duration-300`}>
-                        <span>Explore Course</span>
-                        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <h3 className="text-base sm:text-xl font-bold text-gray-900 group-hover:text-cyan-400 transition-colors mb-1 sm:mb-2">{course.courseName}</h3>
+                      <p className="text-gray-600 text-xs sm:text-sm mb-4 sm:mb-6 flex-1 line-clamp-2 sm:line-clamp-none">Master this in-demand course and elevate your career.</p>
+                      <div className={`flex items-center justify-center sm:justify-between w-full px-2 sm:px-4 py-2 sm:py-3 bg-gray-50/50 group-hover:bg-gradient-to-r ${colors.gradient} text-gray-700 group-hover:text-gray-900 text-[10px] sm:text-sm font-semibold rounded-lg sm:rounded-xl border border-gray-200 group-hover:border-transparent transition-all duration-300`}>
+                        <span className="hidden sm:inline">Explore Course</span>
+                        <span className="sm:hidden">Explore</span>
+                        <svg className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-0 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
                       </div>
