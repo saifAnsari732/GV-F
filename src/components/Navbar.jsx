@@ -64,8 +64,8 @@ const Navbar = () => {
       );
     }
     return (
-      <Link href={href} onClick={closeMenu} className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all duration-300 ${active ? 'bg-white/10 text-cyan-400 shadow-[inset_0_0_20px_rgba(255,255,255,0.05)] border border-gray-200' : 'text-gray-700 hover:text-gray-900 hover:bg-white/5'}`}>
-        <Icon className={`text-lg ${active ? 'text-cyan-400' : 'text-gray-600'}`} /> <span>{children}</span>
+      <Link href={href} onClick={closeMenu} className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 ${active ? 'bg-cyan-50 text-cyan-700 border border-cyan-200/50 shadow-sm' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 border border-transparent'}`}>
+        <Icon className={`text-lg transition-colors ${active ? 'text-cyan-600' : 'text-gray-400 group-hover:text-cyan-500'}`} /> <span>{children}</span>
       </Link>
     );
   };
@@ -76,14 +76,14 @@ const Navbar = () => {
         
         {/* Brand */}
         <Link href="/" onClick={closeMenu} className="flex items-center gap-3 group">
-          <div className="relative w-12 h-12 rounded-xl overflow-hidden shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-500/40 transition-all duration-300 group-hover:scale-105 bg-white flex items-center justify-center">
+          <div className="relative w-12 h-12 rounded-xl overflow-hidden shadow-lg   flex items-center justify-center">
             <Image src="/gv-logo.jpg" alt="GV Logo" fill className="object-cover" />
           </div>
           <span className="text-xl font-extrabold text-gray-900 tracking-tight">GV <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">Computer</span></span>
         </Link>
 
         {/* Mobile Toggle */}
-        <button ref={toggleRef} onClick={toggleMenu} className="md:hidden text-gray-700 hover:text-gray-900 p-2 rounded-lg bg-white/5 border border-gray-200 focus:outline-none">
+        <button ref={toggleRef} onClick={toggleMenu} className="md:hidden text-gray-700 hover:text-cyan-600 p-2.5 rounded-xl bg-white border border-gray-200 shadow-sm focus:outline-none transition-all active:scale-95">
           {menuOpen ? <FaTimes className="text-xl" /> : <FaBars className="text-xl" />}
         </button>
 
@@ -114,29 +114,29 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu Dropdown */}
-        <div ref={menuRef} className={`absolute top-full left-4 right-4 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-2xl shadow-2xl p-4 flex flex-col gap-2 transition-all duration-300 origin-top md:hidden ${menuOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
+        <div ref={menuRef} className={`absolute top-full left-4 right-4 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] p-4 flex flex-col gap-2 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] origin-top md:hidden ${menuOpen ? 'opacity-100 translate-y-2 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'}`}>
           <NavLink href="/" icon={FaHome}>Home</NavLink>
           <NavLink href="/courses" icon={FaGraduationCap}>Courses</NavLink>
           <NavLink href="/jobs" icon={FaBriefcase}>Jobs</NavLink>
           {!isAdmin && <NavLink href="/verify-certificate" icon={FaCertificate}>Verify</NavLink>}
           
-          <div className="h-px w-full bg-white/10 my-2"></div>
+          <div className="h-px w-full bg-gray-200 my-2"></div>
           
           {isAuthenticated ? (
             <>
               <NavLink href={isAdmin ? "/admin/dashboard" : "/student/dashboard"} icon={FaChartBar}>Dashboard</NavLink>
               {isAdmin && <NavLink href="/admin/certificates" icon={FaCertificate}>Certificates</NavLink>}
               <NavLink href="/profile" icon={FaUser}>Profile</NavLink>
-              <button onClick={handleLogout} className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold transition-all duration-300 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-gray-900 border border-red-500/20 mt-2">
+              <button onClick={handleLogout} className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold transition-all duration-300 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white border border-red-200 mt-2">
                 <FaSignOutAlt /> Logout
               </button>
             </>
           ) : (
             <div className="grid grid-cols-2 gap-3 mt-2">
-              <Link href="/login" onClick={closeMenu} className="flex justify-center items-center gap-2 bg-white/10 hover:bg-white/20 text-white py-3 rounded-xl font-semibold transition-all">
+              <Link href="/login" onClick={closeMenu} className="flex justify-center items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-xl font-semibold transition-all shadow-sm">
                 Login
               </Link>
-              <Link href="/register" onClick={closeMenu} className="flex justify-center items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-3 rounded-xl font-semibold transition-all shadow-lg shadow-cyan-500/25">
+              <Link href="/register" onClick={closeMenu} className="flex justify-center items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white py-3 rounded-xl font-semibold transition-all shadow-md shadow-cyan-500/25 hover:shadow-cyan-500/40">
                 Register
               </Link>
             </div>
@@ -145,7 +145,7 @@ const Navbar = () => {
       </div>
       
       {/* Mobile Menu Backdrop */}
-      {menuOpen && <div className="fixed inset-0 bg-black/50 backdrop-blur-sm -z-10 md:hidden" onClick={closeMenu}></div>}
+      {menuOpen && <div className="fixed inset-0 bg-gray-900/30 backdrop-blur-sm -z-10 md:hidden" onClick={closeMenu}></div>}
     </nav>
   );
 };
