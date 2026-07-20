@@ -5,7 +5,7 @@ import api from '../services/api';
 import {
   FaCertificate, FaPlus, FaTrash, FaSearch,
   FaCheckCircle, FaTimesCircle, FaEye,
-  FaDownload, FaExclamationTriangle
+  FaDownload, FaExclamationTriangle, FaEdit
 } from 'react-icons/fa';
 import { useParams } from 'next/navigation';
 
@@ -373,6 +373,77 @@ export const CertificateList = () => {
   const [search, setSearch] = useState('');
   const [filterType, setFilterType] = useState('');
 
+  // Edit Certificate modal states
+  const [editingCert, setEditingCert] = useState(null);
+  const [editForm, setEditForm] = useState({
+    studentName: '',
+    courseName: '',
+    certificateNumber: '',
+    type: 'both',
+    issueDate: '',
+    remarks: '',
+    marksheet: {
+      subjects: []
+    }
+  });
+
+  const handleEditClick = (cert) => {
+    setEditingCert(cert);
+    setEditForm({
+      studentName: cert.studentName || '',
+      courseName: cert.courseName || '',
+      certificateNumber: cert.certificateNumber || '',
+      type: cert.type || 'both',
+      issueDate: cert.issueDate ? cert.issueDate.split('T')[0] : '',
+      remarks: cert.remarks || '',
+      marksheet: {
+        subjects: cert.marksheet?.subjects || []
+      }
+    });
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await api.put(`/api/certificates/${editingCert._id}`, editForm);
+      if (response.data.success) {
+        setCertificates(prev => prev.map(c => c._id === editingCert._id ? response.data.data : c));
+        setEditingCert(null);
+        alert('Certificate updated successfully!');
+      }
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to update certificate');
+    }
+  };
+
+  const addEditSubject = () => {
+    setEditForm(prev => ({
+      ...prev,
+      marksheet: {
+        ...prev.marksheet,
+        subjects: [...prev.marksheet.subjects, { subject: '', marksObtained: '', totalMarks: 100 }]
+      }
+    }));
+  };
+
+  const removeEditSubject = (index) => {
+    setEditForm(prev => ({
+      ...prev,
+      marksheet: {
+        ...prev.marksheet,
+        subjects: prev.marksheet.subjects.filter((_, i) => i !== index)
+      }
+    }));
+  };
+
+  const updateEditSubject = (index, field, value) => {
+    setEditForm(prev => {
+      const subjects = [...prev.marksheet.subjects];
+      subjects[index] = { ...subjects[index], [field]: value };
+      return { ...prev, marksheet: { ...prev.marksheet, subjects } };
+    });
+  };
+
   useEffect(() => { fetchCertificates(); }, []);
 
   const fetchCertificates = async () => {
@@ -499,6 +570,11 @@ export const CertificateList = () => {
                       <FaEye className="text-sm" />
                     </Link>
                     <button
+                      onClick={() => handleEditClick(cert)}
+                      className="text-amber-600 hover:text-amber-800 bg-amber-50 hover:bg-amber-100 p-2 rounded-lg transition-all border border-amber-200/50">
+                      <FaEdit className="text-sm" />
+                    </button>
+                    <button
                       onClick={() => handleDelete(cert._id)}
                       className="text-rose-600 hover:text-rose-800 bg-rose-50 hover:bg-rose-100 p-2 rounded-lg transition-all border border-rose-200/50">
                       <FaTrash className="text-sm" />
@@ -510,6 +586,154 @@ export const CertificateList = () => {
           </div>
         )}
       </div>
+
+      {/* Edit Certificate Modal */}
+      {editingCert && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-200">
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+                <h2 className="font-['Syne',sans-serif] text-xl font-extrabold text-gray-900">Edit Certificate Details</h2>
+                <button
+                  onClick={() => setEditingCert(null)}
+                  className="w-8 h-8 flex items-center justify-center bg-gray-50 border border-gray-200 rounded-lg text-lg cursor-pointer text-gray-400 hover:bg-rose-50 hover:border-rose-200 hover:text-rose-600 font-bold"
+                >
+                  ×
+                </button>
+              </div>
+
+              <form onSubmit={handleEditSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs font-bold text-gray-500 uppercase block mb-1">Student Name</label>
+                    <input
+                      type="text"
+                      value={editForm.studentName}
+                      onChange={e => setEditForm(prev => ({ ...prev, studentName: e.target.value }))}
+                      required
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:border-cyan-500 text-gray-900"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-bold text-gray-500 uppercase block mb-1">Course Name</label>
+                    <input
+                      type="text"
+                      value={editForm.courseName}
+                      onChange={e => setEditForm(prev => ({ ...prev, courseName: e.target.value }))}
+                      required
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:border-cyan-500 text-gray-900"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-bold text-gray-500 uppercase block mb-1">Certificate Number</label>
+                    <input
+                      type="text"
+                      value={editForm.certificateNumber}
+                      onChange={e => setEditForm(prev => ({ ...prev, certificateNumber: e.target.value }))}
+                      required
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:border-cyan-500 font-mono text-gray-900"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-bold text-gray-500 uppercase block mb-1">Issue Date</label>
+                    <input
+                      type="date"
+                      value={editForm.issueDate}
+                      onChange={e => setEditForm(prev => ({ ...prev, issueDate: e.target.value }))}
+                      required
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:border-cyan-500 text-gray-900"
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="text-xs font-bold text-gray-500 uppercase block mb-1">Remarks</label>
+                    <input
+                      type="text"
+                      value={editForm.remarks}
+                      onChange={e => setEditForm(prev => ({ ...prev, remarks: e.target.value }))}
+                      placeholder="Remarks..."
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-cyan-500 text-gray-900"
+                    />
+                  </div>
+                </div>
+
+                {/* Marksheet Subjects Edit Section */}
+                {(editForm.type === 'marksheet' || editForm.type === 'both') && (
+                  <div className="border-t border-gray-100 pt-4">
+                    <div className="flex justify-between items-center mb-3">
+                      <h4 className="font-['Syne',sans-serif] text-sm font-bold text-gray-900">Marksheet / Subjects</h4>
+                      <button
+                        type="button"
+                        onClick={addEditSubject}
+                        className="bg-cyan-50 border border-cyan-200 text-cyan-600 px-3 py-1.5 rounded-lg text-xs font-bold"
+                      >
+                        + Add Subject
+                      </button>
+                    </div>
+                    <div className="space-y-2.5 max-h-[200px] overflow-y-auto pr-1">
+                      {editForm.marksheet?.subjects?.map((sub, i) => (
+                        <div key={i} className="grid grid-cols-12 gap-2.5 items-center">
+                          <div className="col-span-6">
+                            <input
+                              type="text"
+                              placeholder="Subject"
+                              value={sub.subject}
+                              onChange={e => updateEditSubject(i, 'subject', e.target.value)}
+                              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs font-semibold text-gray-900"
+                            />
+                          </div>
+                          <div className="col-span-3">
+                            <input
+                              type="number"
+                              placeholder="Obtained"
+                              value={sub.marksObtained}
+                              onChange={e => updateEditSubject(i, 'marksObtained', e.target.value)}
+                              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs font-semibold text-gray-900"
+                            />
+                          </div>
+                          <div className="col-span-2">
+                            <input
+                              type="number"
+                              placeholder="Total"
+                              value={sub.totalMarks}
+                              onChange={e => updateEditSubject(i, 'totalMarks', e.target.value)}
+                              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs font-semibold text-gray-900"
+                            />
+                          </div>
+                          <div className="col-span-1 text-center">
+                            <button
+                              type="button"
+                              onClick={() => removeEditSubject(i)}
+                              className="text-rose-500 hover:text-rose-700 text-sm"
+                            >
+                              <FaTrash />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex justify-end gap-2.5 border-t border-gray-100 pt-4 mt-6">
+                  <button
+                    type="button"
+                    onClick={() => setEditingCert(null)}
+                    className="px-5 py-2.5 bg-gray-100 border border-gray-200 rounded-xl text-gray-600 font-bold text-sm hover:bg-gray-200/80"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-xl text-sm shadow-md"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
