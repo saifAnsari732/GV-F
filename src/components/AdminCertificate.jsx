@@ -947,10 +947,10 @@ export const CertificateDetail = () => {
         @media print {
           @page {
             size: portrait;
-            margin: 10mm 10mm 10mm 10mm !important;
+            margin: 10mm !important;
           }
           body {
-            background: white !important;
+            background-color: white !important;
             margin: 0 !important;
             padding: 0 !important;
           }
@@ -959,24 +959,19 @@ export const CertificateDetail = () => {
           }
           .print-m-0 {
             margin: 0 !important;
-            padding: 32px 36px !important;
+            padding: 40px !important;
             box-shadow: none !important;
-            border: 14px double #d4af37 !important;
+            border: 4px solid #d4af37 !important;
             border-radius: 0 !important;
-            background: #fdfbf7 !important;
+            background-color: white !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
-            min-height: 262mm !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: space-between !important;
+            min-height: auto !important;
+            display: block !important;
           }
           .cert-card {
             box-shadow: none !important;
             page-break-inside: avoid !important;
-          }
-          html, body {
-            height: 99%;
           }
         }
       `}</style>
