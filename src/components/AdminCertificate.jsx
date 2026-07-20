@@ -8,6 +8,7 @@ import {
   FaDownload, FaExclamationTriangle, FaEdit
 } from 'react-icons/fa';
 import { useParams } from 'next/navigation';
+import confetti from 'canvas-confetti';
 
 const G = 'linear-gradient(135deg,#00D4FF,#7C3AED)';
 
@@ -754,6 +755,12 @@ export const VerifyCertificate = () => {
     try {
       const res = await api.get(`/api/certificates/verify/${certNumber}`);
       setResult(res.data);
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#00D4FF', '#7C3AED', '#10B981', '#F59E0B']
+      });
     } catch (err) {
         console.log(err);
       setError('Certificate not found or invalid');
@@ -829,6 +836,12 @@ export const VerifyCertificate = () => {
                 <span className="text-gray-500 font-semibold">Status</span>
                 <span className="text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-full text-xs font-bold capitalize">{result.data.status}</span>
               </div>
+            </div>
+            <div className="mt-5 pt-5 border-t border-gray-100">
+              <Link href={`/certificates/${result.data._id}`}
+                className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold py-3.5 rounded-xl shadow-md transition-all hover:shadow-emerald-500/20 flex items-center justify-center gap-2">
+                <FaDownload /> View & Download
+              </Link>
             </div>
           </div>
         )}
