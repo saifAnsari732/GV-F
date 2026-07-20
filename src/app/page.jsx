@@ -225,6 +225,16 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* ─── SERVING AREAS / LOCAL SEO ─── */}
+      <section className="py-12 bg-white border-t border-gray-200">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Leading Computer Institute in Kushinagar District</h2>
+          <p className="text-gray-500 text-sm leading-relaxed max-w-4xl mx-auto">
+            GV Computer Center is proud to be the top choice for students searching for the <strong>Best Computer Institute in Fazilnagar</strong>, <strong>Computer Classes in Tamkuhi Raj</strong>, and <strong>Top Computer Coaching in Kasaya</strong>. We also serve students from <strong>Kushinagar, Padrauna, Patherwa, Dhanauji Kalon, Seorahi, and Dudhai</strong>. Whether you are looking for a <em>DCA course near me</em>, <em>ADCA computer center</em>, <em>Tally Prime with GST</em>, <em>CCC certification</em>, or <em>Web Development coding classes</em>, our expert faculty is here to help you succeed.
+          </p>
+        </div>
+      </section>
+
       {/* ─── FOOTER SECTION ─── */}
       <footer className="bg-gray-900 text-gray-300 py-16 border-t border-gray-800">
         <div className="max-w-6xl mx-auto px-6">
