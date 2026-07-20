@@ -853,6 +853,44 @@ export const CertificateDetail = () => {
     fetch();
   }, [id]);
 
+  const getMarksheetStats = () => {
+    if (!cert || !cert.marksheet || !cert.marksheet.subjects) {
+      return { obtained: 0, total: 0, percentage: 0, grade: '-', result: '-' };
+    }
+    const subjects = cert.marksheet.subjects;
+    const total = cert.marksheet.totalMarks || subjects.reduce((sum, s) => sum + Number(s.totalMarks || 0), 0);
+    const obtained = cert.marksheet.obtainedMarks || subjects.reduce((sum, s) => sum + Number(s.marksObtained || 0), 0);
+    
+    let percentage = cert.marksheet.percentage;
+    if (percentage === undefined || percentage === null || isNaN(percentage)) {
+      percentage = total > 0 ? ((obtained / total) * 100).toFixed(1) : 0;
+    }
+    
+    let grade = cert.marksheet.grade;
+    if (!grade || grade === '-') {
+      const pct = Number(percentage);
+      if (pct >= 75) grade = 'A+';
+      else if (pct >= 60) grade = 'A';
+      else if (pct >= 50) grade = 'B';
+      else if (pct >= 33) grade = 'C';
+      else grade = 'F';
+    }
+
+    let result = cert.marksheet.result;
+    if (!result || result === '-') {
+      const pct = Number(percentage);
+      if (pct >= 75) result = 'Distinction';
+      else if (pct >= 60) result = 'First Class';
+      else if (pct >= 50) result = 'Second Class';
+      else if (pct >= 33) result = 'Pass';
+      else result = 'Fail';
+    }
+
+    return { obtained, total, percentage, grade, result };
+  };
+
+  const finalStats = getMarksheetStats();
+
   if (loading) return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center pt-20">
       <div className="flex flex-col items-center gap-4">
@@ -1020,20 +1058,20 @@ export const CertificateDetail = () => {
               <div className="grid grid-cols-4 gap-3 print:gap-2 mt-3 text-center">
                 <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 print:py-1.5">
                   <span className="block text-[9px] print:text-[8px] font-bold text-gray-400 uppercase tracking-wide">Aggregate</span>
-                  <span className="text-gray-900 font-extrabold text-sm print:text-xs mt-0.5 block">{cert.marksheet.obtainedMarks}/{cert.marksheet.totalMarks}</span>
+                  <span className="text-gray-900 font-extrabold text-sm print:text-xs mt-0.5 block">{finalStats.obtained}/{finalStats.total}</span>
                 </div>
                 <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 print:py-1.5">
                   <span className="block text-[9px] print:text-[8px] font-bold text-gray-400 uppercase tracking-wide">Percentage</span>
-                  <span className="text-cyan-600 font-extrabold text-sm print:text-xs mt-0.5 block">{cert.marksheet.percentage}%</span>
+                  <span className="text-cyan-600 font-extrabold text-sm print:text-xs mt-0.5 block">{finalStats.percentage}%</span>
                 </div>
                 <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 print:py-1.5">
                   <span className="block text-[9px] print:text-[8px] font-bold text-gray-400 uppercase tracking-wide">Grade</span>
-                  <span className="text-amber-600 font-extrabold text-sm print:text-xs mt-0.5 block">{cert.marksheet.grade}</span>
+                  <span className="text-amber-600 font-extrabold text-sm print:text-xs mt-0.5 block">{finalStats.grade}</span>
                 </div>
-                <div className={`rounded-xl p-3 print:py-1.5 border ${cert.marksheet.result === 'Fail' ? 'bg-rose-50 border-rose-200' : 'bg-emerald-50 border-emerald-200'}`}>
+                <div className={`rounded-xl p-3 print:py-1.5 border ${finalStats.result === 'Fail' ? 'bg-rose-50 border-rose-200' : 'bg-emerald-50 border-emerald-200'}`}>
                   <span className="block text-[9px] print:text-[8px] font-bold text-gray-400 uppercase tracking-wide">Result</span>
-                  <span className={`font-extrabold text-sm print:text-xs mt-0.5 block ${cert.marksheet.result === 'Fail' ? 'text-rose-700' : 'text-emerald-700'}`}>
-                    {cert.marksheet.result}
+                  <span className={`font-extrabold text-sm print:text-xs mt-0.5 block ${finalStats.result === 'Fail' ? 'text-rose-700' : 'text-emerald-700'}`}>
+                    {finalStats.result}
                   </span>
                 </div>
               </div>
