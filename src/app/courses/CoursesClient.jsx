@@ -62,7 +62,7 @@ export default function CoursesClient({ initialCourses }) {
             <p className="text-gray-600">{search ? `No results match "${search}"` : 'Please check back later'}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-8">
             {filtered.map((course, i) => {
               const p = cardPalettes[i % cardPalettes.length];
               return (
@@ -73,7 +73,7 @@ export default function CoursesClient({ initialCourses }) {
                   <div className={`h-1.5 w-full bg-gradient-to-r ${p.gradient}`}/>
 
                   {/* Image */}
-                  <div className="relative h-48 overflow-hidden bg-gray-50">
+                  <div className="relative h-28 sm:h-48 overflow-hidden bg-gray-50">
                     <img src={course.courseImage || '/uploads/default-course.jpg'} alt={course.courseName}
                       onError={e => e.target.src='/uploads/default-course.jpg'}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"/>
@@ -81,45 +81,45 @@ export default function CoursesClient({ initialCourses }) {
                     <div className="absolute inset-0 bg-gradient-to-t from-gray-100 via-gray-900/20 to-transparent opacity-80" />
                     
                     {course.courseCode && (
-                      <span className={`absolute top-4 right-4 px-3 py-1.5 rounded-lg text-xs font-bold tracking-wider backdrop-blur-md border border-gray-200 ${p.bg} ${p.icon}`}>
+                      <span className={`absolute top-2 right-2 sm:top-4 sm:right-4 px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[9px] sm:text-xs font-bold tracking-wider backdrop-blur-md border border-gray-200 ${p.bg} ${p.icon}`}>
                         {course.courseCode}
                       </span>
                     )}
                   </div>
 
                   {/* Body */}
-                  <div className="p-6 flex-1 flex flex-col relative">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 leading-snug group-hover:text-cyan-400 transition-colors">
+                  <div className="p-3 sm:p-6 flex-1 flex flex-col relative">
+                    <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3 leading-snug group-hover:text-cyan-400 transition-colors line-clamp-2">
                       {course.courseName}
                     </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+                    <p className="hidden sm:block text-gray-600 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
                       {course.description}
                     </p>
 
                     {/* Meta pills */}
-                    <div className="flex flex-wrap gap-3 mb-6">
-                      <div className="flex items-center gap-2 bg-gray-50/50 border border-gray-200 px-3 py-1.5 rounded-lg text-xs font-medium text-gray-700">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-3 mb-3 sm:mb-6">
+                      <div className="flex items-center gap-1 sm:gap-2 bg-gray-50/50 border border-gray-200 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[10px] sm:text-xs font-medium text-gray-700">
                         <FaClock className={p.icon}/> <span>{course.duration}</span>
                       </div>
-                      <div className="flex items-center gap-2 bg-gray-50/50 border border-gray-200 px-3 py-1.5 rounded-lg text-xs font-medium text-gray-700">
+                      <div className="hidden sm:flex items-center gap-2 bg-gray-50/50 border border-gray-200 px-3 py-1.5 rounded-lg text-xs font-medium text-gray-700">
                         <FaUsers className={p.icon}/> <span>{course.totalStudents||0}</span>
                       </div>
                     </div>
 
-                    <div className="h-px bg-gray-100/50 mb-6"/>
+                    <div className="h-px bg-gray-100/50 mb-2 sm:mb-6"/>
 
                     {/* Footer */}
-                    <div className="flex justify-between items-center gap-4">
+                    <div className="flex justify-between items-center gap-1 sm:gap-4">
                       <div className="flex flex-col">
-                        <span className="text-[10px] font-bold tracking-widest uppercase text-gray-500 mb-1">Fee</span>
-                        <span className={`text-2xl font-extrabold ${p.icon}`}>
+                        <span className="text-[9px] sm:text-[10px] font-bold tracking-widest uppercase text-gray-500 mb-0.5">Fee</span>
+                        <span className={`text-base sm:text-2xl font-extrabold ${p.icon}`}>
                           ₹{course.fees?.toLocaleString()}
                         </span>
                       </div>
                       <Link href={`/courses/${course._id}`}
-                        className={`inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm text-white transition-all duration-300 hover:scale-105 hover:shadow-lg bg-gradient-to-r ${p.gradient}`}>
+                        className={`inline-flex items-center justify-center gap-1 sm:gap-2 px-3 py-2 sm:px-5 sm:py-3 rounded-xl font-bold text-xs sm:text-sm text-white transition-all duration-300 hover:scale-105 hover:shadow-lg bg-gradient-to-r ${p.gradient}`}>
                         View
-                        <FaArrowRight className="text-[11px] group-hover:translate-x-1 transition-transform"/>
+                        <FaArrowRight className="text-[9px] sm:text-[11px] group-hover:translate-x-1 transition-transform"/>
                       </Link>
                     </div>
                   </div>
