@@ -69,6 +69,7 @@ const Navbar = () => {
       </Link>
     );
   };
+  // |jnkjnkol
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white backdrop-blur-md border-b border-gray-200 py-3 shadow-2xl' : 'bg-transparent py-5'}`}>
