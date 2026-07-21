@@ -5,9 +5,9 @@ import { toast } from 'react-toastify';
 import api from '../../../services/api';
 
 export default function PayFeesPage() {
-  const [fees, setFees] = useState([]);
+  const [coursesList, setCoursesList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedFee, setSelectedFee] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState(null);
   const [amount, setAmount] = useState('');
   const [transactionId, setTransactionId] = useState('');
   const [screenshot, setScreenshot] = useState(null);
@@ -23,9 +23,24 @@ export default function PayFeesPage() {
     try {
       const meRes = await api.get('/api/auth/me');
       const studentId = meRes.data.data._id;
+      const enrolledCourses = meRes.data.data.courseNames || [];
+      
       const feeRes = await api.get(`/api/fees/student/${studentId}`);
       const feeData = feeRes.data.data || [];
-      setFees(feeData);
+      
+      // Merge enrolled courses and fee data
+      const mergedCourses = enrolledCourses.map(en => {
+        const matchingFee = feeData.find(f => f.course?._id === en.course?._id);
+        return {
+          courseId: en.course?._id,
+          courseName: en.course?.courseName || 'Course',
+          pendingAmount: matchingFee ? matchingFee.pendingAmount : (en.course?.fees || 0),
+          hasFeeRecord: !!matchingFee,
+          feeId: matchingFee?._id || null
+        };
+      });
+      setCoursesList(mergedCourses);
+
       // Collect all payment requests
       const allReqs = [];
       feeData.forEach(f => {
@@ -35,7 +50,7 @@ export default function PayFeesPage() {
       });
       setMyRequests(allReqs.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt)));
     } catch (err) {
-      if (err.response?.status !== 404) toast.error('Failed to load fee data');
+      if (err.response?.status !== 404) toast.error('Failed to load data');
     } finally {
       setLoading(false);
     }
@@ -54,7 +69,7 @@ export default function PayFeesPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedFee) { toast.error('Please select a course'); return; }
+    if (!selectedCourse) { toast.error('Please select a course'); return; }
     if (!amount || Number(amount) <= 0) { toast.error('Please enter a valid amount'); return; }
     if (!screenshot) { toast.error('Please upload a payment screenshot'); return; }
 
@@ -64,12 +79,14 @@ export default function PayFeesPage() {
       fd.append('amount', amount);
       fd.append('transactionId', transactionId);
       fd.append('screenshot', screenshot);
-      await api.post(`/api/fees/${selectedFee._id}/payment-request`, fd, {
+      
+      await api.post(`/api/fees/course/${selectedCourse.courseId}/payment-request`, fd, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
+      
       setSubmitted(true);
       toast.success('Payment request submitted! Admin will verify and update your record.');
-      setTimeout(() => { setSubmitted(false); setAmount(''); setTransactionId(''); setScreenshot(null); setScreenshotPreview(null); setSelectedFee(null); fetchData(); }, 3000);
+      setTimeout(() => { setSubmitted(false); setAmount(''); setTransactionId(''); setScreenshot(null); setScreenshotPreview(null); setSelectedCourse(null); fetchData(); }, 3000);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Submission failed. Please try again.');
     } finally {
@@ -161,20 +178,20 @@ export default function PayFeesPage() {
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Select Course *</label>
                 <div className="grid gap-2">
-                  {fees.length === 0 ? (
-                    <p className="text-gray-500 text-sm py-3 text-center bg-gray-50 rounded-xl">No fee records found. Contact admin.</p>
-                  ) : fees.map(fee => (
+                  {coursesList.length === 0 ? (
+                    <p className="text-gray-500 text-sm py-3 text-center bg-gray-50 rounded-xl">No enrolled courses found. Contact admin.</p>
+                  ) : coursesList.map(course => (
                     <button
                       type="button"
-                      key={fee._id}
-                      onClick={() => { setSelectedFee(fee); setAmount(String(fee.pendingAmount || '')); }}
-                      className={`flex items-center justify-between p-4 rounded-xl border-2 text-left transition-all duration-200 ${selectedFee?._id === fee._id ? 'border-indigo-500 bg-indigo-50' : 'border-gray-200 hover:border-indigo-300 bg-gray-50'}`}
+                      key={course.courseId}
+                      onClick={() => { setSelectedCourse(course); setAmount(String(course.pendingAmount || '')); }}
+                      className={`flex items-center justify-between p-4 rounded-xl border-2 text-left transition-all duration-200 ${selectedCourse?.courseId === course.courseId ? 'border-indigo-500 bg-indigo-50' : 'border-gray-200 hover:border-indigo-300 bg-gray-50'}`}
                     >
                       <div>
-                        <p className="font-semibold text-gray-800 text-sm">{fee.course?.courseName || 'Course'}</p>
-                        <p className="text-xs text-gray-500 mt-0.5">Pending: <span className="text-red-500 font-bold">{fmt(fee.pendingAmount)}</span></p>
+                        <p className="font-semibold text-gray-800 text-sm">{course.courseName}</p>
+                        <p className="text-xs text-gray-500 mt-0.5">Pending: <span className="text-red-500 font-bold">{fmt(course.pendingAmount)}</span></p>
                       </div>
-                      {selectedFee?._id === fee._id && <span className="text-indigo-600 text-lg">✓</span>}
+                      {selectedCourse?.courseId === course.courseId && <span className="text-indigo-600 text-lg">✓</span>}
                     </button>
                   ))}
                 </div>
@@ -231,7 +248,7 @@ export default function PayFeesPage() {
 
               <button
                 type="submit"
-                disabled={submitting || !screenshot || !amount || !selectedFee}
+                disabled={submitting || !screenshot || !amount || !selectedCourse}
                 className="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 disabled:from-gray-300 disabled:to-gray-400 text-white font-bold rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg disabled:cursor-not-allowed text-base"
               >
                 {submitting ? (
