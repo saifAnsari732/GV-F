@@ -119,31 +119,29 @@ const StudentDashboard = () => {
       <div className="max-w-[1400px] mx-auto px-6 pb-20 relative z-10">
 
         {/* ── HEADER ── */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-white border border-gray-200/80 shadow-md shadow-gray-100 rounded-3xl px-8 py-7 mb-7 relative overflow-hidden">
+        <div className="flex justify-between items-center bg-white border border-gray-200/80 shadow-md shadow-gray-100 rounded-3xl px-6 py-6 sm:px-8 sm:py-7 mb-7 relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-[4px]" style={{ background: G }} />
-          <div>
-            <span className="block text-[11px] font-bold tracking-[2.5px] uppercase text-cyan-600 mb-1.5">Student Dashboard</span>
-            <h1 className="font-['Syne',sans-serif] text-3xl font-extrabold leading-tight text-gray-900 mb-1.5">
-              Welcome back,{' '}
+          
+          <div className="flex-1 pr-4">
+            <span className="block text-[10px] sm:text-[11px] font-bold tracking-[2px] uppercase text-cyan-600 mb-1.5">Student Dashboard</span>
+            <h1 className="font-['Syne',sans-serif] text-2xl sm:text-3xl font-extrabold leading-tight text-gray-900 mb-1">
+              Welcome back,<br className="sm:hidden" />
               <span style={{ background: G, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
                 {student?.name || 'Student'}
               </span>{' '}👋
             </h1>
-            <p className="text-sm text-gray-500">Here's an overview of your learning journey</p>
+            <p className="text-xs sm:text-sm text-gray-500">Overview of your learning journey</p>
           </div>
 
-          <div className="flex items-center gap-4 bg-gray-50 border border-gray-100 rounded-2xl px-5 py-4 shrink-0">
-            <div className="w-[50px] h-[50px] rounded-xl flex items-center justify-center font-['Syne',sans-serif] text-[1.3rem] font-extrabold text-white shrink-0 shadow-md shadow-cyan-500/20"
-              style={{ background: G }}>
-              {getInitial(student?.name)}
-            </div>
-            <div>
-              <div className="font-['Syne',sans-serif] text-[15px] font-bold text-gray-900 mb-0.5">{student?.name || 'Student'}</div>
-              <div className="text-[12px] text-gray-500 mb-1.5">{student?.email || 'Email not available'}</div>
-              <span className="inline-block bg-cyan-50 border border-cyan-200 text-cyan-700 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-[0.5px] uppercase">
-                Student
-              </span>
-            </div>
+          <div className="shrink-0">
+             {student?.profileImage && student.profileImage !== 'default-avatar.jpg' ? (
+                <img src={student.profileImage.startsWith('http') ? student.profileImage : `/uploads/${student.profileImage}`} alt={student?.name} className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover shadow-lg border-2 border-white ring-4 ring-gray-50" />
+             ) : (
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center font-['Syne',sans-serif] text-2xl sm:text-3xl font-extrabold text-white shadow-lg border-2 border-white ring-4 ring-gray-50"
+                  style={{ background: G }}>
+                  {getInitial(student?.name)}
+                </div>
+             )}
           </div>
         </div>
 
@@ -153,20 +151,20 @@ const StudentDashboard = () => {
             <span className="block text-[11px] font-bold tracking-[2.5px] uppercase text-cyan-600">Shortcuts</span>
             <div className="h-px flex-1 bg-gradient-to-r from-cyan-200 to-transparent" />
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {quickActions.map((a, i) => (
               <Link key={i} href={a.to}
-                className={`group relative bg-gradient-to-br ${a.grad} ${a.shadow} shadow-lg rounded-2xl px-4 py-5 no-underline overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl block`}>
+                className={`group relative bg-gradient-to-br ${a.grad} ${a.shadow} shadow-lg rounded-2xl px-3 py-3 sm:px-4 sm:py-5 no-underline overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl block`}>
                 {/* shine effect */}
                 <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
                 <div className="relative z-10">
-                  <div className="w-11 h-11 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-white text-lg mb-3 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-8 h-8 sm:w-11 sm:h-11 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-white text-base sm:text-lg mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">
                     {a.icon}
                   </div>
-                  <div className="text-white font-bold text-[14px] leading-tight mb-1">{a.label}</div>
-                  <div className="text-white/70 text-[11px] leading-snug mb-3">{a.sub}</div>
-                  <div className="flex items-center gap-1 text-white/80 text-[11px] font-semibold group-hover:translate-x-1 transition-transform duration-300">
-                    Go <FaArrowRight className="text-[10px]" />
+                  <div className="text-white font-bold text-[13px] sm:text-[14px] leading-tight mb-0.5 sm:mb-1">{a.label}</div>
+                  <div className="text-white/70 text-[10px] sm:text-[11px] leading-snug mb-2 sm:mb-3 hidden sm:block">{a.sub}</div>
+                  <div className="flex items-center gap-1 text-white/80 text-[10px] sm:text-[11px] font-semibold group-hover:translate-x-1 transition-transform duration-300 mt-2 sm:mt-0">
+                    Go <FaArrowRight className="text-[8px] sm:text-[10px]" />
                   </div>
                 </div>
               </Link>
