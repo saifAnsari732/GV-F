@@ -318,16 +318,16 @@ export default async function Home() {
       {/* ══════════════════════════════════════════
           FOOTER
       ══════════════════════════════════════════ */}
-      <footer className="bg-gray-950 text-gray-400 pt-16 pb-8">
+      <footer className="bg-white text-gray-600 pt-16 pb-8 border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
             {/* Brand */}
             <div>
               <Link href="/" className="flex items-center gap-3 mb-5">
-                <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg bg-white flex items-center justify-center">
+                <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-sm bg-white flex items-center justify-center border border-gray-100">
                   <span className="font-extrabold text-lg"><span className="text-blue-900">G</span><span className="text-red-600">V</span></span>
                 </div>
-                <span className="text-xl font-extrabold tracking-tight"><span className="text-blue-500">G</span><span className="text-red-500">V</span> <span className="text-blue-100">Computer</span></span>
+                <span className="text-xl font-extrabold tracking-tight"><span className="text-blue-900">G</span><span className="text-red-600">V</span> <span className="text-blue-900">Computer</span></span>
               </Link>
               <p className="text-sm leading-relaxed mb-6 text-gray-500">
                 Empowering the next generation of tech professionals with industry-leading courses and hands-on training since 2010.
@@ -335,7 +335,7 @@ export default async function Home() {
               <div className="flex gap-3">
                 {[[FaFacebook,'#'],[FaInstagram,'#'],[FaLinkedin,'#'],[FaWhatsapp,'https://wa.me/919876543210']].map(([Icon, href], i) => (
                   <a key={i} href={href} target="_blank" rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-xl bg-gray-800 hover:bg-blue-600 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-200">
+                    className="w-9 h-9 rounded-xl bg-gray-50 border border-gray-200 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 flex items-center justify-center text-gray-500 transition-all duration-200">
                     <Icon className="text-sm" />
                   </a>
                 ))}
@@ -344,11 +344,11 @@ export default async function Home() {
 
             {/* Quick Links */}
             <div>
-              <h4 className="text-white font-bold text-base mb-5">Quick Links</h4>
+              <h4 className="text-gray-900 font-bold text-base mb-5">Quick Links</h4>
               <ul className="space-y-3 text-sm">
                 {[['/', 'Home'],['/courses','All Courses'],['/jobs','Job Portal'],['/verify-certificate','Verify Certificate'],['/register','Enroll Now']].map(([to, label]) => (
-                  <li key={to}><Link href={to} className="hover:text-blue-400 transition-colors flex items-center gap-1.5">
-                    <FaArrowRight className="text-[10px] text-blue-500" /> {label}
+                  <li key={to}><Link href={to} className="text-gray-500 hover:text-blue-600 transition-colors flex items-center gap-1.5">
+                    <FaArrowRight className="text-[10px] text-red-500" /> {label}
                   </Link></li>
                 ))}
               </ul>
@@ -356,11 +356,11 @@ export default async function Home() {
 
             {/* Courses */}
             <div>
-              <h4 className="text-white font-bold text-base mb-5">Popular Courses</h4>
+              <h4 className="text-gray-900 font-bold text-base mb-5">Popular Courses</h4>
               <ul className="space-y-3 text-sm">
                 {['DCA — Diploma in Computer App','ADCA — Advanced DCA','Tally Prime with GST','CCC Certification','O Level Program','Web Development'].map(c => (
-                  <li key={c}><Link href="/courses" className="hover:text-blue-400 transition-colors flex items-center gap-1.5">
-                    <FaArrowRight className="text-[10px] text-blue-500" /> {c}
+                  <li key={c}><Link href="/courses" className="text-gray-500 hover:text-blue-600 transition-colors flex items-center gap-1.5">
+                    <FaArrowRight className="text-[10px] text-red-500" /> {c}
                   </Link></li>
                 ))}
               </ul>
@@ -368,33 +368,33 @@ export default async function Home() {
 
             {/* Contact */}
             <div>
-              <h4 className="text-white font-bold text-base mb-5">Contact Us</h4>
-              <ul className="space-y-4 text-sm">
+              <h4 className="text-gray-900 font-bold text-base mb-5">Contact Us</h4>
+              <ul className="space-y-4 text-sm text-gray-500">
                 <li className="flex items-start gap-3">
-                  <FaMapMarkerAlt className="text-blue-400 mt-1 shrink-0" />
+                  <FaMapMarkerAlt className="text-blue-600 mt-1 shrink-0" />
                   <span>Main Market, Fazilnagar, Kushinagar, Uttar Pradesh 274401</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <FaPhoneAlt className="text-blue-400 shrink-0" />
-                  <a href="tel:+919876543210" className="hover:text-blue-400 transition-colors">+91 98765 43210</a>
+                  <FaPhoneAlt className="text-blue-600 shrink-0" />
+                  <a href="tel:+919876543210" className="hover:text-blue-600 transition-colors">+91 98765 43210</a>
                 </li>
                 <li className="flex items-center gap-3">
-                  <FaEnvelope className="text-blue-400 shrink-0" />
-                  <a href="mailto:info@gvcomputer.in" className="hover:text-blue-400 transition-colors">info@gvcomputer.in</a>
+                  <FaEnvelope className="text-blue-600 shrink-0" />
+                  <a href="mailto:info@gvcomputer.in" className="hover:text-blue-600 transition-colors">info@gvcomputer.in</a>
                 </li>
                 <li className="flex items-center gap-3">
-                  <FaWhatsapp className="text-green-400 shrink-0" />
-                  <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors">WhatsApp Chat</a>
+                  <FaWhatsapp className="text-emerald-500 shrink-0" />
+                  <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">WhatsApp Chat</a>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-600">
+          <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
             <p>© {new Date().getFullYear()} GV Computer Center, Fazilnagar. All rights reserved.</p>
             <div className="flex gap-5">
-              <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-              <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
+              <Link href="#" className="hover:text-blue-600 transition-colors">Privacy Policy</Link>
+              <Link href="#" className="hover:text-blue-600 transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>
