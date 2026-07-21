@@ -118,11 +118,11 @@ export default function PayFeesPage() {
           </h2>
           <div className="flex flex-col items-center gap-4">
             {/* QR Code placeholder - Admin can replace with real QR image */}
-            <div className="w-52 h-52 border-4 border-dashed border-indigo-300 rounded-2xl flex items-center justify-center bg-indigo-50 relative overflow-hidden">
+            <div className="w-52 h-52 border-4 border-dashed border-indigo-300 rounded-2xl flex items-center justify-center bg-indigo-50 relative overflow-hidden p-2">
               <img
-                src="/qr-code.png"
+                src="/qr-code.jpeg"
                 alt="Payment QR Code"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain rounded-xl"
                 onError={(e) => {
                   e.target.style.display = 'none';
                   e.target.nextSibling.style.display = 'flex';
@@ -131,13 +131,13 @@ export default function PayFeesPage() {
               <div className="absolute inset-0 flex-col items-center justify-center text-center p-4" style={{ display: 'none' }}>
                 <span className="text-5xl mb-2">📱</span>
                 <p className="text-indigo-600 text-xs font-semibold">QR Code</p>
-                <p className="text-gray-400 text-[10px] mt-1">Add /qr-code.png to public folder</p>
+                <p className="text-gray-400 text-[10px] mt-1">Add /qr-code.jpeg to public folder</p>
               </div>
             </div>
             <div className="text-center">
               <p className="text-sm font-bold text-gray-700">GV Computer Center</p>
               <p className="text-xs text-gray-500">Google Pay / PhonePe / Paytm / UPI</p>
-              <p className="text-xs text-indigo-600 font-mono mt-1">UPI ID: gvcomputer@upi</p>
+              <p className="text-xs text-indigo-600 font-mono mt-1 font-bold">UPI ID: 9905234866@fam</p>
             </div>
           </div>
         </div>
