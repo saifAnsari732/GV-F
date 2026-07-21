@@ -23,18 +23,20 @@ export default function PayFeesPage() {
     try {
       const meRes = await api.get('/api/auth/me');
       const studentId = meRes.data.data._id;
-      const enrolledCourses = meRes.data.data.courseNames || [];
       
       const feeRes = await api.get(`/api/fees/student/${studentId}`);
       const feeData = feeRes.data.data || [];
       
-      // Merge enrolled courses and fee data
-      const mergedCourses = enrolledCourses.map(en => {
-        const matchingFee = feeData.find(f => f.course?._id === en.course?._id);
+      const coursesRes = await api.get('/api/courses');
+      const allCourses = coursesRes.data.data || [];
+      
+      // Merge all courses and fee data
+      const mergedCourses = allCourses.map(c => {
+        const matchingFee = feeData.find(f => f.course?._id === c._id);
         return {
-          courseId: en.course?._id,
-          courseName: en.course?.courseName || 'Course',
-          pendingAmount: matchingFee ? matchingFee.pendingAmount : (en.course?.fees || 0),
+          courseId: c._id,
+          courseName: c.courseName || 'Course',
+          pendingAmount: matchingFee ? matchingFee.pendingAmount : (c.fees || 0),
           hasFeeRecord: !!matchingFee,
           feeId: matchingFee?._id || null
         };
@@ -179,7 +181,7 @@ export default function PayFeesPage() {
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Select Course *</label>
                 <div className="grid gap-2">
                   {coursesList.length === 0 ? (
-                    <p className="text-gray-500 text-sm py-3 text-center bg-gray-50 rounded-xl">No enrolled courses found. Contact admin.</p>
+                    <p className="text-gray-500 text-sm py-3 text-center bg-gray-50 rounded-xl">No courses found. Contact admin.</p>
                   ) : coursesList.map(course => (
                     <button
                       type="button"
