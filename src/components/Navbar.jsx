@@ -80,7 +80,7 @@ const Navbar = () => {
           <div className="relative w-12 h-12 rounded-xl overflow-hidden shadow-lg   flex items-center justify-center">
             <Image src="/gv-logo.jpg" alt="GV Logo" fill className="object-cover" />
           </div>
-          <span className="text-xl font-extrabold text-gray-900 tracking-tight">GV <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">Computer</span></span>
+          <span className="text-xl font-extrabold tracking-tight"><span className="text-blue-900">G</span><span className="text-red-600">V</span> <span className="text-blue-900">Computer</span></span>
         </Link>
 
         {/* Mobile Toggle */}
