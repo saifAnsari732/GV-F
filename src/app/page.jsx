@@ -66,156 +66,60 @@ export default async function Home() {
     <div className="bg-white min-h-screen text-gray-900 overflow-x-hidden">
 
       {/* ══════════════════════════════════════════
-          HERO SECTION — Split layout
+          HERO SECTION — Centered, Modern
       ══════════════════════════════════════════ */}
-      <section className="relative pt-24 pb-0 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/40 to-indigo-50/30">
-        {/* Decorative blobs */}
-        <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-blue-200/30 rounded-full blur-[80px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-200/20 rounded-full blur-[80px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center pb-16">
-          {/* LEFT — Text */}
-          <div className="relative z-10">
-            {/* Badge */}
-            <span className="inline-flex items-center gap-2 bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded-full mb-6 shadow-lg shadow-blue-600/30">
-              🎓 GV Computer Center — Fazilnagar
-            </span>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.12] mb-6 tracking-tight">
-              Master Computer<br />
-              Skills &{' '}
-              <span className="relative inline-block">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-                  Transform
-                </span>
-                {/* Underline decoration */}
-                <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none">
-                  <path d="M2 8 Q150 2 298 8" stroke="url(#u1)" strokeWidth="4" strokeLinecap="round"/>
-                  <defs>
-                    <linearGradient id="u1" x1="0" y1="0" x2="1" y2="0">
-                      <stop stopColor="#2563eb"/><stop offset="1" stopColor="#4f46e5"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </span>
-              {' '}Your Future
-            </h1>
-
-            <p className="text-gray-600 text-lg leading-relaxed mb-8 max-w-lg">
-              Basic se lekar advanced computer courses — DCA, ADCA, Tally, CCC, O-Level. 
-              10,000+ students ke bharosemand institute se judiye aur career ki nayi shuruwat karein!
-            </p>
-
-            {/* Perks list */}
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-10">
-              {perks.map((p, i) => (
-                <li key={i} className="flex items-center gap-2 text-sm text-gray-700 font-medium">
-                  <FaCheckCircle className="text-blue-500 shrink-0" />
-                  {p}
-                </li>
-              ))}
-            </ul>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/register"
-                className="inline-flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-blue-600/30 hover:-translate-y-0.5 text-base">
-                <FaRocket /> Enroll Now — Free!
-              </Link>
-              <Link href="/courses"
-                className="inline-flex justify-center items-center gap-2 bg-white hover:bg-gray-50 border-2 border-gray-200 hover:border-blue-300 text-gray-800 font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:-translate-y-0.5 text-base">
-                <FaGraduationCap /> View Courses
-              </Link>
-            </div>
-
-            {/* Social proof */}
-            <div className="mt-10 flex items-center gap-4 pt-8 border-t border-gray-200">
-              <div className="flex -space-x-3">
-                {['bg-blue-500','bg-violet-500','bg-pink-500','bg-amber-500'].map((c,i) => (
-                  <div key={i} className={`w-9 h-9 rounded-full ${c} border-2 border-white flex items-center justify-center text-white text-xs font-bold`}>
-                    {['R','S','A','P'][i]}
-                  </div>
-                ))}
-              </div>
-              <div>
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_,i) => <FaStar key={i} className="text-amber-400 text-sm" />)}
-                  <span className="text-gray-900 font-bold ml-1">4.8</span>
-                </div>
-                <p className="text-gray-500 text-xs">Joined by 10,000+ students</p>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT — Decorative card stack */}
-          <div className="relative hidden lg:flex items-center justify-center">
-            {/* Main visual card */}
-            <div className="relative w-full max-w-md">
-              {/* Background card */}
-              <div className="absolute top-6 right-0 w-72 h-80 bg-gradient-to-br from-indigo-400 to-purple-600 rounded-3xl rotate-6 opacity-20" />
-              <div className="absolute top-3 right-3 w-72 h-80 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-3xl rotate-3 opacity-30" />
-
-              {/* Main card */}
-              <div className="relative bg-white rounded-3xl shadow-2xl shadow-blue-100 border border-gray-100 p-8 z-10">
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <p className="text-gray-500 text-xs font-semibold uppercase tracking-widest">Course Progress</p>
-                    <h3 className="text-xl font-extrabold text-gray-900">ADCA Program</h3>
-                  </div>
-                  <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center">
-                    <FaLaptopCode className="text-white text-xl" />
-                  </div>
-                </div>
-
-                <div className="space-y-4 mb-6">
-                  {['MS Office', 'Tally Prime', 'Web Design', 'C Programming'].map((s, i) => (
-                    <div key={i}>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span className="text-gray-700 font-medium">{s}</span>
-                        <span className="text-blue-600 font-bold">{[95, 80, 70, 60][i]}%</span>
-                      </div>
-                      <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-700"
-                          style={{ width: `${[95, 80, 70, 60][i]}%` }} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="bg-blue-50 rounded-2xl px-5 py-4 flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-gray-500">Certificate Ready</p>
-                    <p className="font-bold text-gray-900">12 Modules Done ✅</p>
-                  </div>
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-                    <FaCertificate className="text-white text-xl" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating badges */}
-              <div className="absolute -top-4 -left-4 bg-white shadow-xl rounded-2xl px-4 py-3 flex items-center gap-2 border border-gray-100 z-20">
-                <span className="text-2xl">🏆</span>
-                <div>
-                  <p className="text-xs text-gray-500">Success Rate</p>
-                  <p className="font-extrabold text-gray-900 text-sm">90%</p>
-                </div>
-              </div>
-              <div className="absolute -bottom-4 -right-4 bg-white shadow-xl rounded-2xl px-4 py-3 flex items-center gap-2 border border-gray-100 z-20">
-                <span className="text-2xl">🎓</span>
-                <div>
-                  <p className="text-xs text-gray-500">Students</p>
-                  <p className="font-extrabold text-gray-900 text-sm">10,000+</p>
-                </div>
-              </div>
-            </div>
-          </div>
+      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden bg-white">
+        {/* Background Mesh Gradient */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[600px] opacity-40 blur-[100px] bg-gradient-to-tr from-blue-100 via-indigo-50 to-purple-100 rounded-[100%]" />
+          <div className="absolute bottom-0 left-0 w-full h-[300px] bg-gradient-to-t from-white via-white/80 to-transparent" />
         </div>
 
-        {/* Wave divider */}
-        <svg className="w-full block -mb-1" viewBox="0 0 1440 60" preserveAspectRatio="none" fill="white">
-          <path d="M0,0 C360,60 1080,60 1440,0 L1440,60 L0,60 Z"/>
-        </svg>
+        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-blue-50/80 border border-blue-200 text-blue-700 text-xs sm:text-sm font-bold px-5 py-2.5 rounded-full mb-8 shadow-sm backdrop-blur-md">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            </span>
+            #1 Computer Institute in Fazilnagar
+          </div>
+
+          {/* Heading */}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-gray-900 leading-[1.1] mb-8 tracking-tight max-w-4xl mx-auto">
+            Master Computer Skills & <br className="hidden sm:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+              Transform Your Future
+            </span>
+          </h1>
+
+          {/* Description */}
+          <p className="text-gray-500 text-base sm:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
+            Basic se lekar advanced computer courses (DCA, ADCA, Tally, CCC, O-Level). 
+            <span className="text-gray-800 font-semibold"> 10,000+ students </span> ke bharosemand institute se judiye aur apne career ki shuruwat karein!
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center w-full sm:w-auto mb-16">
+            <Link href="/register"
+              className="inline-flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-blue-600/30 hover:-translate-y-1 text-lg sm:text-base w-full sm:w-auto">
+              <FaRocket /> Enroll Now — Free!
+            </Link>
+            <Link href="/courses"
+              className="inline-flex justify-center items-center gap-2 bg-white hover:bg-gray-50 border-2 border-gray-200 hover:border-gray-300 text-gray-800 font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:-translate-y-1 text-lg sm:text-base w-full sm:w-auto shadow-sm">
+              <FaGraduationCap className="text-gray-500" /> View All Courses
+            </Link>
+          </div>
+
+          {/* Featured Pills */}
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-6 max-w-3xl mx-auto">
+            {['100% Job Assistance', 'Govt. Certified', 'Practical Labs', 'Experienced Faculty'].map((pill, i) => (
+              <div key={i} className="flex items-center gap-2 bg-white border border-gray-100 shadow-sm px-4 py-2 rounded-full text-sm font-semibold text-gray-600">
+                <FaCheckCircle className="text-emerald-500 text-xs" /> {pill}
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ══════════════════════════════════════════
