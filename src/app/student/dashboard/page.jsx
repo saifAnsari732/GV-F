@@ -94,10 +94,11 @@ const StudentDashboard = () => {
   ];
 
   const quickActions = [
-    { to: '/profile', icon: <FaUser />, label: 'Update Profile', sub: 'Manage personal info', bg: 'rgba(6,182,212,0.08)', color: '#0891b2', bar: 'linear-gradient(135deg,#00D4FF,#7C3AED)' },
-    { to: '/courses', icon: <FaGraduationCap />, label: 'Browse Courses', sub: 'Explore available courses', bg: 'rgba(16,185,129,0.08)', color: '#059669', bar: 'linear-gradient(135deg,#10B981,#00D4FF)' },
-    { to: '/jobs', icon: <FaBriefcase />, label: 'Find Jobs', sub: 'View job opportunities', bg: 'rgba(124,58,237,0.08)', color: '#7c3aed', bar: 'linear-gradient(135deg,#7C3AED,#EC4899)' },
-    { to: '/student/fees', icon: <FaRupeeSign />, label: 'Fee Details', sub: 'Payment history & info', bg: 'rgba(245,158,11,0.08)', color: '#d97706', bar: 'linear-gradient(135deg,#F59E0B,#EF4444)' },
+    { to: '/profile', icon: <FaUser />, label: 'Update Profile', sub: 'Manage personal info', grad: 'from-cyan-500 to-blue-600', shadow: 'shadow-cyan-500/30' },
+    { to: '/courses', icon: <FaGraduationCap />, label: 'Browse Courses', sub: 'Explore available courses', grad: 'from-emerald-500 to-teal-600', shadow: 'shadow-emerald-500/30' },
+    { to: '/jobs', icon: <FaBriefcase />, label: 'Find Jobs', sub: 'View job opportunities', grad: 'from-violet-500 to-purple-600', shadow: 'shadow-violet-500/30' },
+    { to: '/student/fees', icon: <FaRupeeSign />, label: 'Fee Details', sub: 'Payment history & info', grad: 'from-amber-500 to-orange-500', shadow: 'shadow-amber-500/30' },
+    { to: '/student/pay-fees', icon: <span className="text-lg">📲</span>, label: 'Pay via QR', sub: 'Submit payment screenshot', grad: 'from-pink-500 to-rose-600', shadow: 'shadow-pink-500/30' },
   ];
 
   const badgeClass = {
@@ -143,6 +144,33 @@ const StudentDashboard = () => {
                 Student
               </span>
             </div>
+          </div>
+        </div>
+
+        {/* ── QUICK ACTIONS ── */}
+        <div className="mb-7">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="block text-[11px] font-bold tracking-[2.5px] uppercase text-cyan-600">Shortcuts</span>
+            <div className="h-px flex-1 bg-gradient-to-r from-cyan-200 to-transparent" />
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {quickActions.map((a, i) => (
+              <Link key={i} href={a.to}
+                className={`group relative bg-gradient-to-br ${a.grad} ${a.shadow} shadow-lg rounded-2xl px-4 py-5 no-underline overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl block`}>
+                {/* shine effect */}
+                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+                <div className="relative z-10">
+                  <div className="w-11 h-11 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-white text-lg mb-3 group-hover:scale-110 transition-transform duration-300">
+                    {a.icon}
+                  </div>
+                  <div className="text-white font-bold text-[14px] leading-tight mb-1">{a.label}</div>
+                  <div className="text-white/70 text-[11px] leading-snug mb-3">{a.sub}</div>
+                  <div className="flex items-center gap-1 text-white/80 text-[11px] font-semibold group-hover:translate-x-1 transition-transform duration-300">
+                    Go <FaArrowRight className="text-[10px]" />
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
 
@@ -301,31 +329,7 @@ const StudentDashboard = () => {
           )}
         </div>
 
-        {/* ── QUICK ACTIONS ── */}
-        <div className="mt-2">
-          <span className="block text-[11px] font-bold tracking-[2.5px] uppercase text-cyan-600 mb-1.5">Shortcuts</span>
-          <h2 className="font-['Syne',sans-serif] text-[1.4rem] font-extrabold text-gray-900 mb-5">Quick Actions</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {quickActions.map((a, i) => (
-              <Link key={i} href={a.to}
-                className="bg-white border border-gray-200/70 shadow-sm rounded-2xl px-5 py-6 no-underline relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-cyan-500/20 group block"
-                style={{ animationDelay: `${i * 0.08}s` }}>
-                {/* top bar accent */}
-                <div className="absolute top-0 left-0 right-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: a.bar }} />
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center text-[15px] mb-4 transition-transform duration-300 group-hover:scale-105"
-                  style={{ background: a.bg, color: a.color }}>
-                  {a.icon}
-                </div>
-                <div className="font-['Syne',sans-serif] text-[15px] font-bold text-gray-900 mb-1">{a.label}</div>
-                <div className="text-[12px] text-gray-500 leading-snug mb-4 font-medium">{a.sub}</div>
-                <div className="text-xs transition-transform duration-300 group-hover:translate-x-1" style={{ color: a.color }}>
-                  <FaArrowRight className="text-[11px]" />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
+        {/* Quick Actions moved to top — removed from here */}
 
       </div>
     </div>
