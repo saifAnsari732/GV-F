@@ -4,6 +4,11 @@ import '../../styles/Profile.css';
 import api from '../../services/api';
 
 const Profile = () => {
+import React, { useState, useEffect, useRef } from 'react';
+import '../../styles/Profile.css';
+import api from '../../services/api';
+
+const Profile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -13,6 +18,7 @@ const Profile = () => {
   const [imagePreview, setImagePreview] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [paymentRequests, setPaymentRequests] = useState([]);
   const fileInputRef = useRef(null);
 
   useEffect(() => { fetchProfile(); }, []);
@@ -35,6 +41,22 @@ const Profile = () => {
             ? `${response.data.data.profileImage}`
             : null   // null instead of ''
         );
+        
+        try {
+          const feeRes = await api.get(`/api/fees/student/${response.data.data._id}`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          const feeData = feeRes.data.data || [];
+          const allReqs = [];
+          feeData.forEach(f => {
+            (f.paymentRequests || []).forEach(r => {
+              allReqs.push({ ...r, courseName: f.course?.courseName || 'Course' });
+            });
+          });
+          setPaymentRequests(allReqs.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt)));
+        } catch (e) {
+          console.warn("Could not fetch fee records for screenshots", e);
+        }
       }
       setLoading(false);
     } catch (err) {
@@ -270,6 +292,30 @@ const Profile = () => {
                     {enrollment.status}
                   </span>
                 </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── Payment Screenshots ── */}
+        {user.role === 'student' && paymentRequests.length > 0 && (
+          <div className="enrolled-courses-card" style={{ marginTop: '20px' }}>
+            <h3>📸 Payment Screenshots</h3>
+            <div className="courses-list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '15px' }}>
+              {paymentRequests.map((req, idx) => (
+                req.screenshotUrl && (
+                  <div key={idx} style={{ textAlign: 'center', border: '1px solid #eee', borderRadius: '10px', padding: '10px', background: '#fafafa' }}>
+                    <a href={req.screenshotUrl} target="_blank" rel="noopener noreferrer">
+                      <img src={req.screenshotUrl} alt="Payment" style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '8px', cursor: 'pointer', border: '1px solid #ddd' }} />
+                    </a>
+                    <p style={{ fontSize: '10px', margin: '5px 0 0 0', fontWeight: 'bold', color: '#333' }}>{req.courseName}</p>
+                    <p style={{ fontSize: '9px', margin: '2px 0 0 0', color: '#777' }}>
+                      <span className={`status-${req.status === 'approved' ? 'active' : req.status === 'rejected' ? 'inactive' : 'pending'}`} style={{ color: req.status === 'approved' ? '#059669' : req.status === 'rejected' ? '#dc2626' : '#d97706', fontWeight: 'bold', textTransform: 'capitalize' }}>
+                        {req.status}
+                      </span>
+                    </p>
+                  </div>
+                )
               ))}
             </div>
           </div>
