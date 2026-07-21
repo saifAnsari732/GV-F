@@ -117,22 +117,22 @@ export default function PayFeesPage() {
             Scan & Pay
           </h2>
           <div className="flex flex-col items-center gap-4">
-            {/* QR Code placeholder - Admin can replace with real QR image */}
-            <div className="w-52 h-52 border-4 border-dashed border-indigo-300 rounded-2xl flex items-center justify-center bg-indigo-50 relative overflow-hidden p-2">
-              <img
-                src="/qr-code.jpeg"
-                alt="Payment QR Code"
-                className="w-full h-full object-contain rounded-xl"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.nextSibling.style.display = 'flex';
-                }}
-              />
-              <div className="absolute inset-0 flex-col items-center justify-center text-center p-4" style={{ display: 'none' }}>
-                <span className="text-5xl mb-2">📱</span>
-                <p className="text-indigo-600 text-xs font-semibold">QR Code</p>
-                <p className="text-gray-400 text-[10px] mt-1">Add /qr-code.jpeg to public folder</p>
+            {/* QR Code */}
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-52 h-52 border-4 border-dashed border-indigo-300 rounded-2xl flex items-center justify-center bg-white p-2 shadow-sm">
+                <img
+                  src="/qr-code.jpeg"
+                  alt="Payment QR Code"
+                  className="w-full h-full object-contain rounded-xl"
+                />
               </div>
+              <a 
+                href="/qr-code.jpeg" 
+                download="GV_Computer_QR.jpeg" 
+                className="flex items-center gap-2 text-sm font-bold text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 px-4 py-2 rounded-full transition-colors"
+              >
+                <span>⬇️</span> Download QR Code
+              </a>
             </div>
             <div className="text-center">
               <p className="text-sm font-bold text-gray-700">GV Computer Center</p>
