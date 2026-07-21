@@ -24,8 +24,14 @@ export default function PayFeesPage() {
       const meRes = await api.get('/api/auth/me');
       const studentId = meRes.data.data._id;
       
-      const feeRes = await api.get(`/api/fees/student/${studentId}`);
-      const feeData = feeRes.data.data || [];
+      let feeData = [];
+      try {
+        const feeRes = await api.get(`/api/fees/student/${studentId}`);
+        feeData = feeRes.data.data || [];
+      } catch (e) {
+        // Ignore 404s or other errors for fees, just assume empty
+        console.warn('Could not fetch fee records:', e);
+      }
       
       const coursesRes = await api.get('/api/courses');
       const allCourses = coursesRes.data.data || [];
