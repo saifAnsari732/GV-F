@@ -72,7 +72,6 @@ const Register = () => {
     data.append('address', formData.address);
     data.append('dateOfBirth', formData.dateOfBirth);
     data.append('role', formData.role);
-    data.append('course', formData.course);
     if (formData.role === 'student' && formData.course) {
       data.append('courseIds', formData.course);
     }
@@ -88,6 +87,20 @@ const Register = () => {
       toast.error(result.message || 'Registration failed');
     }
     setLoading(false);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error('File size must be less than 5MB');
+        return;
+      }
+      setFormData({ ...formData, profileImage: file });
+      const reader = new FileReader();
+      reader.onloadend = () => setPreview(reader.result);
+      reader.readAsDataURL(file);
+    }
   };
 
   const inputClass = "w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all";
@@ -147,6 +160,23 @@ const Register = () => {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             
+            {/* Profile Image Upload */}
+            <div className="flex justify-center mb-6">
+              <div className="relative group">
+                <div className="w-24 h-24 rounded-full border-4 border-white shadow-lg overflow-hidden bg-gray-100 flex items-center justify-center">
+                  {preview ? (
+                    <img src={preview} alt="Profile preview" className="w-full h-full object-cover" />
+                  ) : (
+                    <FaUser className="text-gray-400 text-3xl" />
+                  )}
+                </div>
+                <label className="absolute bottom-0 right-0 bg-blue-600 w-8 h-8 rounded-full border-2 border-white flex items-center justify-center cursor-pointer shadow-md hover:bg-blue-700 transition-colors">
+                  <span className="text-white text-lg leading-none mb-1">+</span>
+                  <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
+                </label>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label className={labelClass}><FaUser className="text-cyan-500" /> Full Name</label>
