@@ -71,7 +71,7 @@ export default async function Home() {
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden bg-white">
         {/* Background Mesh Gradient */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[600px] opacity-40 blur-[100px] bg-gradient-to-tr from-blue-100 via-indigo-50 to-purple-100 rounded-[100%]" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[600px] opacity-30 blur-[100px] bg-gradient-to-tr from-cyan-100 via-blue-50 to-blue-100 rounded-[100%]" />
           <div className="absolute bottom-0 left-0 w-full h-[300px] bg-gradient-to-t from-white via-white/80 to-transparent" />
         </div>
 
@@ -88,7 +88,7 @@ export default async function Home() {
           {/* Heading */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-gray-900 leading-[1.1] mb-8 tracking-tight max-w-4xl mx-auto">
             Master Computer Skills & <br className="hidden sm:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-700">
               Transform Your Future
             </span>
           </h1>
@@ -102,12 +102,12 @@ export default async function Home() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center w-full sm:w-auto mb-16">
             <Link href="/register"
-              className="inline-flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-blue-600/30 hover:-translate-y-1 text-lg sm:text-base w-full sm:w-auto">
+              className="inline-flex justify-center items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/30 hover:-translate-y-1 text-lg sm:text-base w-full sm:w-auto">
               <FaRocket /> Enroll Now — Free!
             </Link>
             <Link href="/courses"
-              className="inline-flex justify-center items-center gap-2 bg-white hover:bg-gray-50 border-2 border-gray-200 hover:border-gray-300 text-gray-800 font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:-translate-y-1 text-lg sm:text-base w-full sm:w-auto shadow-sm">
-              <FaGraduationCap className="text-gray-500" /> View All Courses
+              className="inline-flex justify-center items-center gap-2 bg-white hover:bg-gray-50 border-2 border-gray-200 hover:border-blue-500 text-gray-800 font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:-translate-y-1 text-lg sm:text-base w-full sm:w-auto shadow-sm">
+              <FaGraduationCap className="text-cyan-500" /> View All Courses
             </Link>
           </div>
 
@@ -145,7 +145,7 @@ export default async function Home() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
-            <span className="inline-block bg-blue-100 text-blue-600 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-4">Our Programs</span>
+            <span className="inline-block bg-cyan-50 text-cyan-600 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-4 border border-cyan-100">Our Programs</span>
             <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">Popular Courses</h2>
             <p className="text-gray-500 max-w-xl mx-auto text-lg">Explore our most in-demand courses designed to make you industry-ready and job-confident.</p>
           </div>
@@ -188,7 +188,7 @@ export default async function Home() {
 
           <div className="text-center mt-10">
             <Link href="/courses"
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3.5 rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-600/30 hover:-translate-y-0.5">
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold px-8 py-3.5 rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30 hover:-translate-y-0.5">
               View All Courses <FaArrowRight />
             </Link>
           </div>
@@ -203,10 +203,10 @@ export default async function Home() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left */}
             <div>
-              <span className="inline-block bg-indigo-100 text-indigo-600 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-5">Why Choose Us</span>
+              <span className="inline-block bg-cyan-50 border border-cyan-100 text-cyan-600 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-5">Why Choose Us</span>
               <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-5 leading-tight">
                 The GV Computer<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Advantage</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Advantage</span>
               </h2>
               <p className="text-gray-500 text-base leading-relaxed mb-8">
                 Fazilnagar ka sabse trusted computer institute — jahan quality education, practical skills, aur career support ek saath milte hain.
@@ -226,11 +226,11 @@ export default async function Home() {
 
             {/* Right — Visual card */}
             <div className="relative hidden lg:block">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 text-white relative overflow-hidden shadow-2xl shadow-blue-500/30">
+              <div className="bg-gradient-to-br from-cyan-500 to-blue-700 rounded-3xl p-8 text-white relative overflow-hidden shadow-2xl shadow-cyan-500/30">
                 <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full translate-x-16 -translate-y-16" />
                 <div className="absolute bottom-0 left-0 w-36 h-36 bg-white/5 rounded-full -translate-x-10 translate-y-10" />
                 <div className="relative z-10">
-                  <p className="text-blue-200 text-sm font-semibold uppercase tracking-widest mb-2">Student Testimonial</p>
+                  <p className="text-cyan-100 text-sm font-semibold uppercase tracking-widest mb-2">Student Testimonial</p>
                   <p className="text-white text-lg font-bold leading-relaxed mb-8">
                     "GV Computer Center ne meri life change kar di! DCA course ke baad mujhe ek government job mil gayi. Best institute in Fazilnagar!"
                   </p>
@@ -238,14 +238,14 @@ export default async function Home() {
                     <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center font-bold text-xl">R</div>
                     <div>
                       <p className="font-bold text-white">Rahul Kumar</p>
-                      <p className="text-blue-200 text-sm">DCA Graduate • Now at Govt. Office</p>
+                      <p className="text-cyan-100 text-sm">DCA Graduate • Now at Govt. Office</p>
                     </div>
                   </div>
                   <div className="mt-6 grid grid-cols-3 gap-4 pt-6 border-t border-white/20">
                     {[['10K+','Students'],['50+','Courses'],['90%','Placement']].map(([n,l],i) => (
                       <div key={i} className="text-center">
                         <p className="text-2xl font-extrabold">{n}</p>
-                        <p className="text-blue-200 text-xs">{l}</p>
+                        <p className="text-cyan-100 text-xs">{l}</p>
                       </div>
                     ))}
                   </div>
@@ -274,20 +274,20 @@ export default async function Home() {
           CTA SECTION — Light & vibrant
       ══════════════════════════════════════════ */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700" />
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-600 via-blue-600 to-blue-800" />
         {/* Pattern overlay */}
         <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px'}} />
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full translate-x-48 -translate-y-48" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full -translate-x-32 translate-y-32" />
 
         <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <span className="inline-block bg-white/20 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 backdrop-blur-sm">
+          <span className="inline-block bg-white/20 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 backdrop-blur-sm border border-white/30">
             🚀 Limited Seats Available
           </span>
           <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
             Start Your Learning<br />Journey Today!
           </h2>
-          <p className="text-blue-100 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-cyan-50 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
             Join thousands of students who transformed their careers. Register now and get your first class FREE!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -324,10 +324,10 @@ export default async function Home() {
             {/* Brand */}
             <div>
               <Link href="/" className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg">
                   <FaGraduationCap className="text-white text-xl" />
                 </div>
-                <span className="text-xl font-extrabold text-white">GV <span className="text-blue-400">Computer</span></span>
+                <span className="text-xl font-extrabold text-white">GV <span className="text-cyan-400">Computer</span></span>
               </Link>
               <p className="text-sm leading-relaxed mb-6 text-gray-500">
                 Empowering the next generation of tech professionals with industry-leading courses and hands-on training since 2010.
@@ -335,7 +335,7 @@ export default async function Home() {
               <div className="flex gap-3">
                 {[[FaFacebook,'#'],[FaInstagram,'#'],[FaLinkedin,'#'],[FaWhatsapp,'https://wa.me/919876543210']].map(([Icon, href], i) => (
                   <a key={i} href={href} target="_blank" rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-xl bg-gray-800 hover:bg-blue-600 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-200">
+                    className="w-9 h-9 rounded-xl bg-gray-800 hover:bg-cyan-600 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-200">
                     <Icon className="text-sm" />
                   </a>
                 ))}
