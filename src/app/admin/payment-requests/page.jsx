@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import api from '../../../../services/api';
+import api from '../../../services/api';
 
 export default function PaymentRequestsPage() {
   const [requests, setRequests] = useState([]);
