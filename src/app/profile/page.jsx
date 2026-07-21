@@ -4,11 +4,6 @@ import '../../styles/Profile.css';
 import api from '../../services/api';
 
 const Profile = () => {
-import React, { useState, useEffect, useRef } from 'react';
-import '../../styles/Profile.css';
-import api from '../../services/api';
-
-const Profile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
