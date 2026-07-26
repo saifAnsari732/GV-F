@@ -144,17 +144,23 @@ export default function RootLayout({ children }) {
         </AuthProvider>
         
         {/* Floating WhatsApp Button */}
-        <a 
-          href="https://wa.me/919838531365" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl shadow-green-500/40 hover:-translate-y-1 hover:scale-110 transition-all duration-300 flex items-center justify-center group"
-        >
-          <FaWhatsapp className="text-3xl" />
-          <span className="absolute right-full mr-4 bg-white text-gray-800 text-sm font-bold py-1.5 px-3 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap border border-gray-100">
-            Chat with us
-          </span>
-        </a>
+        <div className="fixed bottom-6 right-6 z-50 flex items-center justify-center group">
+          {/* Glowing pulse rings */}
+          <div className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-30"></div>
+          <div className="absolute inset-0 rounded-full bg-green-400 blur-md opacity-40 animate-pulse"></div>
+          
+          <a 
+            href="https://wa.me/919838531365" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="relative bg-gradient-to-tr from-green-600 to-green-400 hover:from-green-500 hover:to-green-300 text-white p-4 rounded-full shadow-[0_0_25px_rgba(34,197,94,0.6)] hover:shadow-[0_0_35px_rgba(34,197,94,0.8)] hover:-translate-y-1 hover:scale-110 transition-all duration-300 flex items-center justify-center border border-green-300/30"
+          >
+            <FaWhatsapp className="text-3xl drop-shadow-md" />
+            <span className="absolute right-full mr-4 bg-white text-gray-800 text-sm font-bold py-2 px-4 rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.1)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap border border-gray-100 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Chat with us
+            </span>
+          </a>
+        </div>
       </body>
     </html>
   );
