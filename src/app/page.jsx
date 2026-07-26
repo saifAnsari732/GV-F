@@ -333,7 +333,7 @@ export default async function Home() {
                 Empowering the next generation of tech professionals with industry-leading courses and hands-on training since 2010.
               </p>
               <div className="flex gap-3">
-                {[[FaFacebook,'#'],[FaInstagram,'#'],[FaLinkedin,'#'],[FaWhatsapp,'https://wa.me/919876543210']].map(([Icon, href], i) => (
+                {[[FaFacebook,'https://www.facebook.com/GVCOMPUTEREDUCATIONCENTER/'],[FaInstagram,'https://www.instagram.com/gv_computer_fazilnagar/'],[FaLinkedin,'#'],[FaWhatsapp,'https://wa.me/919838531365']].map(([Icon, href], i) => (
                   <a key={i} href={href} target="_blank" rel="noopener noreferrer"
                     className="w-9 h-9 rounded-xl bg-gray-50 border border-gray-200 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 flex items-center justify-center text-gray-500 transition-all duration-200">
                     <Icon className="text-sm" />
