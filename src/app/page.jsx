@@ -8,6 +8,7 @@ import {
 } from 'react-icons/fa';
 import ReviewHelper from '../components/ReviewHelper';
 import TestimonialSlider from '../components/TestimonialSlider';
+import EnrollButton from '../components/EnrollButton';
 import { API_URL } from '../helper';
 
 export const dynamic = 'force-dynamic';
@@ -101,10 +102,9 @@ export default async function Home() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center w-full sm:w-auto mb-16">
-            <Link href="/register"
-              className="inline-flex justify-center items-center gap-2 bg-gradient-to-r from-blue-900 to-blue-800 hover:from-blue-800 hover:to-blue-700 text-white font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-blue-900/30 hover:-translate-y-1 text-lg sm:text-base w-full sm:w-auto">
-              <FaRocket /> Enroll Now — Free!
-            </Link>
+            <EnrollButton 
+              className="inline-flex justify-center items-center gap-2 bg-gradient-to-r from-blue-900 to-blue-800 hover:from-blue-800 hover:to-blue-700 text-white font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-blue-900/30 hover:-translate-y-1 text-lg sm:text-base w-full sm:w-auto"
+            />
             <Link href="/courses"
               className="inline-flex justify-center items-center gap-2 bg-white hover:bg-gray-50 border-2 border-red-100 hover:border-red-500 text-blue-900 font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:-translate-y-1 text-lg sm:text-base w-full sm:w-auto shadow-sm">
               <FaGraduationCap className="text-red-600" /> View All Courses
@@ -291,11 +291,10 @@ export default async function Home() {
             Join thousands of students who transformed their careers. Register now and get your first class FREE!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register"
-              className="inline-flex items-center justify-center gap-2 bg-red-600 text-white hover:bg-red-700 font-extrabold px-10 py-4 rounded-2xl hover:-translate-y-1 transition-all duration-300 shadow-2xl shadow-red-600/30 text-lg">
-              <FaRocket /> Enroll Now — Free!
-            </Link>
-            <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer"
+            <EnrollButton 
+              className="inline-flex items-center justify-center gap-2 bg-red-600 text-white hover:bg-red-700 font-extrabold px-10 py-4 rounded-2xl hover:-translate-y-1 transition-all duration-300 shadow-2xl shadow-red-600/30 text-lg"
+            />
+            <a href="https://wa.me/919838531365" target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-400 text-white font-extrabold px-10 py-4 rounded-2xl hover:-translate-y-1 transition-all duration-300 shadow-xl text-lg">
               <FaWhatsapp /> WhatsApp Us
             </a>
@@ -346,11 +345,14 @@ export default async function Home() {
             <div>
               <h4 className="text-gray-900 font-bold text-base mb-5">Quick Links</h4>
               <ul className="space-y-3 text-sm">
-                {[['/', 'Home'],['/courses','All Courses'],['/jobs','Job Portal'],['/verify-certificate','Verify Certificate'],['/register','Enroll Now']].map(([to, label]) => (
+                {[['/', 'Home'],['/courses','All Courses'],['/jobs','Job Portal'],['/verify-certificate','Verify Certificate']].map(([to, label]) => (
                   <li key={to}><Link href={to} className="text-gray-500 hover:text-blue-600 transition-colors flex items-center gap-1.5">
                     <FaArrowRight className="text-[10px] text-red-500" /> {label}
                   </Link></li>
                 ))}
+                <li>
+                  <EnrollButton variant="footer" text="Enroll Now" className="text-gray-500 hover:text-blue-600 transition-colors flex items-center gap-1.5 bg-transparent border-none p-0 cursor-pointer text-left w-full" />
+                </li>
               </ul>
             </div>
 

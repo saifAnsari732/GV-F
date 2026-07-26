@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FaBookOpen, FaChartBar, FaCheckCircle, FaBriefcase, FaGraduationCap, FaArrowRight, FaExclamationTriangle } from 'react-icons/fa';
+import { FaBookOpen, FaChartBar, FaCheckCircle, FaBriefcase, FaGraduationCap, FaArrowRight, FaExclamationTriangle, FaEnvelopeOpenText } from 'react-icons/fa';
 import api from '../../../services/api';
 
 const G = 'linear-gradient(135deg,#00D4FF,#7C3AED)';
@@ -92,6 +92,7 @@ const AdminDashboard = () => {
     { label: 'Attendance', path: '/admin/attendance',   bg: 'rgba(124,58,237,0.08)', color: '#7c3aed', icon: <FaChartBar className="text-xl" />, bar: 'linear-gradient(135deg,#7C3AED,#EC4899)' },
     { label: 'Fees Info',  path: '/admin/fees/manage',  bg: 'rgba(16,185,129,0.08)', color: '#059669', icon: <FaCheckCircle className="text-xl" />, bar: 'linear-gradient(135deg,#10B981,#00D4FF)' },
     { label: 'Jobs',       path: '/createjob',          bg: 'rgba(245,158,11,0.08)', color: '#d97706', icon: <FaBriefcase className="text-xl" />, bar: 'linear-gradient(135deg,#F59E0B,#EF4444)' },
+    { label: 'Enquiries',  path: '/admin/enquiries',    bg: 'rgba(59,130,246,0.08)', color: '#3b82f6', icon: <FaEnvelopeOpenText className="text-xl" />, bar: 'linear-gradient(135deg,#3B82F6,#93C5FD)' },
   ];
 
   return (
@@ -166,7 +167,7 @@ const AdminDashboard = () => {
             <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
               <h2 className="font-['Syne',sans-serif] text-lg font-extrabold text-gray-900 m-0">⚡ Quick Actions</h2>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {actions.map((a, i) => (
                 <button key={i} onClick={() => navigate.push(a.path)}
                   className="group flex flex-col items-center justify-center gap-3 py-6 px-4 rounded-xl border border-gray-200 bg-white cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/20 hover:shadow-lg relative overflow-hidden"
