@@ -58,6 +58,38 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Field Validations
+    if (!formData.profileImage) {
+      toast.error('Please upload a profile picture');
+      return;
+    }
+    if (formData.name.trim().length < 3) {
+      toast.error('Name must be at least 3 characters');
+      return;
+    }
+    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formData.email)) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+    if (formData.password.length < 6) {
+      toast.error('Password must be at least 6 characters');
+      return;
+    }
+    if (!/^\d{10}$/.test(formData.phone.trim())) {
+      toast.error('Phone number must be exactly 10 digits');
+      return;
+    }
+    const dob = new Date(formData.dateOfBirth);
+    const today = new Date();
+    if (isNaN(dob.getTime()) || dob.getFullYear() < 1900 || dob >= today) {
+      toast.error('Please enter a valid date of birth in the past');
+      return;
+    }
+    if (formData.address.trim().length < 10) {
+      toast.error('Address must be at least 10 characters long');
+      return;
+    }
     if (formData.role === 'student' && !formData.course) {
       toast.error('Please select a course');
       return;
