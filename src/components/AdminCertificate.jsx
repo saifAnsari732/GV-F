@@ -778,8 +778,8 @@ export const VerifyCertificate = () => {
 
       <div className="max-w-md w-full relative z-10">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-cyan-500/20">
-            <FaCertificate className="text-3xl text-white animate-pulse" />
+          <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg border border-gray-100 overflow-hidden p-2">
+            <img src="/gv-logo.jpg" alt="GV Logo" className="w-full h-full object-contain" />
           </div>
           <h1 className="text-3xl font-extrabold text-gray-900 font-['Syne',sans-serif]">Verify Certificate</h1>
           <p className="text-gray-500 mt-2 font-medium">Enter certificate number to verify authenticity</p>
@@ -999,10 +999,10 @@ export const CertificateDetail = () => {
               ISO certificate no: QMS/02345/0723
             </p>
             <p className="text-[9.5px] print:text-[8.5px] font-bold text-gray-800 uppercase tracking-wider mt-2.5 print:mt-1 font-sans max-w-lg leading-relaxed">
-              Sarda Complex, Babu Bazar Rd, Fazilnagar, Dhanauji Kalon, Uttar Pradesh 274401
+              Near SBI Bank Left side Sarda Complex Babu Bazar Fazilnagar Kushinagar 274401
             </p>
             <p className="text-[9.5px] print:text-[8.5px] font-bold text-gray-800 uppercase tracking-wider mt-0.5 font-sans">
-              Contact: 098385 31365
+              Contact: 98385 31365
             </p>
           </div>
 

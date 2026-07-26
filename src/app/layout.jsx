@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../index.css';
 import { Inter } from 'next/font/google';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -45,7 +46,7 @@ const jsonLd = {
   "telephone": "+919838531365",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Sarda Complex, Babu Bazar Rd, Dhanauji Kalon",
+    "streetAddress": "Near SBI Bank Left side Sarda Complex Babu Bazar",
     "addressLocality": "Fazilnagar",
     "addressRegion": "UP",
     "postalCode": "274401",
@@ -87,7 +88,7 @@ const placementSchemaLd = {
   "description": "Job placement assistance for computer course graduates in Fazilnagar, Tamkuhi Raj, Kasaya, Kushinagar, Padrauna and nearby districts.",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Sarda Complex, Babu Bazar Rd, Dhanauji Kalon",
+    "streetAddress": "Near SBI Bank Left side Sarda Complex Babu Bazar",
     "addressLocality": "Fazilnagar",
     "addressRegion": "Uttar Pradesh",
     "postalCode": "274401",
@@ -141,6 +142,19 @@ export default function RootLayout({ children }) {
             theme="dark"
           />
         </AuthProvider>
+        
+        {/* Floating WhatsApp Button */}
+        <a 
+          href="https://wa.me/919838531365" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl shadow-green-500/40 hover:-translate-y-1 hover:scale-110 transition-all duration-300 flex items-center justify-center group"
+        >
+          <FaWhatsapp className="text-3xl" />
+          <span className="absolute right-full mr-4 bg-white text-gray-800 text-sm font-bold py-1.5 px-3 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap border border-gray-100">
+            Chat with us
+          </span>
+        </a>
       </body>
     </html>
   );

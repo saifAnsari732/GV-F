@@ -372,19 +372,19 @@ export default async function Home() {
               <ul className="space-y-4 text-sm text-gray-500">
                 <li className="flex items-start gap-3">
                   <FaMapMarkerAlt className="text-blue-600 mt-1 shrink-0" />
-                  <span>Main Market, Fazilnagar, Kushinagar, Uttar Pradesh 274401</span>
+                  <span>Near SBI Bank Left side Sarda Complex Babu Bazar Fazilnagar Kushinagar 274401</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <FaPhoneAlt className="text-blue-600 shrink-0" />
-                  <a href="tel:+919876543210" className="hover:text-blue-600 transition-colors">+91 98765 43210</a>
+                  <a href="tel:+919838531365" className="hover:text-blue-600 transition-colors">+91 98385 31365</a>
                 </li>
                 <li className="flex items-center gap-3">
                   <FaEnvelope className="text-blue-600 shrink-0" />
-                  <a href="mailto:info@gvcomputer.in" className="hover:text-blue-600 transition-colors">info@gvcomputer.in</a>
+                  <a href="mailto:gvcomputerfazilnagar@gmail.com" className="hover:text-blue-600 transition-colors">gvcomputerfazilnagar@gmail.com</a>
                 </li>
                 <li className="flex items-center gap-3">
                   <FaWhatsapp className="text-emerald-500 shrink-0" />
-                  <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">WhatsApp Chat</a>
+                  <a href="https://wa.me/919838531365" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">WhatsApp Chat</a>
                 </li>
               </ul>
             </div>
