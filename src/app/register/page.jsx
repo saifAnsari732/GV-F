@@ -42,11 +42,7 @@ const Register = () => {
       }
     } catch (err) {
       console.error('Failed to fetch courses:', err);
-      setCourses([
-        { _id: 'dca', courseName: 'DCA', courseCode: 'DCA001' },
-        { _id: 'adca', courseName: 'ADCA', courseCode: 'ADCA001' },
-        { _id: 'tally', courseName: 'Tally-prime', courseCode: 'TALLY001' }
-      ]);
+      toast.error('Failed to load courses. Please refresh the page.');
     } finally {
       setLoadingCourses(false);
     }
