@@ -193,12 +193,17 @@ const AdminDashboard = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {recentStudents?.length > 0 ? recentStudents.map(student => (
               <div key={student._id}
-                className="flex flex-col items-center px-4 py-5 rounded-xl border border-gray-200 bg-gray-50/60 text-center transition-all duration-300 hover:border-cyan-500/20 hover:bg-white hover:shadow-md"
+                onClick={() => navigate.push(`/admin/students/${student._id}`)}
+                className="flex flex-col items-center px-4 py-5 rounded-xl border border-gray-200 bg-gray-50/60 text-center transition-all duration-300 hover:border-cyan-500/20 hover:bg-white hover:shadow-md cursor-pointer"
               >
-                <div className="w-12 h-12 rounded-full flex items-center justify-center text-[15px] font-bold text-white mb-3 shadow-md shadow-indigo-500/20"
-                  style={{ background: 'linear-gradient(135deg,#667eea,#764ba2)' }}>
-                  {getInitials(student.name)}
-                </div>
+                {student.profileImage && student.profileImage !== 'default-avatar.jpg' ? (
+                  <img src={student.profileImage} alt={student.name} className="w-12 h-12 rounded-full mb-3 object-cover shadow-md shadow-indigo-500/20" />
+                ) : (
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-[15px] font-bold text-white mb-3 shadow-md shadow-indigo-500/20"
+                    style={{ background: 'linear-gradient(135deg,#667eea,#764ba2)' }}>
+                    {getInitials(student.name)}
+                  </div>
+                )}
                 <h4 className="text-[14px] font-bold text-gray-900 m-0 mb-1 truncate w-full">{student.name}</h4>
                 <p className="text-[11px] text-gray-500 m-0 mb-2.5 truncate w-full">{student.email}</p>
                 <span className="text-[10px] text-gray-400 font-bold bg-white border border-gray-200 px-2 py-0.5 rounded-full">
